@@ -88,8 +88,8 @@ class Snake_Game():
                     self.fruit_position = [random.randrange(1, (self.screen_width//10)) * 10,random.randrange(1, (self.screen_height//10)) * 10]
                     self.fruit_spawn = True
             else:self.body_s.pop()
-            if self.head_s[0] < 0:self.head_s[0]=self.screen_width
-            if self.head_s[0] > self.screen_width:self.head_s[0]=0
+            if self.head_s[0] < -10:self.head_s[0]=self.screen_width
+            if self.head_s[0] > self.screen_width:self.head_s[0]=-10
             if self.head_s[1] < 0:self.head_s[1]=self.screen_height
             if self.head_s[1] > self.screen_height:self.head_s[1]=0
             for body in self.body_s[1:]:
