@@ -1,4 +1,4 @@
-import pygame,random
+import pygame,random,os
 
 class Snake_Game():
     def __init__(self):
@@ -15,18 +15,21 @@ class Snake_Game():
         pygame.display.set_caption("Snake")
         self.clock=pygame.time.Clock()
         self.FPS=60
-        self.apple_img=pygame.image.load("C:/Users/Cancino/Desktop/codigos de programacion/Python/proyecto/3/final_version/images/apple.png")
+        self.scores_take=os.path.join(os.path.dirname(__file__), "score.txt")
+        self.image_path=os.path.join(os.path.dirname(__file__), "images")
+        self.apple_img=pygame.image.load(os.path.join(self.image_path,"apple.png"))
         self.apple_img=pygame.transform.scale(self.apple_img,(25,25))
-        self.head_snake=pygame.image.load("C:/Users/Cancino/Desktop/codigos de programacion/Python/proyecto/3/final_version/images/head_snake.png")
+        self.head_snake=pygame.image.load(os.path.join(self.image_path,"head_snake.png"))
         self.head_snake=pygame.transform.scale(self.head_snake,(30,30))
-        self.body_snake=pygame.image.load("C:/Users/Cancino/Desktop/codigos de programacion/Python/proyecto/3/final_version/images/body_snake.png")
+        self.body_snake=pygame.image.load(os.path.join(self.image_path,"body_snake.png"))
         self.body_snake=pygame.transform.scale(self.body_snake,(30,30))
-        self.background_img=pygame.image.load("C:/Users/Cancino/Desktop/codigos de programacion/Python/proyecto/3/final_version/images/floor.jpg")
+        self.background_img=pygame.image.load(os.path.join(self.image_path,"floor.jpg"))
         self.background_img=pygame.transform.scale(self.background_img,(600,400))
-        self.s_food=pygame.mixer.Sound("C:/Users/Cancino/Desktop/codigos de programacion/Python/proyecto/3/final_version/sounds/food.wav")
-        self.s_game_over=pygame.mixer.Sound("C:/Users/Cancino/Desktop/codigos de programacion/Python/proyecto/3/final_version/sounds/game_over.flac")
-        self.s_dead=pygame.mixer.Sound("C:/Users/Cancino/Desktop/codigos de programacion/Python/proyecto/3/final_version/sounds/dead.mp3")
-        self.s_main=pygame.mixer.Sound("C:/Users/Cancino/Desktop/codigos de programacion/Python/proyecto/3/final_version/sounds/main.wav")
+        self.sound_path=os.path.join(os.path.dirname(__file__), "sounds")
+        self.s_food=pygame.mixer.Sound(os.path.join(self.sound_path,"food.wav"))
+        self.s_game_over=pygame.mixer.Sound(os.path.join(self.sound_path,"game_over.flac"))
+        self.s_dead=pygame.mixer.Sound(os.path.join(self.sound_path,"dead.mp3"))
+        self.s_main=pygame.mixer.Sound(os.path.join(self.sound_path,"main.wav"))
         self.running=True
         self.s_speed=3
         self.score=0
@@ -146,10 +149,10 @@ class Snake_Game():
         if self.score>=self.max_score:
             self.max_score=self.score
     def save_scores(self):
-        with open("C:/Users/Cancino/Desktop/codigos de programacion/Python/proyecto/3/final_version/score.txt", "w") as archive:
+        with open(self.scores_take, "w") as archive:
             archive.write(str(self.max_score) + "\n")
     def load_scores(self):
-        with open("C:/Users/Cancino/Desktop/codigos de programacion/Python/proyecto/3/final_version/score.txt", "r") as archive:
+        with open(self.scores_take, "r") as archive:
             score = archive.readline()
             self.max_score = int(score)
     def run(self):
@@ -183,7 +186,5 @@ class Snake_Game():
             self.save_scores()
             self.clock.tick(self.FPS)
             pygame.display.flip()
-if __name__=="__main__":
-    game=Snake_Game()
-    game.run()
+if __name__=="__main__":(game:=Snake_Game()).run()
 pygame.quit()
