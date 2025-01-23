@@ -1,5 +1,4 @@
 import pygame,random,os
-
 class Snake_Game():
     def __init__(self):
         pygame.init()
@@ -54,8 +53,7 @@ class Snake_Game():
     def draw(self):
         if self.pause is False:
             self.screen.blit(self.background_img,[0,0])
-            text_score=self.font_0.render("Score: "+str(self.score),True,self.skyblue)
-            self.screen.blit(text_score,[0,0])
+            self.screen.blit(self.font_0.render(f"Score: {self.score}",True,self.skyblue),[0,0])
             self.rect_f=pygame.Rect(self.fruit_position[0],self.fruit_position[1], 20, 20)
             self.screen.blit(self.apple_img,self.fruit_position)
             self.body_s.insert(0,list(self.head_s))
@@ -102,10 +100,8 @@ class Snake_Game():
     def game_over(self):
         if self.game_o and self.inter is False:
             self.screen.fill(self.background)
-            text_game_over=self.font.render("Game Over",True,self.black)
-            text_game_reset=self.font_0.render("To restart press R",True,self.black)
-            self.screen.blit(text_game_over,(self.screen_width/2-135,self.screen_height/2-170))
-            self.screen.blit(text_game_reset,(self.screen_width/2-100,self.screen_height/2-100))
+            self.screen.blit(self.font.render("Game Over",True,self.black),(self.screen_width/2-135,self.screen_height/2-170))
+            self.screen.blit(self.font_0.render("To restart press R",True,self.black),(self.screen_width/2-100,self.screen_height/2-100))
             self.reset=True
             if self.s_v:
                 self.s_game_over.play(loops=0)
@@ -128,18 +124,14 @@ class Snake_Game():
             self.s_main.play(loops=-1)
             self.screen.fill(self.black)
             self.pause=True
-            text_game=self.font.render("Snake Game",True,self.white)
-            text_play = self.font_0.render("Play", True, self.green)
-            text_exit = self.font_0.render("Exit", True, self.green)
-            text_puntaje = self.font_0.render(f"Highest Score {self.max_score}", True, self.skyblue)
             x = self.screen_width / 2 - 65
             y = self.screen_height / 2 - 100
             self.rect_inter = pygame.Rect(x + 46, y , 50, 19)
             self.rect_inter1 = pygame.Rect(x + 46, y +35, 50, 19)
-            self.screen.blit(text_game, (x-84, y-80))
-            self.screen.blit(text_play, (x+45, y-10))
-            self.screen.blit(text_exit, (x+45, y+25))
-            self.screen.blit(text_puntaje, (0, self.screen_height-40))
+            self.screen.blit(self.font.render("Snake Game",True,self.white), (x-84, y-80))
+            self.screen.blit(self.font_0.render("Play", True, self.green), (x+45, y-10))
+            self.screen.blit(self.font_0.render("Exit", True, self.green), (x+45, y+25))
+            self.screen.blit(self.font_0.render(f"Highest Score {self.max_score}", True, self.skyblue), (0, self.screen_height-40))
         else:self.s_main.stop()
     def pause_menu(self):
         if self.pause and self.inter is False and self.game_o is False:
