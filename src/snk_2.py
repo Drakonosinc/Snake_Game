@@ -139,15 +139,11 @@ class Snake_Game():
             text_pause=self.font.render("Pause",True,self.black)
             self.screen.blit(text_pause,(self.screen_width/2-70,self.screen_height/2-150))
     def score_snake(self):
-        if self.score>=self.max_score:
-            self.max_score=self.score
+        if self.score>=self.max_score:self.max_score=self.score
     def save_scores(self):
-        with open(self.scores_take, "w") as archive:
-            archive.write(str(self.max_score) + "\n")
+        with open(self.scores_take, "w") as archive:archive.write(str(self.max_score) + "\n")
     def load_scores(self):
-        with open(self.scores_take, "r") as archive:
-            score = archive.readline()
-            self.max_score = int(score)
+        with open(self.scores_take, "r") as archive:self.max_score = int(archive.readline())
     def run(self):
         self.load_scores()
         while self.running:
@@ -165,9 +161,7 @@ class Snake_Game():
                         if self.v_pause%2==0:self.pause=False
                     if event.key == pygame.K_r:self.reset_game()
                 if event.type == pygame.MOUSEBUTTONDOWN:
-                    if self.rect_inter.collidepoint(event.pos) and self.inter:
-                        self.inter=False
-                        self.pause=False
+                    if self.rect_inter.collidepoint(event.pos) and self.inter:self.inter,self.pause=False,False
                     if self.rect_inter1.collidepoint(event.pos) and self.inter:self.running=False
             self.draw()
             self.move_snake(self.change_to)
