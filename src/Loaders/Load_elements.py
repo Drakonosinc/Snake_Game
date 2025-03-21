@@ -50,4 +50,5 @@ class load_elements():
         self.s_dead=pygame.mixer.Sound(os.path.join(self.sound_path,"dead.mp3"))
         self.s_main=pygame.mixer.Sound(os.path.join(self.sound_path,"main.wav"))
     def load_fonts(self):
-        
+        self.font=pygame.font.SysFont("times new roman",60)
+        self.font_0=pygame.font.SysFont("times new roman",30)
