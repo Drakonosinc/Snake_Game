@@ -12,3 +12,5 @@ class load_elements():
         self.load_fonts()
         self.load_sounds()
         self.config_screen()
+    def load_AI(self):
+        self.model_path=os.path.join(self.config.base_dir, "AI/best_model.pth")
