@@ -2,18 +2,10 @@ import pygame,random,os
 class Snake_Game():
     def __init__(self):
         pygame.init()
-        self.screen_width = 600
-        self.screen_height = 400
-        self.screen = pygame.display.set_mode((self.screen_width,self.screen_height))
-        self.white=(255,255,255)
-        self.black=(0,0,0)
-        self.gray=(128,128,128)
-        self.green=(0,255,0)
-        self.skyblue=(0,191,255)
-        self.background = self.gray
+        # self.screen_width = 600
+        # self.screen_height = 400
         self.clock=pygame.time.Clock()
         self.FPS=60
-        self.base_dir = os.path.abspath(os.path.join(__file__, "../.."))
         self.scores_take=os.path.join(self.base_dir, "Config/score.txt")
         self.image_path=os.path.join(self.base_dir, "images")
         self.apple_img=pygame.image.load(os.path.join(self.image_path,"apple.png"))
