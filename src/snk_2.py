@@ -164,5 +164,3 @@ class Snake_Game():
             self.save_scores()
             self.clock.tick(self.FPS)
             pygame.display.flip()
-if __name__=="__main__":(game:=Snake_Game()).run()
-pygame.quit()
