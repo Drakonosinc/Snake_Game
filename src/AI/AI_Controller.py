@@ -9,3 +9,5 @@ class AIController():
         state=self.get_state()
         action = model(torch.tensor(state, dtype=torch.float32)).detach().numpy()
         self.AI_actions(action)
+    def AI_actions(self,action):
+        pass
