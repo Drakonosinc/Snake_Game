@@ -12,6 +12,7 @@ class load_elements():
         self.load_fonts()
         self.load_sounds()
         self.config_screen()
+        self.load_scores()
     def load_AI(self):
         self.model_path=os.path.join(self.config.base_dir, "AI/best_model.pth")
     def config_screen(self):
@@ -30,3 +31,5 @@ class load_elements():
         self.RED=(255,0,0)
         self.GOLDEN=(255,199,51)
         self.background=self.GRAY
+    def load_scores(self):
+        self.scores_take=os.path.join(self.base_dir, "Config/score.txt")

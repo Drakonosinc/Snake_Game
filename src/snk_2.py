@@ -6,7 +6,6 @@ class Snake_Game():
         # self.screen_height = 400
         self.clock=pygame.time.Clock()
         self.FPS=60
-        self.scores_take=os.path.join(self.base_dir, "Config/score.txt")
         self.image_path=os.path.join(self.base_dir, "images")
         self.apple_img=pygame.image.load(os.path.join(self.image_path,"apple.png"))
         self.apple_img=pygame.transform.scale(self.apple_img,(25,25))
