@@ -24,8 +24,6 @@ class Snake_Game():
         self.gane_o=False
         self.rect_s=pygame.Rect(0, 0, 25, 25)
         self.rect_f=pygame.Rect(0, 0, 20, 20)
-        self.font=pygame.font.SysFont("times new roman",60)
-        self.font_0=pygame.font.SysFont("times new roman",30)
         self.s_v=True
     def draw(self):
         if self.pause is False:
