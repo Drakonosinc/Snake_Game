@@ -11,7 +11,6 @@ class Snake_Game():
         self.green=(0,255,0)
         self.skyblue=(0,191,255)
         self.background = self.gray
-        pygame.display.set_caption("Snake")
         self.clock=pygame.time.Clock()
         self.FPS=60
         self.base_dir = os.path.abspath(os.path.join(__file__, "../.."))

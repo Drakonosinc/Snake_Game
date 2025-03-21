@@ -8,3 +8,7 @@ class load_elements():
         pygame.display.set_caption("Snake Game")
         self.config=Config()
         self.config.load_config()
+        self.define_colors()
+        self.load_fonts()
+        self.load_sounds()
+        self.config_screen()
