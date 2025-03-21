@@ -6,15 +6,6 @@ class Snake_Game():
         # self.screen_height = 400
         self.clock=pygame.time.Clock()
         self.FPS=60
-        self.image_path=os.path.join(self.base_dir, "images")
-        self.apple_img=pygame.image.load(os.path.join(self.image_path,"apple.png"))
-        self.apple_img=pygame.transform.scale(self.apple_img,(25,25))
-        self.head_snake=pygame.image.load(os.path.join(self.image_path,"head_snake.png"))
-        self.head_snake=pygame.transform.scale(self.head_snake,(30,30))
-        self.body_snake=pygame.image.load(os.path.join(self.image_path,"body_snake.png"))
-        self.body_snake=pygame.transform.scale(self.body_snake,(30,30))
-        self.background_img=pygame.image.load(os.path.join(self.image_path,"floor.jpg"))
-        self.background_img=pygame.transform.scale(self.background_img,(600,400))
         self.sound_path=os.path.join(self.base_dir, "sounds")
         self.s_food=pygame.mixer.Sound(os.path.join(self.sound_path,"food.wav"))
         self.s_game_over=pygame.mixer.Sound(os.path.join(self.sound_path,"game_over.flac"))
