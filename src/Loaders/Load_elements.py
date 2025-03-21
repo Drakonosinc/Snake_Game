@@ -14,3 +14,8 @@ class load_elements():
         self.config_screen()
     def load_AI(self):
         self.model_path=os.path.join(self.config.base_dir, "AI/best_model.pth")
+    def config_screen(self):
+        self.WIDTH=self.config.config_visuals["WIDTH"]
+        self.HEIGHT=self.config.config_visuals["HEIGHT"]
+        self.screen=pygame.display.set_mode((self.WIDTH,self.HEIGHT))
+        self.load_images()
