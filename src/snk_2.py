@@ -6,11 +6,6 @@ class Snake_Game():
         # self.screen_height = 400
         self.clock=pygame.time.Clock()
         self.FPS=60
-        self.sound_path=os.path.join(self.base_dir, "sounds")
-        self.s_food=pygame.mixer.Sound(os.path.join(self.sound_path,"food.wav"))
-        self.s_game_over=pygame.mixer.Sound(os.path.join(self.sound_path,"game_over.flac"))
-        self.s_dead=pygame.mixer.Sound(os.path.join(self.sound_path,"dead.mp3"))
-        self.s_main=pygame.mixer.Sound(os.path.join(self.sound_path,"main.wav"))
         self.running=True
         self.s_speed=3
         self.score=0

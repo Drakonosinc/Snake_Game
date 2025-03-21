@@ -43,3 +43,9 @@ class load_elements():
         self.body_snake=pygame.transform.scale(self.body_snake,(30,30))
         self.background_img=pygame.image.load(os.path.join(self.image_path,"floor.jpg"))
         self.background_img=pygame.transform.scale(self.background_img,(600,400))
+    def load_sounds(self):
+        self.sound_path=os.path.join(self.base_dir, "sounds")
+        self.s_food=pygame.mixer.Sound(os.path.join(self.sound_path,"food.wav"))
+        self.s_game_over=pygame.mixer.Sound(os.path.join(self.sound_path,"game_over.flac"))
+        self.s_dead=pygame.mixer.Sound(os.path.join(self.sound_path,"dead.mp3"))
+        self.s_main=pygame.mixer.Sound(os.path.join(self.sound_path,"main.wav"))
