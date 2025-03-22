@@ -7,7 +7,7 @@ class Snake_Game():
         self.clock=pygame.time.Clock()
         self.FPS=60
         self.running=True
-        self.s_speed=3
+        self.move_speed=3
         self.score=0
         self.game_o=False
         self.reset=False
