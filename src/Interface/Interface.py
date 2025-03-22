@@ -15,3 +15,4 @@ class interface(load_elements):
         self.visuals_menu()
         self.keys_menu()
         self.draw_generation()
+    def main_menu(self):pass
