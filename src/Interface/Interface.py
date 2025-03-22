@@ -19,3 +19,5 @@ class interface(load_elements):
     def menu_options(self):pass
     def mode_game_menu(self):pass
     def game_over_menu(self):pass
+    def pausa_menu(self):pass
+    
