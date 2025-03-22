@@ -22,3 +22,4 @@ class interface(load_elements):
     def pausa_menu(self):pass
     def sounds_menu(self):pass
     def visuals_menu(self):pass
+    def keys_menu(self):pass
