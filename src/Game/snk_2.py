@@ -8,7 +8,6 @@ class Snake_Game():
         self.FPS=60
         self.running=True
         self.move_speed=3
-        self.score=0
         self.game_o=False
         self.reset=False
         self.pause=False
@@ -22,7 +21,6 @@ class Snake_Game():
         self.fruit_position=[random.randrange(1, (self.screen_width//10)) * 10,random.randrange(1, (self.screen_height//10)) * 10]
         self.fruit_spawn=True
         self.gane_o=False
-        self.rect_s=pygame.Rect(0, 0, 25, 25)
         self.s_v=True
     def draw(self):
         if self.pause is False:
