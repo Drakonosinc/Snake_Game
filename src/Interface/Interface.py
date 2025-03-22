@@ -16,3 +16,4 @@ class interface(load_elements):
         self.keys_menu()
         self.draw_generation()
     def main_menu(self):pass
+    def menu_options(self):pass
