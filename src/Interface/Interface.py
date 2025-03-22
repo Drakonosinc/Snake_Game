@@ -15,6 +15,7 @@ class interface(load_elements):
         self.visuals_menu()
         self.keys_menu()
         self.draw_generation()
+    def draw_buttons(self):pass
     def main_menu(self):pass
     def menu_options(self):pass
     def mode_game_menu(self):pass
