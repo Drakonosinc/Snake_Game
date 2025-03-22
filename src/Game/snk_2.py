@@ -23,7 +23,6 @@ class Snake_Game():
         self.fruit_spawn=True
         self.gane_o=False
         self.rect_s=pygame.Rect(0, 0, 25, 25)
-        self.rect_f=pygame.Rect(0, 0, 20, 20)
         self.s_v=True
     def draw(self):
         if self.pause is False:
