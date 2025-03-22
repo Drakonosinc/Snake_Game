@@ -17,3 +17,4 @@ class interface(load_elements):
         self.draw_generation()
     def main_menu(self):pass
     def menu_options(self):pass
+    def mode_game_menu(self):pass
