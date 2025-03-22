@@ -21,4 +21,4 @@ class interface(load_elements):
     def game_over_menu(self):pass
     def pausa_menu(self):pass
     def sounds_menu(self):pass
-    
+    def visuals_menu(self):pass
