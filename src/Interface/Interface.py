@@ -5,6 +5,7 @@ class interface(load_elements):
         super().__init__()
         self.main=0 #-1=game, 0=menu, 1=game over, 2=game menu, 3=pausa, 4=options, 5=visuals, 6=menu keys, 7=sound menu
         self.mode_game={"Training AI":False,"Player":True,"AI":False}
+        self.sound_type={"sound_menu":f"Sound Menu {"ON" if (x:=self.config.config_sounds["sound_menu"]) else "OFF"}","color_menu":self.SKYBLUE if x else self.RED,"value_menu":x}
     def draw_interfaces(self):
         self.main_menu()
         self.menu_options()
@@ -17,6 +18,10 @@ class interface(load_elements):
         self.draw_generation()
     def draw_buttons(self):
         self.button_factory_f2_5 = ElementsFactory({"screen": self.screen,"font": self.font2_5,"hover_color": self.GOLDEN,"sound_hover": self.sound_buttonletters,"sound_touch": self.sound_touchletters})
+    def filt(self,width,height,number,color=(0,0,0),position=(0,0)):
+        background=pygame.Surface((width,height),pygame.SRCALPHA)
+        background.fill((*color, number))
+        self.screen.blit(background,position)
     def main_menu(self):pass
     def menu_options(self):pass
     def mode_game_menu(self):pass
