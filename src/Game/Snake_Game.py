@@ -1,4 +1,5 @@
-import pygame,random,os
+import pygame,random
+
 class Snake_Game():
     def __init__(self):
         pygame.init()
@@ -16,11 +17,12 @@ class Snake_Game():
         self.body_s=[[100,30],[90,30],[80,30],[70,30]]
         self.direction="RIGHT"
         self.change_to=self.direction
-        self.fruit_position=[random.randrange(1, (self.WIDTH//10)) * 10,random.randrange(1, (self.HEIGHT//10)) * 10]
-        print(self.fruit_position)
         self.fruit_spawn=True
         self.gane_o=False
         self.s_v=True
+    def instances(self):
+        self.fruit_position=[random.randrange(1, (self.WIDTH//10)) * 10,random.randrange(1, (self.HEIGHT//10)) * 10]
+        
     def draw(self):
         if self.pause is False:
             self.screen.blit(self.background_img,[0,0])
