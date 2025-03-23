@@ -10,10 +10,10 @@ class interface(load_elements):
         if self.main==0:self.main_menu()
         if self.main==1:self.game_over_menu()
         if self.main==2:self.mode_game_menu()
-        self.menu_options()
-        self.pausa_menu()
+        if self.main==3:self.pausa_menu()
+        if self.main==4:self.menu_options()
+        if self.main==5:self.visuals_menu()
         self.sounds_menu()
-        self.visuals_menu()
         self.keys_menu()
         self.draw_generation()
     def draw_buttons(self):
