@@ -1,6 +1,7 @@
 import pygame,random
 from Entities import *
-class Snake_Game():
+from Interface import Interface
+class Snake_Game(Interface):
     def __init__(self):
         pygame.init()
         self.clock=pygame.time.Clock()
