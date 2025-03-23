@@ -13,8 +13,8 @@ class interface(load_elements):
         if self.main==3:self.pausa_menu()
         if self.main==4:self.menu_options()
         if self.main==5:self.visuals_menu()
-        self.sounds_menu()
-        self.keys_menu()
+        if self.main==6:self.keys_menu()
+        if self.main==7:self.sounds_menu()
         self.draw_generation()
     def draw_buttons(self):
         self.button_factory_f2_5 = ElementsFactory({"screen": self.screen,"font": self.font2_5,"hover_color": self.GOLDEN,"sound_hover": self.sound_buttonletters,"sound_touch": self.sound_touchletters})
