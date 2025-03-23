@@ -1,5 +1,5 @@
 from Loaders.Load_elements import *
-from .Elements_interface import load_elements
+from .Elements_interface import *
 class interface(load_elements):
     def __init__(self):
         super().__init__()
@@ -15,7 +15,8 @@ class interface(load_elements):
         self.visuals_menu()
         self.keys_menu()
         self.draw_generation()
-    def draw_buttons(self):pass
+    def draw_buttons(self):
+        self.button_factory_f2_5 = ElementsFactory({"screen": self.screen,"font": self.font2_5,"hover_color": self.GOLDEN,"sound_hover": self.sound_buttonletters,"sound_touch": self.sound_touchletters})
     def main_menu(self):pass
     def menu_options(self):pass
     def mode_game_menu(self):pass
