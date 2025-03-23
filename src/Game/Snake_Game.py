@@ -14,16 +14,15 @@ class Snake_Game(Interface):
         self.v_pause=0
         self.inter=True
         self.max_score=0
-        self.head_s=[100,30]
-        self.body_s=[[100,30],[90,30],[80,30],[70,30]]
         self.direction="RIGHT"
         self.change_to=self.direction
         self.fruit_spawn=True
         self.gane_o=False
         self.s_v=True
     def instances(self):
-        self.fruit_position=[random.randrange(1, (self.WIDTH//10)) * 10,random.randrange(1, (self.HEIGHT//10)) * 10]
-        
+        self.head_s=[100,30]
+        self.body_s=[[100,30],[90,30],[80,30],[70,30]]
+        self.fruit_position=Apple(random.randrange(1, (self.WIDTH//10)) * 10,random.randrange(1, (self.HEIGHT//10)) * 10,20,20)
     def draw(self):
         if self.pause is False:
             self.screen.blit(self.background_img,[0,0])
