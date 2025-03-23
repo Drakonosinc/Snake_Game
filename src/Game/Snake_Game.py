@@ -1,5 +1,5 @@
 import pygame,random
-
+from Entities import *
 class Snake_Game():
     def __init__(self):
         pygame.init()
