@@ -6,3 +6,4 @@ class Player:
         self.move_speed=3
         self.reward = 0
         self.score = 0
+        self.active = True
