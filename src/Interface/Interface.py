@@ -7,10 +7,10 @@ class interface(load_elements):
         self.mode_game={"Training AI":False,"Player":True,"AI":False}
         self.sound_type={"sound_menu":f"Sound Menu {"ON" if (x:=self.config.config_sounds["sound_menu"]) else "OFF"}","color_menu":self.SKYBLUE if x else self.RED,"value_menu":x}
     def draw_interfaces(self):
-        self.main_menu()
+        if self.main==0:self.main_menu()
+        if self.main==1:self.game_over_menu()
+        if self.main==2:self.mode_game_menu()
         self.menu_options()
-        self.mode_game_menu()
-        self.game_over_menu()
         self.pausa_menu()
         self.sounds_menu()
         self.visuals_menu()
@@ -22,6 +22,10 @@ class interface(load_elements):
         background=pygame.Surface((width,height),pygame.SRCALPHA)
         background.fill((*color, number))
         self.screen.blit(background,position)
+    def check_item(self,dic,is_true,is_false,item,**kwargs):
+        for key,button in kwargs.items():setattr(button,item,(is_true if dic[key] else is_false))
+    def execute_buttons(self,*args):
+        for button in args:button.draw()
     def main_menu(self):pass
     def menu_options(self):pass
     def mode_game_menu(self):pass
