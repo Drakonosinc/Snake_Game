@@ -24,4 +24,5 @@ class interface(load_elements):
     def sounds_menu(self):pass
     def visuals_menu(self):pass
     def keys_menu(self):pass
-    def draw_generation(self):pass
+    def draw_generation(self):
+        if self.main==-1 and self.mode_game["Training AI"]:self.screen.blit(self.font3_5.render(f"Generation: {int(self.generation)}", True, "orange"),(35,0))
