@@ -2,8 +2,6 @@ import pygame,random,os
 class Snake_Game():
     def __init__(self):
         pygame.init()
-        # self.screen_width = 600
-        # self.screen_height = 400
         self.clock=pygame.time.Clock()
         self.FPS=60
         self.running=True
@@ -18,7 +16,8 @@ class Snake_Game():
         self.body_s=[[100,30],[90,30],[80,30],[70,30]]
         self.direction="RIGHT"
         self.change_to=self.direction
-        self.fruit_position=[random.randrange(1, (self.screen_width//10)) * 10,random.randrange(1, (self.screen_height//10)) * 10]
+        self.fruit_position=[random.randrange(1, (self.WIDTH//10)) * 10,random.randrange(1, (self.HEIGHT//10)) * 10]
+        print(self.fruit_position)
         self.fruit_spawn=True
         self.gane_o=False
         self.s_v=True
@@ -26,7 +25,6 @@ class Snake_Game():
         if self.pause is False:
             self.screen.blit(self.background_img,[0,0])
             self.screen.blit(self.font_0.render(f"Score: {self.score}",True,self.skyblue),[0,0])
-            self.rect_f=pygame.Rect(self.fruit_position[0],self.fruit_position[1], 20, 20)
             self.screen.blit(self.apple_img,self.fruit_position)
             self.body_s.insert(0,list(self.head_s))
             for pos in self.body_s:
