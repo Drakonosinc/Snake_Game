@@ -69,42 +69,8 @@ class Snake_Game(Interface):
                 if self.head_s[0] == body[0] and self.head_s[1] == body[1]:
                     self.game_o=True
                     self.s_dead.play(loops=0)
-    def game_over(self):
-        if self.game_o and self.inter is False:
-            self.screen.fill(self.background)
-            self.screen.blit(self.font.render("Game Over",True,self.black),(self.screen_width/2-135,self.screen_height/2-170))
-            self.screen.blit(self.font_0.render("To restart press R",True,self.black),(self.screen_width/2-100,self.screen_height/2-100))
-            self.reset=True
-            if self.s_v:
-                self.s_game_over.play(loops=0)
-                self.s_v=False
-    def reset_game(self):
-        if self.reset:
-            self.fruit_position=[random.randrange(1, (self.screen_width//10)) * 10,random.randrange(1, (self.screen_height//10)) * 10]
-            self.head_s=[100,30]
-            self.body_s=[[100,30],[90,30],[80,30],[70,30]]
-            self.direction="RIGHT"
-            self.change_to=self.direction
-            self.score=0
-            self.s_v=True
-            self.game_o=False
-            self.inter=True
-            self.pause=True
-            self.reset=False
-    def interface(self):
-        if self.inter:
-            self.s_main.play(loops=-1)
-            self.screen.fill(self.black)
-            self.pause=True
-            x = self.screen_width / 2 - 65
-            y = self.screen_height / 2 - 100
-            self.rect_inter = pygame.Rect(x + 46, y , 50, 19)
-            self.rect_inter1 = pygame.Rect(x + 46, y +35, 50, 19)
-            self.screen.blit(self.font.render("Snake Game",True,self.white), (x-84, y-80))
-            self.screen.blit(self.font_0.render("Play", True, self.green), (x+45, y-10))
-            self.screen.blit(self.font_0.render("Exit", True, self.green), (x+45, y+25))
-            self.screen.blit(self.font_0.render(f"Highest Score {self.max_score}", True, self.skyblue), (0, self.screen_height-40))
-        else:self.s_main.stop()
+    def reset(self):
+        pass
     def pause_menu(self):
         if self.pause and self.inter is False and self.game_o is False:
             text_pause=self.font.render("Pause",True,self.black)

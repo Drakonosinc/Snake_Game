@@ -36,6 +36,7 @@ class interface(load_elements):
         for button in args:button.draw()
     def main_menu(self):
         self.screen.fill(self.BLACK)
+        self.screen.blit(self.font4.render("Snake Game", True, "orange"),(35,self.height/2-250))
     def buttons_main_menu(self):pass
     def game_over_menu(self):
         self.screen.fill(self.BLACK)
