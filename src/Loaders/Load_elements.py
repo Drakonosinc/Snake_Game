@@ -65,5 +65,5 @@ class load_elements():
         self.font5_5=pygame.font.Font(os.path.join(self.font_path,"8bitOperatorPlusSC-Bold.ttf"),20)
     def load_scores(self):
         self.scores_take=os.path.join(self.base_dir, "Config/score.txt")
-    def save_scores(self):
-        with open(self.scores_take, "w") as archive:archive.write(str(self.max_score) + "\n")
+    def save_scores(self,max_score):
+        with open(self.scores_take, "w") as archive:archive.write(str(max_score) + "\n")
