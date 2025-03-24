@@ -39,16 +39,16 @@ class interface(load_elements):
     def buttons_main_menu(self):pass
     def game_over_menu(self):
         self.screen.fill(self.BLACK)
-    def buttons_main_menu(self):pass
+    def buttons_game_over(self):pass
     def mode_game_menu(self):
         self.screen.fill(self.BLACK)
-    def buttons_main_menu(self):pass
+    def buttons_mode_game(self):pass
     def pausa_menu(self):
         self.screen.fill(self.BLACK)
-    def buttons_main_menu(self):pass
+    def buttons_pausa(self):pass
     def menu_options(self):
         self.screen.fill(self.BLACK)
-    def buttons_main_menu(self):pass
+    def buttons_menu_options(self):pass
     def visuals_menu(self):
         self.screen.fill(self.BLACK)
     def buttons_main_menu(self):pass
