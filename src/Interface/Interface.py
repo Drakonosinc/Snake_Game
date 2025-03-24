@@ -36,20 +36,28 @@ class interface(load_elements):
         for button in args:button.draw()
     def main_menu(self):
         self.screen.fill(self.BLACK)
+    def buttons_main_menu(self):pass
     def game_over_menu(self):
         self.screen.fill(self.BLACK)
+    def buttons_main_menu(self):pass
     def mode_game_menu(self):
         self.screen.fill(self.BLACK)
+    def buttons_main_menu(self):pass
     def pausa_menu(self):
         self.screen.fill(self.BLACK)
+    def buttons_main_menu(self):pass
     def menu_options(self):
         self.screen.fill(self.BLACK)
+    def buttons_main_menu(self):pass
     def visuals_menu(self):
         self.screen.fill(self.BLACK)
+    def buttons_main_menu(self):pass
     def keys_menu(self):
         self.screen.fill(self.BLACK)
+    def buttons_main_menu(self):pass
     def sounds_menu(self):
         self.screen.fill(self.BLACK)
+    def buttons_main_menu(self):pass
     def draw_generation(self):
         if self.main==-1 and self.mode_game["Training AI"]:self.screen.blit(self.font3_5.render(f"Generation: {int(self.generation)}", True, "orange"),(35,0))
     def show_score(self,player):
