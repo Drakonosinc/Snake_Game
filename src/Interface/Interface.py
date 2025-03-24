@@ -26,10 +26,14 @@ class interface(load_elements):
         for key,button in kwargs.items():setattr(button,item,(is_true if dic[key] else is_false))
     def execute_buttons(self,*args):
         for button in args:button.draw()
-    def main_menu(self):pass
-    def menu_options(self):pass
-    def mode_game_menu(self):pass
-    def game_over_menu(self):pass
+    def main_menu(self):
+        self.screen.fill(self.BLACK)
+    def menu_options(self):
+        self.screen.fill(self.BLACK)
+    def mode_game_menu(self):
+        self.screen.fill(self.BLACK)
+    def game_over_menu(self):
+        self.screen.fill(self.BLACK)
     def pausa_menu(self):pass
     def sounds_menu(self):pass
     def visuals_menu(self):pass
