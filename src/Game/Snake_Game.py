@@ -13,8 +13,6 @@ class Snake_Game(Interface):
         self.v_pause=0
         self.max_score=0
         self.fruit_spawn=True
-        self.gane_o=False
-        self.s_v=True
     def instances(self):
         self.head_s=[100,30]
         self.body_s=[[100,30],[90,30],[80,30],[70,30]]
