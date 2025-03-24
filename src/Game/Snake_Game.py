@@ -12,8 +12,6 @@ class Snake_Game(Interface):
         self.pause=False
         self.v_pause=0
         self.max_score=0
-        self.direction="RIGHT"
-        self.change_to=self.direction
         self.fruit_spawn=True
         self.gane_o=False
         self.s_v=True
@@ -76,7 +74,6 @@ class Snake_Game(Interface):
     def score_snake(self):
         if self.score>=self.max_score:self.max_score=self.score
     def run(self):
-        self.load_scores()
         while self.running and self.game_over is False:
             for event in pygame.event.get():
                 if event.type==pygame.QUIT:self.running=False
