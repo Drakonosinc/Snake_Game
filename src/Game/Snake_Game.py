@@ -8,11 +8,9 @@ class Snake_Game(Interface):
         self.FPS=60
         self.running=True
         self.generation=0
-        self.game_o=False
-        self.reset=False
+        self.game_over=False
         self.pause=False
         self.v_pause=0
-        self.inter=True
         self.max_score=0
         self.direction="RIGHT"
         self.change_to=self.direction
@@ -77,13 +75,9 @@ class Snake_Game(Interface):
             self.screen.blit(text_pause,(self.screen_width/2-70,self.screen_height/2-150))
     def score_snake(self):
         if self.score>=self.max_score:self.max_score=self.score
-    def save_scores(self):
-        with open(self.scores_take, "w") as archive:archive.write(str(self.max_score) + "\n")
-    def load_scores(self):
-        with open(self.scores_take, "r") as archive:self.max_score = int(archive.readline())
     def run(self):
         self.load_scores()
-        while self.running:
+        while self.running and self.game_over is False:
             for event in pygame.event.get():
                 if event.type==pygame.QUIT:self.running=False
                 if event.type==pygame.KEYDOWN:
@@ -92,21 +86,11 @@ class Snake_Game(Interface):
                     if event.key == pygame.K_DOWN or event.key==pygame.K_s:self.change_to = "DOWN"
                     if event.key == pygame.K_LEFT or event.key==pygame.K_a:self.change_to = "LEFT"
                     if event.key == pygame.K_RIGHT or event.key==pygame.K_d:self.change_to = "RIGHT"
-                    if event.key == pygame.K_p:
-                        self.pause=True
-                        self.v_pause+=1
-                        if self.v_pause%2==0:self.pause=False
-                    if event.key == pygame.K_r:self.reset_game()
-                if event.type == pygame.MOUSEBUTTONDOWN:
-                    if self.rect_inter.collidepoint(event.pos) and self.inter:self.inter,self.pause=False,False
-                    if self.rect_inter1.collidepoint(event.pos) and self.inter:self.running=False
             self.draw()
             self.move_snake(self.change_to)
             self.colision()
             self.score_snake()
             self.pause_menu()
-            self.game_over()
-            self.interface()
             self.save_scores()
             self.clock.tick(self.FPS)
             pygame.display.flip()
