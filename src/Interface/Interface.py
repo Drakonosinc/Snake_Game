@@ -18,6 +18,14 @@ class interface(load_elements):
         self.draw_generation()
     def draw_buttons(self):
         self.button_factory_f2_5 = ElementsFactory({"screen": self.screen,"font": self.font2_5,"hover_color": self.GOLDEN,"sound_hover": self.sound_buttonletters,"sound_touch": self.sound_touchletters})
+        self.buttons_main_menu()
+        self.buttons_game_over()
+        self.buttons_mode_game()
+        self.buttons_pausa()
+        self.buttons_menu_options()
+        self.buttons_visual()
+        self.buttons_keys()
+        self.buttons_sounds()
     def filt(self,width,height,number,color=(0,0,0),position=(0,0)):
         background=pygame.Surface((width,height),pygame.SRCALPHA)
         background.fill((*color, number))
