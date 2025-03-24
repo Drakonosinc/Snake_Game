@@ -6,6 +6,14 @@ class interface(load_elements):
         self.main=0 #-1=game, 0=menu, 1=game over, 2=game menu, 3=pausa, 4=options, 5=visuals, 6=menu keys, 7=sound menu
         self.mode_game={"Training AI":False,"Player":True,"AI":False}
         self.sound_type={"sound_menu":f"Sound Menu {"ON" if (x:=self.config.config_sounds["sound_menu"]) else "OFF"}","color_menu":self.SKYBLUE if x else self.RED,"value_menu":x}
+        self.utils_keys={"key_jump":False}
+        self.key=None
+    def play_music(self):
+        self.check_sounds()
+        self.sound_main.set_volume(0.5)
+    def check_sounds(self):
+        # self.sound_back_game.stop()
+        self.sound_main.play(loops=-1) if self.sound_type["value_menu"] else None
     def draw_interfaces(self):
         if self.main==0:self.main_menu()
         if self.main==1:self.game_over_menu()

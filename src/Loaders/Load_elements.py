@@ -46,11 +46,10 @@ class load_elements():
         self.sound_food=pygame.mixer.Sound(os.path.join(self.sound_path,"food.wav"))
         self.sound_game_over=pygame.mixer.Sound(os.path.join(self.sound_path,"game_over.flac"))
         self.sound_dead=pygame.mixer.Sound(os.path.join(self.sound_path,"dead.mp3"))
-        self.sound_main=pygame.mixer.Sound(os.path.join(self.sound_path,"main.wav"))
         self.sound_touchletters=pygame.mixer.Sound(os.path.join(self.sound_path,"touchletters.wav"))
         self.sound_buttonletters=pygame.mixer.Sound(os.path.join(self.sound_path,"buttonletters.mp3"))
         self.sound_exit=pygame.mixer.Sound(os.path.join(self.sound_path,"exitbutton.wav"))
-        self.sound_back=pygame.mixer.Sound(os.path.join(self.sound_path,"sound_back.wav"))
+        self.sound_main=pygame.mixer.Sound(os.path.join(self.sound_path,"main.wav"))
     def load_fonts(self):
         self.font=pygame.font.SysFont("times new roman",60)
         self.font_0=pygame.font.SysFont("times new roman",30)
