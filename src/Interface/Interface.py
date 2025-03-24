@@ -51,13 +51,13 @@ class interface(load_elements):
     def buttons_menu_options(self):pass
     def visuals_menu(self):
         self.screen.fill(self.BLACK)
-    def buttons_main_menu(self):pass
+    def buttons_visual(self):pass
     def keys_menu(self):
         self.screen.fill(self.BLACK)
-    def buttons_main_menu(self):pass
+    def buttons_keys(self):pass
     def sounds_menu(self):
         self.screen.fill(self.BLACK)
-    def buttons_main_menu(self):pass
+    def buttons_sounds(self):pass
     def draw_generation(self):
         if self.main==-1 and self.mode_game["Training AI"]:self.screen.blit(self.font3_5.render(f"Generation: {int(self.generation)}", True, "orange"),(35,0))
     def show_score(self,player):
