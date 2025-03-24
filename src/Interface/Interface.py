@@ -88,3 +88,6 @@ class interface(load_elements):
         if config.get("command",None):config["command"]()
         if config.get("run",False):setattr(self,"running",False),setattr(self, "game_over", True)
         if config.get("recursive",False):self.change_mains({"main":self.main,"fade_in":fade_in,"fade_out":fade_out})
+    def on_off(self,dic=None,variable=""):
+        if dic:dic[variable]=not dic[variable]
+        else:setattr(self,variable,not getattr(self,variable))
