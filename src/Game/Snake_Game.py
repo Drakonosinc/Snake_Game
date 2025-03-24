@@ -11,6 +11,8 @@ class Snake_Game(Interface):
         self.game_over=False
         self.max_score=0
     def instances(self):
+        head=[100,30]
+        body=[[100,30],[90,30],[80,30],[70,30]]
         self.snake = [Player((*i, 25, 25)) for i in [[100,30],[90,30],[80,30],[70,30]]]
         self.fruit_position=Apple(random.randrange(1, (self.WIDTH//10)) * 10,random.randrange(1, (self.HEIGHT//10)) * 10,20,20)
     def draw(self):
