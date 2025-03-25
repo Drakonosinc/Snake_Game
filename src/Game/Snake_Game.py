@@ -16,8 +16,8 @@ class Snake_Game(interface):
         self.draw_buttons()
         self.play_music()
     def instances(self):
-        head=[100,30]
-        body=[[100,30],[90,30],[80,30],[70,30]]
+        snake_head=[100,30]
+        snake_body=[[100,30],[90,30],[80,30],[70,30]]
         self.snake = [Player(*i, 25, 25) for i in [[100,30],[90,30],[80,30],[70,30]]]
         self.fruit_position=Apple(random.randrange(1, (self.WIDTH//10)) * 10,random.randrange(1, (self.HEIGHT//10)) * 10,20,20)
     def draw(self):
@@ -49,7 +49,6 @@ class Snake_Game(interface):
                 self.head_s[0] += self.s_speed
                 self.body_s[0][0] += self.s_speed
     def colision(self):
-        if self.pause is False:
             if self.rect_s.colliderect(self.rect_f):
                 self.score += 1
                 self.s_food.play(loops=0)
@@ -68,11 +67,7 @@ class Snake_Game(interface):
                     self.s_dead.play(loops=0)
     def reset(self):
         pass
-    def pause_menu(self):
-        if self.pause and self.inter is False and self.game_o is False:
-            text_pause=self.font.render("Pause",True,self.black)
-            self.screen.blit(text_pause,(self.screen_width/2-70,self.screen_height/2-150))
-    def score_snake(self):
+    def check_score(self):
         if self.score>=self.max_score:self.max_score=self.score
     def run(self):
         while self.running and self.game_over is False:
@@ -87,8 +82,5 @@ class Snake_Game(interface):
             self.draw()
             self.move_snake(self.change_to)
             self.colision()
-            self.score_snake()
-            self.pause_menu()
-            self.save_scores()
             self.clock.tick(self.FPS)
             pygame.display.flip()
