@@ -18,12 +18,12 @@ class Snake_Game(interface):
     def instances(self):
         self.snake_head=[100,30]
         self.snake_body=[[100,30],[90,30],[80,30],[70,30]]
-        self.Player = [Player(*i, 25, 25) for i in [[100,30],[90,30],[80,30],[70,30]]]
-        self.fruit_position=Apple(random.randrange(1, (self.WIDTH//10)) * 10,random.randrange(1, (self.HEIGHT//10)) * 10,20,20)
+        self.player = [Player(*i, 25, 25) for i in [[100,30],[90,30],[80,30],[70,30]]]
+        self.fruit=Apple(random.randrange(1, (self.WIDTH//10)) * 10,random.randrange(1, (self.HEIGHT//10)) * 10,20,20)
     def draw(self):
             self.screen.blit(self.background_img,[0,0])
-            self.screen.blit(self.font_0.render(f"Score: {self.score}",True,self.skyblue),[0,0])
-            self.screen.blit(self.apple_img,self.fruit_position)
+            self.screen.blit(self.font_0.render(f"Score: {self.player[0].score}",True,self.SKYBLUE),[0,0])
+            self.screen.blit(self.apple_img,self.fruit)
             self.snake_body.insert(0,list(self.snake_head))
             for pos in self.snake_body:
                 self.rect_s=pygame.Rect(self.snake_head[0], self.snake_head[1], 25, 25)
@@ -31,35 +31,32 @@ class Snake_Game(interface):
             self.screen.blit(self.head_snake,self.snake_head)
     def move_snake(self,change):
         if self.pause is False:
-            if change == "UP" and self.direction != "DOWN":self.direction = "UP"
-            if change == "DOWN" and self.direction != "UP":self.direction = "DOWN"
-            if change == "LEFT" and self.direction != "RIGHT":self.direction = "LEFT"
-            if change == "RIGHT" and self.direction != "LEFT":self.direction = "RIGHT"
-            if self.direction == "UP":
-                self.snake_head[1] -= self.s_speed
-                self.body_snake[0][1] -= self.s_speed
-            if self.direction == "DOWN":
-                self.snake_head[1] += self.s_speed
-                self.body_snake[0][1] += self.s_speed
-            if self.direction == "LEFT":
-                self.snake_head[0] -= self.s_speed
-                self.body_snake[0][0] -= self.s_speed
-            if self.direction == "RIGHT":
-                self.snake_head[0] += self.s_speed
-                self.body_snake[0][0] += self.s_speed
+            if change == "UP" and self.player[0].direction != "DOWN":self.player[0].direction = "UP"
+            if change == "DOWN" and self.player[0].direction != "UP":self.player[0].direction = "DOWN"
+            if change == "LEFT" and self.player[0].direction != "RIGHT":self.player[0].direction = "LEFT"
+            if change == "RIGHT" and self.player[0].direction != "LEFT":self.player[0].direction = "RIGHT"
+            if self.player[0].direction == "UP":
+                self.snake_head[1] -= self.player[0].move_speed
+                self.body_snake[0][1] -= self.player[0].move_speed
+            if self.vdirection == "DOWN":
+                self.snake_head[1] += self.player[0].move_speed
+                self.body_snake[0][1] += self.player[0].move_speed
+            if self.player[0].direction == "LEFT":
+                self.snake_head[0] -= self.player[0].move_speed
+                self.body_snake[0][0] -= self.player[0].move_speed
+            if self.player[0].direction == "RIGHT":
+                self.snake_head[0] += self.player[0].move_speed
+                self.body_snake[0][0] += self.player[0].move_speed
     def colision(self):
-            if self.rect_s.colliderect(self.rect_f):
-                self.score += 1
+            if self.player[0].check_collision(self.apple):
+                self.player[0].score += 1
                 self.s_food.play(loops=0)
-                self.fruit_spawn = False
-                if not self.fruit_spawn:
-                    self.fruit_position = [random.randrange(1, (self.screen_width//10)) * 10,random.randrange(1, (self.screen_height//10)) * 10]
-                    self.fruit_spawn = True
+                self.fruit.respawn_food()
             else:self.body_snake.pop()
-            if self.snake_head[0] < -10:self.snake_head[0]=self.screen_width
-            if self.snake_head[0] > self.screen_width:self.snake_head[0]=-10
-            if self.snake_head[1] < 0:self.snake_head[1]=self.screen_height
-            if self.snake_head[1] > self.screen_height:self.snake_head[1]=0
+            if self.snake_head[0] < -10:self.snake_head[0]=self.WIDTH
+            if self.snake_head[0] > self.WIDTH:self.snake_head[0]=-10
+            if self.snake_head[1] < 0:self.snake_head[1]=self.HEIGHT
+            if self.snake_head[1] > self.HEIGHT:self.snake_head[1]=0
             for body in self.body_snake[1:]:
                 if self.snake_head[0] == body[0] and self.snake_head[1] == body[1]:
                     self.game_o=True
@@ -79,7 +76,7 @@ class Snake_Game(interface):
                     if event.key == pygame.K_LEFT or event.key==pygame.K_a:self.change_to = "LEFT"
                     if event.key == pygame.K_RIGHT or event.key==pygame.K_d:self.change_to = "RIGHT"
             self.draw()
-            self.move_snake(self.change_to)
+            self.move_snake(self.player[0].change_to)
             self.colision()
             self.clock.tick(self.FPS)
             pygame.display.flip()
