@@ -16,20 +16,19 @@ class Snake_Game(interface):
         self.draw_buttons()
         self.play_music()
     def instances(self):
-        snake_head=[100,30]
-        snake_body=[[100,30],[90,30],[80,30],[70,30]]
-        self.snake = [Player(*i, 25, 25) for i in [[100,30],[90,30],[80,30],[70,30]]]
+        self.snake_head=[100,30]
+        self.snake_body=[[100,30],[90,30],[80,30],[70,30]]
+        self.Player = [Player(*i, 25, 25) for i in [[100,30],[90,30],[80,30],[70,30]]]
         self.fruit_position=Apple(random.randrange(1, (self.WIDTH//10)) * 10,random.randrange(1, (self.HEIGHT//10)) * 10,20,20)
     def draw(self):
-        if self.pause is False:
             self.screen.blit(self.background_img,[0,0])
             self.screen.blit(self.font_0.render(f"Score: {self.score}",True,self.skyblue),[0,0])
             self.screen.blit(self.apple_img,self.fruit_position)
-            self.body_s.insert(0,list(self.head_s))
-            for pos in self.body_s:
-                self.rect_s=pygame.Rect(self.head_s[0], self.head_s[1], 25, 25)
+            self.snake_body.insert(0,list(self.snake_head))
+            for pos in self.snake_body:
+                self.rect_s=pygame.Rect(self.snake_head[0], self.snake_head[1], 25, 25)
                 self.screen.blit(self.body_snake,pos)
-            self.screen.blit(self.head_snake,self.head_s)
+            self.screen.blit(self.head_snake,self.snake_head)
     def move_snake(self,change):
         if self.pause is False:
             if change == "UP" and self.direction != "DOWN":self.direction = "UP"
@@ -37,17 +36,17 @@ class Snake_Game(interface):
             if change == "LEFT" and self.direction != "RIGHT":self.direction = "LEFT"
             if change == "RIGHT" and self.direction != "LEFT":self.direction = "RIGHT"
             if self.direction == "UP":
-                self.head_s[1] -= self.s_speed
-                self.body_s[0][1] -= self.s_speed
+                self.snake_head[1] -= self.s_speed
+                self.body_snake[0][1] -= self.s_speed
             if self.direction == "DOWN":
-                self.head_s[1] += self.s_speed
-                self.body_s[0][1] += self.s_speed
+                self.snake_head[1] += self.s_speed
+                self.body_snake[0][1] += self.s_speed
             if self.direction == "LEFT":
-                self.head_s[0] -= self.s_speed
-                self.body_s[0][0] -= self.s_speed
+                self.snake_head[0] -= self.s_speed
+                self.body_snake[0][0] -= self.s_speed
             if self.direction == "RIGHT":
-                self.head_s[0] += self.s_speed
-                self.body_s[0][0] += self.s_speed
+                self.snake_head[0] += self.s_speed
+                self.body_snake[0][0] += self.s_speed
     def colision(self):
             if self.rect_s.colliderect(self.rect_f):
                 self.score += 1
@@ -56,13 +55,13 @@ class Snake_Game(interface):
                 if not self.fruit_spawn:
                     self.fruit_position = [random.randrange(1, (self.screen_width//10)) * 10,random.randrange(1, (self.screen_height//10)) * 10]
                     self.fruit_spawn = True
-            else:self.body_s.pop()
-            if self.head_s[0] < -10:self.head_s[0]=self.screen_width
-            if self.head_s[0] > self.screen_width:self.head_s[0]=-10
-            if self.head_s[1] < 0:self.head_s[1]=self.screen_height
-            if self.head_s[1] > self.screen_height:self.head_s[1]=0
-            for body in self.body_s[1:]:
-                if self.head_s[0] == body[0] and self.head_s[1] == body[1]:
+            else:self.body_snake.pop()
+            if self.snake_head[0] < -10:self.snake_head[0]=self.screen_width
+            if self.snake_head[0] > self.screen_width:self.snake_head[0]=-10
+            if self.snake_head[1] < 0:self.snake_head[1]=self.screen_height
+            if self.snake_head[1] > self.screen_height:self.snake_head[1]=0
+            for body in self.body_snake[1:]:
+                if self.snake_head[0] == body[0] and self.snake_head[1] == body[1]:
                     self.game_o=True
                     self.s_dead.play(loops=0)
     def reset(self):
