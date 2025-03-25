@@ -32,7 +32,7 @@ class load_elements():
         self.GOLDEN=(255,199,51)
         self.background=self.GRAY
     def load_images(self):
-        self.image_path=os.path.join(self.base_dir, "images")
+        self.image_path=os.path.join(self.config.base_dir, "images")
         self.apple_img=pygame.image.load(os.path.join(self.image_path,"apple.png"))
         self.apple_img=pygame.transform.scale(self.apple_img,(25,25))
         self.head_snake=pygame.image.load(os.path.join(self.image_path,"head_snake.png"))
@@ -42,7 +42,7 @@ class load_elements():
         self.background_img=pygame.image.load(os.path.join(self.image_path,"floor.jpg"))
         self.background_img=pygame.transform.scale(self.background_img,(600,400))
     def load_sounds(self):
-        self.sound_path=os.path.join(self.base_dir, "sounds")
+        self.sound_path=os.path.join(self.config.base_dir, "sounds")
         self.sound_food=pygame.mixer.Sound(os.path.join(self.sound_path,"food.wav"))
         self.sound_game_over=pygame.mixer.Sound(os.path.join(self.sound_path,"game_over.flac"))
         self.sound_dead=pygame.mixer.Sound(os.path.join(self.sound_path,"dead.mp3"))
@@ -51,6 +51,7 @@ class load_elements():
         self.sound_exit=pygame.mixer.Sound(os.path.join(self.sound_path,"exitbutton.wav"))
         self.sound_main=pygame.mixer.Sound(os.path.join(self.sound_path,"main.wav"))
     def load_fonts(self):
+        self.font_path = os.path.join(self.config.base_dir, "fonts")
         self.font=pygame.font.SysFont("times new roman",60)
         self.font_0=pygame.font.SysFont("times new roman",30)
         self.font_0_5=pygame.font.Font(None,25)
@@ -63,6 +64,6 @@ class load_elements():
         self.font5=pygame.font.Font(os.path.join(self.font_path,"ka1.ttf"),20)
         self.font5_5=pygame.font.Font(os.path.join(self.font_path,"8bitOperatorPlusSC-Bold.ttf"),20)
     def load_scores(self):
-        self.scores_take=os.path.join(self.base_dir, "Config/score.txt")
+        self.scores_take=os.path.join(self.config.base_dir, "Config/score.txt")
     def save_scores(self,max_score):
         with open(self.scores_take, "w") as archive:archive.write(str(max_score) + "\n")
