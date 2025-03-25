@@ -1,1 +1,1 @@
-from Snake_Game import *
+from .Snake_Game import *

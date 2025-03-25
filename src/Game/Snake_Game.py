@@ -1,7 +1,7 @@
 import pygame,random
 from Entities import *
-from Interface import Interface
-class Snake_Game(Interface):
+from Interface.Interface import *
+class Snake_Game(interface):
     def __init__(self):
         super().__init__()
         pygame.init()
