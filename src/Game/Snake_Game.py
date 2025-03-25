@@ -7,9 +7,13 @@ class Snake_Game(Interface):
         self.clock=pygame.time.Clock()
         self.FPS=60
         self.running=True
-        self.generation=0
         self.game_over=False
+        self.exit=False
+        self.generation=0
         self.max_score=0
+        self.instances()
+        self.draw_buttons()
+        self.play_music()
     def instances(self):
         head=[100,30]
         body=[[100,30],[90,30],[80,30],[70,30]]
