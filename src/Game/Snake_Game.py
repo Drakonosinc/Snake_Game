@@ -3,6 +3,7 @@ from Entities import *
 from Interface import Interface
 class Snake_Game(Interface):
     def __init__(self):
+        super().__init__()
         pygame.init()
         self.clock=pygame.time.Clock()
         self.FPS=60
