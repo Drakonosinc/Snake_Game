@@ -39,7 +39,7 @@ class load_elements():
         self.head_snake=pygame.transform.scale(self.head_snake,(30,30))
         self.body_snake=pygame.image.load(os.path.join(self.image_path,"body_snake.png"))
         self.body_snake=pygame.transform.scale(self.body_snake,(30,30))
-        self.background_img=pygame.image.load(os.path.join(self.image_path,"floor.jpg"))
+        self.background_img=pygame.image.load(os.path.join(self.image_path,"bg.jpg"))
         self.background_img=pygame.transform.scale(self.background_img,(600,400))
     def load_sounds(self):
         self.sound_path=os.path.join(self.config.base_dir, "sounds")
