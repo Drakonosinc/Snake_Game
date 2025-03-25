@@ -1,0 +1,34 @@
+{
+    "config_visuals": {
+        "background": [
+            "bg.jpg"
+        ],
+        "value_background": 0,
+        "snake_head": [
+            "head_snake.png"
+        ],
+        "value_snake_head": 0,
+        "snake_body": [
+            "body_snake.png"
+        ],
+        "value_snake_body": 0,
+        "food": [
+            "apple.png"
+        ],
+        "value_foods": 0
+    },
+    "config_keys": {
+        "key_up": null,
+        "Name_key1": "SPACE"
+    },
+    "config_sounds": {
+        "sound_menu": true,
+        "sound_game": true
+    },
+    "config_AI": {
+        "generation_value": 100,
+        "population_value": 20,
+        "try_for_ai": 3,
+        "model_save": false
+    }
+}
