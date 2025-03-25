@@ -30,34 +30,33 @@ class Snake_Game(interface):
                 self.screen.blit(self.body_snake,pos)
             self.screen.blit(self.head_snake,self.snake_head)
     def move_snake(self,change):
-        if self.pause is False:
             if change == "UP" and self.player[0].direction != "DOWN":self.player[0].direction = "UP"
             if change == "DOWN" and self.player[0].direction != "UP":self.player[0].direction = "DOWN"
             if change == "LEFT" and self.player[0].direction != "RIGHT":self.player[0].direction = "LEFT"
             if change == "RIGHT" and self.player[0].direction != "LEFT":self.player[0].direction = "RIGHT"
             if self.player[0].direction == "UP":
                 self.snake_head[1] -= self.player[0].move_speed
-                self.body_snake[0][1] -= self.player[0].move_speed
-            if self.vdirection == "DOWN":
+                self.snake_body[0][1] -= self.player[0].move_speed
+            if self.player[0].direction == "DOWN":
                 self.snake_head[1] += self.player[0].move_speed
-                self.body_snake[0][1] += self.player[0].move_speed
+                self.snake_body[0][1] += self.player[0].move_speed
             if self.player[0].direction == "LEFT":
                 self.snake_head[0] -= self.player[0].move_speed
-                self.body_snake[0][0] -= self.player[0].move_speed
+                self.snake_body[0][0] -= self.player[0].move_speed
             if self.player[0].direction == "RIGHT":
                 self.snake_head[0] += self.player[0].move_speed
-                self.body_snake[0][0] += self.player[0].move_speed
+                self.snake_body[0][0] += self.player[0].move_speed
     def colision(self):
-            if self.player[0].check_collision(self.apple):
+            if self.player[0].check_collision(self.fruit):
                 self.player[0].score += 1
                 self.s_food.play(loops=0)
                 self.fruit.respawn_food()
-            else:self.body_snake.pop()
+            else:self.snake_body.pop()
             if self.snake_head[0] < -10:self.snake_head[0]=self.WIDTH
             if self.snake_head[0] > self.WIDTH:self.snake_head[0]=-10
             if self.snake_head[1] < 0:self.snake_head[1]=self.HEIGHT
             if self.snake_head[1] > self.HEIGHT:self.snake_head[1]=0
-            for body in self.body_snake[1:]:
+            for body in self.snake_body[1:]:
                 if self.snake_head[0] == body[0] and self.snake_head[1] == body[1]:
                     self.game_o=True
                     self.s_dead.play(loops=0)
