@@ -23,7 +23,7 @@ class Snake_Game(interface):
     def handle_keys(self):
         for event in pygame.event.get():
             self.event_quit(event)
-            self.events(event)
+            # self.events(event)
             self.event_keydown(event)
         self.pressed_keys=pygame.key.get_pressed()
         self.pressed_mouse=pygame.mouse.get_pressed()
@@ -40,8 +40,8 @@ class Snake_Game(interface):
             if event.key == pygame.K_DOWN or event.key==pygame.K_s:self.player[0].change_to = "DOWN"
             if event.key == pygame.K_LEFT or event.key==pygame.K_a:self.player[0].change_to = "LEFT"
             if event.key == pygame.K_RIGHT or event.key==pygame.K_d:self.player[0].change_to = "RIGHT"
-    def events(self,event):
-        if event.type == self.EVENT_BACKGROUND and self.main==-1:pass
+    # def events(self,event):
+        # if event.type == self.EVENT_BACKGROUND and self.main==-1:pass
     def restart(self):
         if all(not player.active for player in self.players) and self.mode_game["Training AI"]:self.reset(False,1)
         if self.mode_game["Player"] or self.mode_game["AI"]:self.change_mains({"main":1,"color":self.RED,"limit":100,"command":self.reset})
@@ -95,6 +95,7 @@ class Snake_Game(interface):
         if self.score>=self.max_score:self.max_score=self.score
     def run(self):
         while self.running and self.game_over is False:
+            self.handle_keys()
             self.draw()
             self.move_snake(self.player[0].change_to)
             self.colision()
