@@ -36,10 +36,10 @@ class Snake_Game(interface):
     def event_keydown(self,event):
         if event.type==pygame.KEYDOWN:
             if event.key==pygame.K_ESCAPE:self.running=False
-            if event.key == pygame.K_UP or event.key==pygame.K_w:self.player[0].direction = "UP"
-            if event.key == pygame.K_DOWN or event.key==pygame.K_s:self.player[0].direction = "DOWN"
-            if event.key == pygame.K_LEFT or event.key==pygame.K_a:self.player[0].direction = "LEFT"
-            if event.key == pygame.K_RIGHT or event.key==pygame.K_d:self.player[0].direction = "RIGHT"
+            if (event.key == pygame.K_UP or event.key==pygame.K_w) and self.player[0].direction != "DOWN":self.player[0].direction = "UP"
+            if (event.key == pygame.K_DOWN or event.key==pygame.K_s) and self.player[0].direction != "UP":self.player[0].direction = "DOWN"
+            if (event.key == pygame.K_LEFT or event.key==pygame.K_a) and self.player[0].direction != "RIGHT":self.player[0].direction = "LEFT"
+            if (event.key == pygame.K_RIGHT or event.key==pygame.K_d) and self.player[0].direction != "LEFT":self.player[0].direction = "RIGHT"
     # def events(self,event):
         # if event.type == self.EVENT_BACKGROUND and self.main==-1:pass
     def restart(self):
@@ -61,10 +61,10 @@ class Snake_Game(interface):
             self.screen.blit(self.body_snake,pos)
         self.screen.blit(self.head_snake,self.snake_head)
     def move_snake(self):
-        if self.player[0].direction == "UP" and self.player[0].direction != "DOWN":
+        if self.player[0].direction == "UP":
             self.snake_head[1] -= self.player[0].move_speed
             self.snake_body[0][1] -= self.player[0].move_speed
-        if self.player[0].direction == "DOWN" and self.player[0].direction != "UP":
+        if self.player[0].direction == "DOWN":
             self.snake_head[1] += self.player[0].move_speed
             self.snake_body[0][1] += self.player[0].move_speed
         if self.player[0].direction == "LEFT":
