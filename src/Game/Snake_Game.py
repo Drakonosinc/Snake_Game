@@ -34,7 +34,12 @@ class Snake_Game(interface):
         self.sound_exit.play(loops=0)
         self.game_over,self.exit,self.running=True,True,False
     def event_keydown(self,event):
-        if event.type==pygame.KEYDOWN:pass
+        if event.type==pygame.KEYDOWN:
+            if event.key==pygame.K_ESCAPE:self.running=False
+            if event.key == pygame.K_UP or event.key==pygame.K_w:self.player[0].change_to = "UP"
+            if event.key == pygame.K_DOWN or event.key==pygame.K_s:self.player[0].change_to = "DOWN"
+            if event.key == pygame.K_LEFT or event.key==pygame.K_a:self.player[0].change_to = "LEFT"
+            if event.key == pygame.K_RIGHT or event.key==pygame.K_d:self.player[0].change_to = "RIGHT"
     def events(self,event):
         if event.type == self.EVENT_BACKGROUND and self.main==-1:pass
     def restart(self):
@@ -47,57 +52,49 @@ class Snake_Game(interface):
     def type_mode(self):
         self.ai_handler.actions_AI(self.models if self.mode_game["Training AI"] else self.model_training)
     def draw(self):
-            self.screen.blit(self.background_img,[0,0])
-            self.screen.blit(self.font_0.render(f"Score: {self.player[0].score}",True,self.SKYBLUE),[0,0])
-            self.screen.blit(self.apple_img,self.fruit)
-            self.snake_body.insert(0,list(self.snake_head))
-            for pos in self.snake_body:
-                self.rect_s=pygame.Rect(self.snake_head[0], self.snake_head[1], 25, 25)
-                self.screen.blit(self.body_snake,pos)
-            self.screen.blit(self.head_snake,self.snake_head)
+        self.screen.blit(self.background_img,[0,0])
+        self.screen.blit(self.font_0.render(f"Score: {self.player[0].score}",True,self.SKYBLUE),[0,0])
+        self.screen.blit(self.apple_img,self.fruit)
+        self.snake_body.insert(0,list(self.snake_head))
+        for pos in self.snake_body:
+            self.rect_s=pygame.Rect(self.snake_head[0], self.snake_head[1], 25, 25)
+            self.screen.blit(self.body_snake,pos)
+        self.screen.blit(self.head_snake,self.snake_head)
     def move_snake(self,change):
-            if change == "UP" and self.player[0].direction != "DOWN":self.player[0].direction = "UP"
-            if change == "DOWN" and self.player[0].direction != "UP":self.player[0].direction = "DOWN"
-            if change == "LEFT" and self.player[0].direction != "RIGHT":self.player[0].direction = "LEFT"
-            if change == "RIGHT" and self.player[0].direction != "LEFT":self.player[0].direction = "RIGHT"
-            if self.player[0].direction == "UP":
-                self.snake_head[1] -= self.player[0].move_speed
-                self.snake_body[0][1] -= self.player[0].move_speed
-            if self.player[0].direction == "DOWN":
-                self.snake_head[1] += self.player[0].move_speed
-                self.snake_body[0][1] += self.player[0].move_speed
-            if self.player[0].direction == "LEFT":
-                self.snake_head[0] -= self.player[0].move_speed
-                self.snake_body[0][0] -= self.player[0].move_speed
-            if self.player[0].direction == "RIGHT":
-                self.snake_head[0] += self.player[0].move_speed
-                self.snake_body[0][0] += self.player[0].move_speed
+        if change == "UP" and self.player[0].direction != "DOWN":self.player[0].direction = "UP"
+        if change == "DOWN" and self.player[0].direction != "UP":self.player[0].direction = "DOWN"
+        if change == "LEFT" and self.player[0].direction != "RIGHT":self.player[0].direction = "LEFT"
+        if change == "RIGHT" and self.player[0].direction != "LEFT":self.player[0].direction = "RIGHT"
+        if self.player[0].direction == "UP":
+            self.snake_head[1] -= self.player[0].move_speed
+            self.snake_body[0][1] -= self.player[0].move_speed
+        if self.player[0].direction == "DOWN":
+            self.snake_head[1] += self.player[0].move_speed
+            self.snake_body[0][1] += self.player[0].move_speed
+        if self.player[0].direction == "LEFT":
+            self.snake_head[0] -= self.player[0].move_speed
+            self.snake_body[0][0] -= self.player[0].move_speed
+        if self.player[0].direction == "RIGHT":
+            self.snake_head[0] += self.player[0].move_speed
+            self.snake_body[0][0] += self.player[0].move_speed
     def colision(self):
-            if self.player[0].check_collision(self.fruit):
-                self.player[0].score += 1
-                self.s_food.play(loops=0)
-                self.fruit.respawn_food()
-            else:self.snake_body.pop()
-            if self.snake_head[0] < -10:self.snake_head[0]=self.WIDTH
-            if self.snake_head[0] > self.WIDTH:self.snake_head[0]=-10
-            if self.snake_head[1] < 0:self.snake_head[1]=self.HEIGHT
-            if self.snake_head[1] > self.HEIGHT:self.snake_head[1]=0
-            for body in self.snake_body[1:]:
-                if self.snake_head[0] == body[0] and self.snake_head[1] == body[1]:
-                    self.game_o=True
-                    self.s_dead.play(loops=0)
+        if self.player[0].check_collision(self.fruit):
+            self.player[0].score += 1
+            self.s_food.play(loops=0)
+            self.fruit.respawn_food()
+        else:self.snake_body.pop()
+        if self.snake_head[0] < -10:self.snake_head[0]=self.WIDTH
+        if self.snake_head[0] > self.WIDTH:self.snake_head[0]=-10
+        if self.snake_head[1] < 0:self.snake_head[1]=self.HEIGHT
+        if self.snake_head[1] > self.HEIGHT:self.snake_head[1]=0
+        for body in self.snake_body[1:]:
+            if self.snake_head[0] == body[0] and self.snake_head[1] == body[1]:
+                self.game_o=True
+                self.s_dead.play(loops=0)
     def check_score(self):
         if self.score>=self.max_score:self.max_score=self.score
     def run(self):
         while self.running and self.game_over is False:
-            for event in pygame.event.get():
-                if event.type==pygame.QUIT:self.running=False
-                if event.type==pygame.KEYDOWN:
-                    if event.key==pygame.K_ESCAPE:self.running=False
-                    if event.key == pygame.K_UP or event.key==pygame.K_w:self.change_to = "UP"
-                    if event.key == pygame.K_DOWN or event.key==pygame.K_s:self.change_to = "DOWN"
-                    if event.key == pygame.K_LEFT or event.key==pygame.K_a:self.change_to = "LEFT"
-                    if event.key == pygame.K_RIGHT or event.key==pygame.K_d:self.change_to = "RIGHT"
             self.draw()
             self.move_snake(self.player[0].change_to)
             self.colision()
