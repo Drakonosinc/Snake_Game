@@ -44,6 +44,8 @@ class Snake_Game(interface):
         self.running=running
         self.instances()
         if type_reset==0:self.players[0].reset()
+    def type_mode(self):
+        self.ai_handler.actions_AI(self.models if self.mode_game["Training AI"] else self.model_training)
     def draw(self):
             self.screen.blit(self.background_img,[0,0])
             self.screen.blit(self.font_0.render(f"Score: {self.player[0].score}",True,self.SKYBLUE),[0,0])
