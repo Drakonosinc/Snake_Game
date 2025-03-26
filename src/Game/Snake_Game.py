@@ -21,7 +21,10 @@ class Snake_Game(interface):
         self.player = [Player(*i, 25, 25) for i in [[100,30],[90,30],[80,30],[70,30]]]
         self.fruit=Apple(random.randrange(1, (self.WIDTH//10)) * 10,random.randrange(1, (self.HEIGHT//10)) * 10,20,20)
     def handle_keys(self):
-        for event in pygame.event.get():pass
+        for event in pygame.event.get():
+            self.event_quit(event)
+            self.events(event)
+            self.event_keydown(event)
         self.pressed_keys=pygame.key.get_pressed()
         self.pressed_mouse=pygame.mouse.get_pressed()
         self.mouse_pos = pygame.mouse.get_pos()
@@ -30,6 +33,10 @@ class Snake_Game(interface):
     def close_game(self):
         self.sound_exit.play(loops=0)
         self.game_over,self.exit,self.running=True,True,False
+    def event_keydown(self,event):
+        if event.type==pygame.KEYDOWN:pass
+    def events(self,event):
+        if event.type == self.EVENT_BACKGROUND and self.main==-1:pass
     def draw(self):
             self.screen.blit(self.background_img,[0,0])
             self.screen.blit(self.font_0.render(f"Score: {self.player[0].score}",True,self.SKYBLUE),[0,0])
