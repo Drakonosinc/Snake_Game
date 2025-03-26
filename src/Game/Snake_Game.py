@@ -61,11 +61,10 @@ class Snake_Game(interface):
             self.screen.blit(self.body_snake,pos)
         self.screen.blit(self.head_snake,self.snake_head)
     def move_snake(self):
-        # self.player[0].move(change)
-        if self.player[0].direction == "UP":
+        if self.player[0].direction == "UP" and self.player[0].direction != "DOWN":
             self.snake_head[1] -= self.player[0].move_speed
             self.snake_body[0][1] -= self.player[0].move_speed
-        if self.player[0].direction == "DOWN":
+        if self.player[0].direction == "DOWN" and self.player[0].direction != "UP":
             self.snake_head[1] += self.player[0].move_speed
             self.snake_body[0][1] += self.player[0].move_speed
         if self.player[0].direction == "LEFT":

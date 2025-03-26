@@ -5,7 +5,6 @@ class Player:
         self.reset_position = (x, y, width, height)
         self.move_speed = 3
         self.direction = "RIGHT"
-        # self.change_to = self.direction
         self.reward = 0
         self.score = 0
         self.active = True
