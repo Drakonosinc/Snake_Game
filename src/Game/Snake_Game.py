@@ -61,10 +61,7 @@ class Snake_Game(interface):
             self.screen.blit(self.body_snake,pos)
         self.screen.blit(self.head_snake,self.snake_head)
     def move_snake(self,change):
-        if change == "UP" and self.player[0].direction != "DOWN":self.player[0].direction = "UP"
-        if change == "DOWN" and self.player[0].direction != "UP":self.player[0].direction = "DOWN"
-        if change == "LEFT" and self.player[0].direction != "RIGHT":self.player[0].direction = "LEFT"
-        if change == "RIGHT" and self.player[0].direction != "LEFT":self.player[0].direction = "RIGHT"
+        self.player[0].move(change)
         if self.player[0].direction == "UP":
             self.snake_head[1] -= self.player[0].move_speed
             self.snake_body[0][1] -= self.player[0].move_speed
@@ -88,9 +85,7 @@ class Snake_Game(interface):
         if self.snake_head[1] < 0:self.snake_head[1]=self.HEIGHT
         if self.snake_head[1] > self.HEIGHT:self.snake_head[1]=0
         for body in self.snake_body[1:]:
-            if self.snake_head[0] == body[0] and self.snake_head[1] == body[1]:
-                self.game_o=True
-                self.s_dead.play(loops=0)
+            if self.snake_head[0] == body[0] and self.snake_head[1] == body[1]:self.sound_dead.play(loops=0)
     def check_score(self):
         if self.score>=self.max_score:self.max_score=self.score
     def run(self):
