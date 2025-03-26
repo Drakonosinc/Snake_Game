@@ -25,6 +25,11 @@ class Snake_Game(interface):
         self.pressed_keys=pygame.key.get_pressed()
         self.pressed_mouse=pygame.mouse.get_pressed()
         self.mouse_pos = pygame.mouse.get_pos()
+    def event_quit(self,event):
+        if event.type==pygame.QUIT:self.close_game()
+    def close_game(self):
+        self.sound_exit.play(loops=0)
+        self.game_over,self.exit,self.running=True,True,False
     def draw(self):
             self.screen.blit(self.background_img,[0,0])
             self.screen.blit(self.font_0.render(f"Score: {self.player[0].score}",True,self.SKYBLUE),[0,0])
