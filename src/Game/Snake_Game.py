@@ -37,6 +37,13 @@ class Snake_Game(interface):
         if event.type==pygame.KEYDOWN:pass
     def events(self,event):
         if event.type == self.EVENT_BACKGROUND and self.main==-1:pass
+    def restart(self):
+        if all(not player.active for player in self.players) and self.mode_game["Training AI"]:self.reset(False,1)
+        if self.mode_game["Player"] or self.mode_game["AI"]:self.change_mains({"main":1,"color":self.RED,"limit":100,"command":self.reset})
+    def reset(self,running=True,type_reset=0):
+        self.running=running
+        self.instances()
+        if type_reset==0:self.players[0].reset()
     def draw(self):
             self.screen.blit(self.background_img,[0,0])
             self.screen.blit(self.font_0.render(f"Score: {self.player[0].score}",True,self.SKYBLUE),[0,0])
@@ -77,8 +84,6 @@ class Snake_Game(interface):
                 if self.snake_head[0] == body[0] and self.snake_head[1] == body[1]:
                     self.game_o=True
                     self.s_dead.play(loops=0)
-    def reset(self):
-        pass
     def check_score(self):
         if self.score>=self.max_score:self.max_score=self.score
     def run(self):
