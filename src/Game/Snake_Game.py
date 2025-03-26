@@ -20,6 +20,8 @@ class Snake_Game(interface):
         self.snake_body=[[100,30],[90,30],[80,30],[70,30]]
         self.player = [Player(*i, 25, 25) for i in [[100,30],[90,30],[80,30],[70,30]]]
         self.fruit=Apple(random.randrange(1, (self.WIDTH//10)) * 10,random.randrange(1, (self.HEIGHT//10)) * 10,20,20)
+    def handle_keys(self):
+        for event in pygame.event.get():pass
     def draw(self):
             self.screen.blit(self.background_img,[0,0])
             self.screen.blit(self.font_0.render(f"Score: {self.player[0].score}",True,self.SKYBLUE),[0,0])
