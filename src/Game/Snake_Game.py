@@ -81,7 +81,7 @@ class Snake_Game(interface):
         if self.player.rect_head.y < 0:self.player.rect_head.y=self.HEIGHT
         if self.player.rect_head.y > self.HEIGHT:self.player.rect_head.y=0
         for body in self.player.body[1:]:
-            if self.player.rect.x == body.x and self.player.rect.y == body.y:self.sound_dead.play(loops=0)
+            if self.player.rect_head.x == body.x and self.player.rect_head.y == body.y:self.sound_dead.play(loops=0)
     def check_score(self):
         if self.score>=self.max_score:self.max_score=self.score
     def run(self):
