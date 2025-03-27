@@ -53,7 +53,9 @@ class Snake_Game(interface):
         self.screen.blit(self.background_img,[0,0])
         self.screen.blit(self.font_0.render(f"Score: {self.player.score}",True,self.SKYBLUE),[0,0])
         self.screen.blit(self.apple_img,self.fruit)
-        for body in self.player.body:self.screen.blit(self.body_snake,body)
+        for body in self.player.body:
+            self.screen.blit(self.body_snake,body)
+            self.move_snake(body)
         self.screen.blit(self.head_snake,self.player.rect_head)
     def move_snake(self):
         if self.player.direction == "UP":
@@ -68,7 +70,7 @@ class Snake_Game(interface):
         if self.player.direction == "RIGHT":
             self.player.rect_head.x += self.player.move_speed
             self.player.body.x += self.player.move_speed
-    def colision(self):
+    def collision(self):
         if self.player.check_collision(self.fruit):
             self.player.score += 1
             self.sound_food.play(loops=0)
@@ -78,15 +80,14 @@ class Snake_Game(interface):
         if self.player.rect_head.x > self.WIDTH:self.player.rect_head.x=-10
         if self.player.rect_head.y < 0:self.player.rect_head.y=self.HEIGHT
         if self.player.rect_head.y > self.HEIGHT:self.player.rect_head.y=0
-        for body in self.snake_body[1:]:
-            if self.snake_head[0] == body[0] and self.snake_head[1] == body[1]:self.sound_dead.play(loops=0)
+        for body in self.player.body[1:]:
+            if self.player.rect.x == body.x and self.player.rect.y == body.y:self.sound_dead.play(loops=0)
     def check_score(self):
         if self.score>=self.max_score:self.max_score=self.score
     def run(self):
         while self.running and self.game_over is False:
             self.handle_keys()
             self.draw()
-            self.move_snake()
-            self.colision()
+            self.collision()
             self.clock.tick(self.FPS)
             pygame.display.flip()
