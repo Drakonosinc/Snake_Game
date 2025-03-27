@@ -57,19 +57,19 @@ class Snake_Game(interface):
             self.screen.blit(self.body_snake,body)
             self.move_snake(body)
         self.screen.blit(self.head_snake,self.player.rect_head)
-    def move_snake(self):
+    def move_snake(self,body):
         if self.player.direction == "UP":
             self.player.rect_head.y -= self.player.move_speed
-            self.player.body.y -= self.player.move_speed
+            body.y -= self.player.move_speed
         if self.player.direction == "DOWN":
             self.player.rect_head.y += self.player.move_speed
-            self.player.body.y += self.player.move_speed
+            body.y += self.player.move_speed
         if self.player.direction == "LEFT":
             self.player.rect_head.x -= self.player.move_speed
-            self.player.body.x -= self.player.move_speed
+            body.x -= self.player.move_speed
         if self.player.direction == "RIGHT":
             self.player.rect_head.x += self.player.move_speed
-            self.player.body.x += self.player.move_speed
+            body.x += self.player.move_speed
     def collision(self):
         if self.player.check_collision(self.fruit):
             self.player.score += 1

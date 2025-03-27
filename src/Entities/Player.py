@@ -21,4 +21,4 @@ class Player:
         self.scores = 0
         self.active = True
     def check_collision(self, other_rect):
-        return self.rect.colliderect(other_rect)
+        return self.rect_head.colliderect(other_rect)
