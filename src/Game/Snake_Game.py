@@ -56,23 +56,24 @@ class Snake_Game(interface):
         self.screen.blit(self.font_0.render(f"Score: {self.player[0].score}",True,self.SKYBLUE),[0,0])
         self.screen.blit(self.apple_img,self.fruit)
         self.snake_body.insert(0,list(self.snake_head))
-        for pos in self.snake_body:
-            self.rect_s=pygame.Rect(self.snake_head[0], self.snake_head[1], 25, 25)
-            self.screen.blit(self.body_snake,pos)
-        self.screen.blit(self.head_snake,self.snake_head)
-    def move_snake(self):
+        for i,player in enumerate(self.player):
+            # self.rect_s=pygame.Rect(self.snake_head[0], self.snake_head[1], 25, 25)
+            self.screen.blit(self.body_snake,player.rect)
+            self.move_snake(player,i)
+        self.screen.blit(self.head_snake,self.player[0].rect)
+    def move_snake(self,player,i):
         if self.player[0].direction == "UP":
-            self.snake_head[1] -= self.player[0].move_speed
-            self.snake_body[0][1] -= self.player[0].move_speed
+            player[1] -= self.player[0].move_speed
+            player[i][1] -= self.player[0].move_speed
         if self.player[0].direction == "DOWN":
-            self.snake_head[1] += self.player[0].move_speed
-            self.snake_body[0][1] += self.player[0].move_speed
+            player[1] += self.player[0].move_speed
+            player[i][1] += self.player[0].move_speed
         if self.player[0].direction == "LEFT":
-            self.snake_head[0] -= self.player[0].move_speed
-            self.snake_body[0][0] -= self.player[0].move_speed
+            player[0] -= self.player[0].move_speed
+            player[i][0] -= self.player[0].move_speed
         if self.player[0].direction == "RIGHT":
-            self.snake_head[0] += self.player[0].move_speed
-            self.snake_body[0][0] += self.player[0].move_speed
+            player[0] += self.player[0].move_speed
+            player[i][0] += self.player[0].move_speed
     def colision(self):
         if self.player[0].check_collision(self.fruit):
             self.player[0].score += 1
@@ -91,7 +92,7 @@ class Snake_Game(interface):
         while self.running and self.game_over is False:
             self.handle_keys()
             self.draw()
-            self.move_snake()
+            # self.move_snake()
             self.colision()
             self.clock.tick(self.FPS)
             pygame.display.flip()
