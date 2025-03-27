@@ -1,10 +1,10 @@
 import pygame,random
 from Entities import *
 from Interface.Interface import *
-class Snake_Game(interface):
+class Snake_Game():
     def __init__(self):
-        super().__init__()
         pygame.init()
+        self.interface=interface(self)
         self.clock=pygame.time.Clock()
         self.FPS=60
         self.running=True
@@ -13,13 +13,13 @@ class Snake_Game(interface):
         self.generation=0
         self.max_score=0
         self.instances()
-        self.draw_buttons()
-        self.play_music()
+        self.interface.draw_buttons()
+        self.interface.play_music()
     def instances(self):
         self.snake_head=[100,30]
         self.snake_body=[[100,30],[90,30],[80,30],[70,30]]
         self.player = [Player(*i, 25, 25) for i in [[100,30],[90,30],[80,30],[70,30]]]
-        self.fruit=Apple(random.randrange(1, (self.WIDTH//10)) * 10,random.randrange(1, (self.HEIGHT//10)) * 10,20,20)
+        self.fruit=Apple(random.randrange(1, (self.interface.WIDTH//10)) * 10,random.randrange(1, (self.interface.HEIGHT//10)) * 10,20,20)
     def handle_keys(self):
         for event in pygame.event.get():
             self.event_quit(event)
@@ -79,10 +79,10 @@ class Snake_Game(interface):
             self.s_food.play(loops=0)
             self.fruit.respawn_food()
         else:self.snake_body.pop()
-        if self.snake_head[0] < -10:self.snake_head[0]=self.WIDTH
-        if self.snake_head[0] > self.WIDTH:self.snake_head[0]=-10
-        if self.snake_head[1] < 0:self.snake_head[1]=self.HEIGHT
-        if self.snake_head[1] > self.HEIGHT:self.snake_head[1]=0
+        if self.snake_head[0] < -10:self.snake_head[0]=self.interface.WIDTH
+        if self.snake_head[0] > self.interface.WIDTH:self.snake_head[0]=-10
+        if self.snake_head[1] < 0:self.snake_head[1]=self.interface.HEIGHT
+        if self.snake_head[1] > self.interface.HEIGHT:self.snake_head[1]=0
         for body in self.snake_body[1:]:
             if self.snake_head[0] == body[0] and self.snake_head[1] == body[1]:self.sound_dead.play(loops=0)
     def check_score(self):

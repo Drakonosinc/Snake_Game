@@ -1,8 +1,9 @@
 from Loaders.Load_elements import *
 from .Elements_interface import *
 class interface(load_elements):
-    def __init__(self):
+    def __init__(self,game=None):
         super().__init__()
+        self.game = game
         self.main=-1 #-1=game, 0=menu, 1=game over, 2=game menu, 3=pausa, 4=options, 5=visuals, 6=menu keys, 7=sound menu
         self.mode_game={"Training AI":False,"Player":True,"AI":False}
         self.sound_type={"sound_menu":f"Sound Menu {"ON" if (x:=self.config.config_sounds["sound_menu"]) else "OFF"}","color_menu":self.SKYBLUE if x else self.RED,"value_menu":x}
