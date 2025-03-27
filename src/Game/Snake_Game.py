@@ -16,8 +16,6 @@ class Snake_Game(interface):
         self.draw_buttons()
         self.play_music()
     def instances(self):
-        self.snake_head=[100,30]
-        self.snake_body=[[100,30],[90,30],[80,30],[70,30]]
         self.player = [Player(*i, 25, 25) for i in [[100,30],[90,30],[80,30],[70,30]]]
         self.fruit=Apple(random.randrange(1, (self.WIDTH//10)) * 10,random.randrange(1, (self.HEIGHT//10)) * 10,20,20)
     def handle_keys(self):
@@ -78,7 +76,7 @@ class Snake_Game(interface):
             self.player[0].score += 1
             self.sound_food.play(loops=0)
             self.fruit.respawn_food()
-        else:self.snake_body.pop()
+        else:self.player.body.pop()
         if self.snake_head[0] < -10:self.snake_head[0]=self.WIDTH
         if self.snake_head[0] > self.WIDTH:self.snake_head[0]=-10
         if self.snake_head[1] < 0:self.snake_head[1]=self.HEIGHT
