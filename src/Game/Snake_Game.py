@@ -55,7 +55,6 @@ class Snake_Game(interface):
         self.screen.blit(self.background_img,[0,0])
         self.screen.blit(self.font_0.render(f"Score: {self.player[0].score}",True,self.SKYBLUE),[0,0])
         self.screen.blit(self.apple_img,self.fruit)
-        self.snake_body.insert(0,list(self.snake_head))
         for player in self.player[1:]:
             # self.rect_s=pygame.Rect(self.snake_head[0], self.snake_head[1], 25, 25)
             self.screen.blit(self.body_snake,player.rect)
@@ -77,7 +76,7 @@ class Snake_Game(interface):
     def colision(self):
         if self.player[0].check_collision(self.fruit):
             self.player[0].score += 1
-            self.s_food.play(loops=0)
+            self.sound_food.play(loops=0)
             self.fruit.respawn_food()
         else:self.snake_body.pop()
         if self.snake_head[0] < -10:self.snake_head[0]=self.WIDTH
