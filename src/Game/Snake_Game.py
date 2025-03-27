@@ -34,10 +34,10 @@ class Snake_Game(interface):
     def event_keydown(self,event):
         if event.type==pygame.KEYDOWN:
             if event.key==pygame.K_ESCAPE:self.running=False
-            if (event.key == pygame.K_UP or event.key==pygame.K_w) and self.player[0].direction != "DOWN":self.player[0].direction = "UP"
-            if (event.key == pygame.K_DOWN or event.key==pygame.K_s) and self.player[0].direction != "UP":self.player[0].direction = "DOWN"
-            if (event.key == pygame.K_LEFT or event.key==pygame.K_a) and self.player[0].direction != "RIGHT":self.player[0].direction = "LEFT"
-            if (event.key == pygame.K_RIGHT or event.key==pygame.K_d) and self.player[0].direction != "LEFT":self.player[0].direction = "RIGHT"
+            if (event.key == pygame.K_UP or event.key==pygame.K_w) and self.player.direction != "DOWN":self.player.direction = "UP"
+            if (event.key == pygame.K_DOWN or event.key==pygame.K_s) and self.player.direction != "UP":self.player.direction = "DOWN"
+            if (event.key == pygame.K_LEFT or event.key==pygame.K_a) and self.player.direction != "RIGHT":self.player.direction = "LEFT"
+            if (event.key == pygame.K_RIGHT or event.key==pygame.K_d) and self.player.direction != "LEFT":self.player.direction = "RIGHT"
     def events(self,event):pass
         # if event.type == self.EVENT_BACKGROUND and self.main==-1:pass
     def restart(self):
@@ -74,8 +74,8 @@ class Snake_Game(interface):
         if self.player.check_collision(self.fruit):
             self.player.score += 1
             self.sound_food.play(loops=0)
-            self.fruit.respawn_food()
-        else:self.player.body.pop()
+            self.fruit.respawn_food(self.WIDTH,self.HEIGHT)
+        # else:self.player.body.pop()
         if self.player.rect_head.x < -10:self.player.rect_head.x=self.WIDTH
         if self.player.rect_head.x > self.WIDTH:self.player.rect_head.x=-10
         if self.player.rect_head.y < 0:self.player.rect_head.y=self.HEIGHT
