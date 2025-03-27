@@ -70,15 +70,15 @@ class Snake_Game(interface):
             self.player.rect_head.x += self.player.move_speed
             self.player.body.x += self.player.move_speed
     def colision(self):
-        if self.player[0].check_collision(self.fruit):
-            self.player[0].score += 1
+        if self.player.check_collision(self.fruit):
+            self.player.score += 1
             self.sound_food.play(loops=0)
             self.fruit.respawn_food()
         else:self.player.body.pop()
-        if self.snake_head[0] < -10:self.snake_head[0]=self.WIDTH
-        if self.snake_head[0] > self.WIDTH:self.snake_head[0]=-10
-        if self.snake_head[1] < 0:self.snake_head[1]=self.HEIGHT
-        if self.snake_head[1] > self.HEIGHT:self.snake_head[1]=0
+        if self.player.rect_head.x < -10:self.player.rect_head.x=self.WIDTH
+        if self.player.rect_head.x > self.WIDTH:self.player.rect_head.x=-10
+        if self.player.rect_head.y < 0:self.player.rect_head.y=self.HEIGHT
+        if self.player.rect_head.y > self.HEIGHT:self.player.rect_head.y=0
         for body in self.snake_body[1:]:
             if self.snake_head[0] == body[0] and self.snake_head[1] == body[1]:self.sound_dead.play(loops=0)
     def check_score(self):
