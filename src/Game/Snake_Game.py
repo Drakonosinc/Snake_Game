@@ -60,16 +60,16 @@ class Snake_Game(interface):
     def move_snake(self):
         if self.player[0].direction == "UP":
             self.player[0].rect.y -= self.player[0].move_speed
-            player.rect.y -= self.player[0].move_speed
+            self.player.body.y -= self.player[0].move_speed
         if self.player[0].direction == "DOWN":
-            self.player[0].rect.y += self.player[0].move_speed
-            player.rect.y += self.player[0].move_speed
+            self.player[0].body.y += self.player[0].move_speed
+            self.player.body.y += self.player[0].move_speed
         if self.player[0].direction == "LEFT":
-            self.player[0].rect.x -= self.player[0].move_speed
-            player.rect.x -= self.player[0].move_speed
+            self.player[0].body.x -= self.player[0].move_speed
+            self.player.body.x -= self.player[0].move_speed
         if self.player[0].direction == "RIGHT":
             self.player[0].rect.x += self.player[0].move_speed
-            player.rect.x += self.player[0].move_speed
+            self.player.body.x += self.player[0].move_speed
     def colision(self):
         if self.player[0].check_collision(self.fruit):
             self.player[0].score += 1
