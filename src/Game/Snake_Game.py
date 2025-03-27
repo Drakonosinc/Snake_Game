@@ -62,10 +62,10 @@ class Snake_Game(interface):
             self.player.rect.y -= self.player.move_speed
             self.player.body.y -= self.player.move_speed
         if self.player.direction == "DOWN":
-            self.player.body.y += self.player.move_speed
+            self.player.rect.y += self.player.move_speed
             self.player.body.y += self.player.move_speed
         if self.player.direction == "LEFT":
-            self.player.body.x -= self.player.move_speed
+            self.player.rect.x -= self.player.move_speed
             self.player.body.x -= self.player.move_speed
         if self.player.direction == "RIGHT":
             self.player.rect.x += self.player.move_speed
