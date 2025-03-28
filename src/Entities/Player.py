@@ -10,4 +10,10 @@ class Player:
         self.reward = 0
         self.score = 0
         self.active = True
-    
+    def move(self):
+        head_pos = (self.rect_head.x, self.rect_head.y)
+        if self.direction == "UP": self.rect_head.y -= self.move_speed
+        if self.direction == "DOWN": self.rect_head.y += self.move_speed
+        if self.direction == "LEFT": self.rect_head.x -= self.move_speed
+        if self.direction == "RIGHT": self.rect_head.x += self.move_speed
+        
