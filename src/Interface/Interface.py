@@ -82,7 +82,7 @@ class interface(load_elements):
     def draw_generation(self):
         if self.main==-1 and self.mode_game["Training AI"]:self.screen.blit(self.font3_5.render(f"Generation: {int(self.generation)}", True, "orange"),(35,0))
     def show_score(self,player):
-        if self.main==-1 or self.main==1:self.screen.blit(self.font.render(f"Score: {int(player.score)}", True, "orange"),(35,self.height-50))
+        if self.main==-1 or self.main==1:self.screen.blit(self.font5.render(f"Score: {int(player.score)}", True, "orange"),(0,0))
     def fade_transition(self,fade_in,color=(0,0,0),limit=255):
         overlay = pygame.Surface((self.width, self.height))
         overlay.fill(color)
