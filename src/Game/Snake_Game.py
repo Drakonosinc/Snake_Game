@@ -46,47 +46,35 @@ class Snake_Game(interface):
     def reset(self,running=True,type_reset=0):
         self.running=running
         self.instances()
-        if type_reset==0:self.players[0].reset()
+        if type_reset==0:self.player.reset()
     def type_mode(self):
         self.ai_handler.actions_AI(self.models if self.mode_game["Training AI"] else self.model_training)
     def draw(self):
         self.screen.blit(self.background_img,[0,0])
         self.screen.blit(self.font_0.render(f"Score: {self.player.score}",True,self.SKYBLUE),[0,0])
         self.screen.blit(self.apple_img,self.fruit)
-        for body in self.player.body:
-            self.screen.blit(self.body_snake,body)
-            self.move_snake(body)
+        for body in self.player.body:self.screen.blit(self.body_snake,body)
         self.screen.blit(self.head_snake,self.player.rect_head)
-    def move_snake(self,body):
-        if self.player.direction == "UP":
-            self.player.rect_head.y -= self.player.move_speed
-            body.y -= self.player.move_speed
-        if self.player.direction == "DOWN":
-            self.player.rect_head.y += self.player.move_speed
-            body.y += self.player.move_speed
-        if self.player.direction == "LEFT":
-            self.player.rect_head.x -= self.player.move_speed
-            body.x -= self.player.move_speed
-        if self.player.direction == "RIGHT":
-            self.player.rect_head.x += self.player.move_speed
-            body.x += self.player.move_speed
     def collision(self):
         if self.player.check_collision(self.fruit):
             self.player.score += 1
             self.sound_food.play(loops=0)
             self.fruit.respawn_food(self.WIDTH,self.HEIGHT)
-        # else:self.player.body.pop()
-        if self.player.rect_head.x < -10:self.player.rect_head.x=self.WIDTH
-        if self.player.rect_head.x > self.WIDTH:self.player.rect_head.x=-10
-        if self.player.rect_head.y < 0:self.player.rect_head.y=self.HEIGHT
-        if self.player.rect_head.y > self.HEIGHT:self.player.rect_head.y=0
-        for body in self.player.body[1:]:
-            if self.player.rect_head.x == body.x and self.player.rect_head.y == body.y:self.sound_dead.play(loops=0)
+            self.player.add_segment()
+        if self.player.rect_head.x < -10:self.player.rect_head.x = self.WIDTH
+        if self.player.rect_head.x > self.WIDTH:self.player.rect_head.x = -10
+        if self.player.rect_head.y < 0:self.player.rect_head.y = self.HEIGHT
+        if self.player.rect_head.y > self.HEIGHT:self.player.rect_head.y = 0
+        for body in self.player.body[1:-1]:
+            if self.player.rect_head.colliderect(body):
+                self.sound_dead.play(loops=0)
+                self.game_over = True
     def check_score(self):
         if self.score>=self.max_score:self.max_score=self.score
     def run(self):
         while self.running and self.game_over is False:
             self.handle_keys()
+            self.player.move()
             self.draw()
             self.collision()
             self.clock.tick(self.FPS)
