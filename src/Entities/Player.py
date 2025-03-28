@@ -22,9 +22,7 @@ class Player:
         if len(self.body) > 0:
             self.body[0].x = head_pos[0]
             self.body[0].y = head_pos[1]
-    def add_segment(self):
-        if len(self.body) > 0:self.body.append(Rect(self.body[-1].x, self.body[-1].y, self.body[-1].width, self.body[-1].height))
-        else:self.body.append(Rect(self.rect_head.x, self.rect_head.y, self.rect_head.width, self.rect_head.height))
+    def add_segment(self):self.body.append(Rect(self.body[-1].x, self.body[-1].y, self.body[-1].width, self.body[-1].height))
     def reset(self):
         self.rect_head = Rect(*self.reset_head_position)
         self.body = Rect(*self.reset_body_position)
