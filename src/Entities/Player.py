@@ -16,4 +16,10 @@ class Player:
         if self.direction == "DOWN": self.rect_head.y += self.move_speed
         if self.direction == "LEFT": self.rect_head.x -= self.move_speed
         if self.direction == "RIGHT": self.rect_head.x += self.move_speed
-        
+        for i in range(len(self.body)-1, 0, -1):
+            self.body[i].x = self.body[i-1].x
+            self.body[i].y = self.body[i-1].y
+        if len(self.body) > 0:
+            self.body[0].x = head_pos[0]
+            self.body[0].y = head_pos[1]
+    
