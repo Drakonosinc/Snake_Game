@@ -18,8 +18,22 @@
         "value_foods": 0
     },
     "config_keys": {
-        "key_up": null,
-        "Name_key1": "SPACE"
+        "key_up": 1073741906,
+        "Name_key1": "UP",
+        "key_up2": 119,
+        "Name_key2": "W",
+        "key_down": 1073741905,
+        "Name_key3": "DOWN",
+        "key_down2": 115,
+        "Name_key4": "S",
+        "key_left": 1073741904,
+        "Name_key5": "LEFT",
+        "key_left2": 97,
+        "Name_key6": "A",
+        "key_right": 1073741903,
+        "Name_key7": "RIGHT",
+        "key_right2": 100,
+        "Name_key8": "D"
     },
     "config_sounds": {
         "sound_menu": true,
