@@ -38,9 +38,9 @@ class load_elements():
         self.apple_img=pygame.transform.scale(self.apple_img,(25,25))
         self.head_snake=pygame.image.load(os.path.join(self.image_path,self.image_direct_path("snake_head","value_snake_head")))
         self.head_snake=pygame.transform.scale(self.head_snake,(30,30))
-        self.body_snake=pygame.image.load(os.path.join(self.image_path,self.config.config_visuals["snake_body"][self.config.config_visuals["value_snake_body"]]))
+        self.body_snake=pygame.image.load(os.path.join(self.image_path,self.image_direct_path("snake_body","value_snake_body")))
         self.body_snake=pygame.transform.scale(self.body_snake,(30,30))
-        self.background_img=pygame.image.load(os.path.join(self.image_path,self.config.config_visuals["background"][self.config.config_visuals["value_background"]]))
+        self.background_img=pygame.image.load(os.path.join(self.image_path,self.image_direct_path("background","value_background")))
         self.background_img=pygame.transform.scale(self.background_img,(600,400))
     def load_sounds(self):
         self.sound_path=os.path.join(self.config.base_dir, "sounds")
