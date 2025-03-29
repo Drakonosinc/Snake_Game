@@ -31,3 +31,5 @@ class Player:
         self.active = True
     def check_collision(self, other_rect):
         return self.rect_head.colliderect(other_rect)
+    def collision(self, rect, other_rect):
+        return rect.x== other_rect.x and rect.y == other_rect.y and rect.width == other_rect.width and rect.height == other_rect.height
