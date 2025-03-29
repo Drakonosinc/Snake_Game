@@ -4,7 +4,7 @@ from Interface.Interface import *
 class Snake_Game(interface):
     def __init__(self):
         super().__init__()
-        pygame.init()
+        self.models=None
         self.clock=pygame.time.Clock()
         self.FPS=60
         self.running=True
