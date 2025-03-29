@@ -35,10 +35,10 @@ class Snake_Game(interface):
         if event.type==pygame.KEYDOWN:
             if event.key==pygame.K_ESCAPE:self.running=False
             if self.mode_game["Player"]:
-                if (event.key == pygame.K_UP or event.key==pygame.K_w) and self.player.direction != "DOWN":self.player.direction = "UP"
-                if (event.key == pygame.K_DOWN or event.key==pygame.K_s) and self.player.direction != "UP":self.player.direction = "DOWN"
-                if (event.key == pygame.K_LEFT or event.key==pygame.K_a) and self.player.direction != "RIGHT":self.player.direction = "LEFT"
-                if (event.key == pygame.K_RIGHT or event.key==pygame.K_d) and self.player.direction != "LEFT":self.player.direction = "RIGHT"
+                if (event.key in {self.config.config_keys["key_up"], self.config.config_keys["key_up2"]}) and self.player.direction != "DOWN":self.player.direction = "UP"
+                if (event.key in {self.config.config_keys["key_down"], self.config.config_keys["key_down2"]}) and self.player.direction != "UP":self.player.direction = "DOWN"
+                if (event.key in {self.config.config_keys["key_left"], self.config.config_keys["key_left2"]}) and self.player.direction != "RIGHT":self.player.direction = "LEFT"
+                if (event.key in {self.config.config_keys["key_right"], self.config.config_keys["key_right2"]}) and self.player.direction != "LEFT":self.player.direction = "RIGHT"
     def events(self,event):pass
         # if event.type == self.EVENT_BACKGROUND and self.main==-1:pass
     def restart(self):
