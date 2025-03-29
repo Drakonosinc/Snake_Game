@@ -16,7 +16,8 @@ class Config():
                             "snake_head":["head_snake.png"],"value_snake_head":0,
                             "snake_body":["body_snake.png"],"value_snake_body":0,
                             "food":["apple.png"],"value_foods":0}
-        if keys or alls:self.config_keys={"key_up":K_UP,"Name_key1":"UP"}
+        if keys or alls:self.config_keys={"key_up":K_UP,"Name_key1":"UP","key_down":K_DOWN,"Name_key2":"DOWN","key_left":K_LEFT,"Name_key3":"LEFT",
+                                        "key_right":K_RIGHT,"Name_key1":"RIGHT"}
         if sounds or alls:self.config_sounds={"sound_menu":True,"sound_game":True}
         if AI or alls:self.config_AI={"generation_value":100,"population_value":20,"try_for_ai":3,"model_save":False}
     def save_config(self):
