@@ -30,11 +30,13 @@ class load_elements():
         self.RED=(255,0,0)
         self.GOLDEN=(255,199,51)
         self.background=self.GRAY
+    def image_direct_path(self,image,value):
+        return self.config.config_visuals[image][self.config.config_visuals[value]]
     def load_images(self):
         self.image_path=os.path.join(self.config.base_dir, "images")
-        self.apple_img=pygame.image.load(os.path.join(self.image_path,self.config.config_visuals["food"][self.config.config_visuals["value_foods"]]))
+        self.apple_img=pygame.image.load(os.path.join(self.image_path,self.image_direct_path("food","value_foods")))
         self.apple_img=pygame.transform.scale(self.apple_img,(25,25))
-        self.head_snake=pygame.image.load(os.path.join(self.image_path,self.config.config_visuals["snake_head"][self.config.config_visuals["value_snake_head"]]))
+        self.head_snake=pygame.image.load(os.path.join(self.image_path,self.image_direct_path("snake_head","value_snake_head")))
         self.head_snake=pygame.transform.scale(self.head_snake,(30,30))
         self.body_snake=pygame.image.load(os.path.join(self.image_path,self.config.config_visuals["snake_body"][self.config.config_visuals["value_snake_body"]]))
         self.body_snake=pygame.transform.scale(self.body_snake,(30,30))
