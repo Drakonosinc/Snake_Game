@@ -12,7 +12,6 @@ class load_elements():
         self.load_fonts()
         self.load_sounds()
         self.config_screen()
-        self.load_scores()
     def load_AI(self):
         self.model_path=os.path.join(self.config.base_dir, "AI/best_model.pth")
         # self.model_training = load_model(self.model_path, , ) if os.path.exists(self.model_path) else None
@@ -31,7 +30,8 @@ class load_elements():
         self.RED=(255,0,0)
         self.GOLDEN=(255,199,51)
         self.background=self.GRAY
-    def image_direct_path(self,image,value):return self.config.config_visuals[image][self.config.config_visuals[value]]
+    def image_direct_path(self,image,value):
+        return self.config.config_visuals[image][self.config.config_visuals[value]]
     def load_images(self):
         self.image_path=os.path.join(self.config.base_dir, "images")
         self.apple_img=pygame.image.load(os.path.join(self.image_path,self.image_direct_path("food","value_foods")))

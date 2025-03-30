@@ -32,8 +32,9 @@ class Snake_Game(interface):
         self.game_over,self.exit,self.running=True,True,False
     def event_keydown(self,event):
         if event.type==pygame.KEYDOWN:
-            if event.key==pygame.K_ESCAPE:self.running=False
-            if self.mode_game["Player"]:
+            if self.main==3 and event.key==K_p:self.main=-1
+            elif self.main==-1 and event.key==K_p:self.main=3
+            if self.mode_game["Player"] and self.main==-1:
                 if (event.key in {self.config.config_keys["key_up"], self.config.config_keys["key_up2"]}) and self.player.direction != "DOWN":self.player.direction = "UP"
                 if (event.key in {self.config.config_keys["key_down"], self.config.config_keys["key_down2"]}) and self.player.direction != "UP":self.player.direction = "DOWN"
                 if (event.key in {self.config.config_keys["key_left"], self.config.config_keys["key_left2"]}) and self.player.direction != "RIGHT":self.player.direction = "LEFT"
@@ -74,9 +75,11 @@ class Snake_Game(interface):
         self.player.reward = 0
         while self.running and self.game_over is False:
             self.handle_keys()
-            self.player.move()
             self.draw()
-            self.collision()
+            if self.main==-1:
+                if self.mode_game["AI"] or self.mode_game["Training AI"]:self.type_mode()
+                self.player.move()
+                self.collision()
             self.clock.tick(self.FPS)
             pygame.display.flip()
         return self.player.reward
