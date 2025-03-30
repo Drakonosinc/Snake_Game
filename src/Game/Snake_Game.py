@@ -11,7 +11,6 @@ class Snake_Game(interface):
         self.game_over=False
         self.exit=False
         self.generation=0
-        self.max_score=0
         self.instances()
         self.draw_buttons()
         self.play_music()
@@ -46,6 +45,7 @@ class Snake_Game(interface):
         if self.mode_game["Player"] or self.mode_game["AI"]:self.change_mains({"main":1,"color":self.RED,"limit":100,"command":self.reset})
     def reset(self,running=True,type_reset=0):
         self.running=running
+        self.check_score()
         self.instances()
         if type_reset==0:self.player.reset()
     def type_mode(self):
@@ -69,7 +69,7 @@ class Snake_Game(interface):
         for body in self.player.body:
             if self.player.collision_snake(self.player.rect_head,body):self.sound_dead.play(loops=0)
     def check_score(self):
-        if self.score>=self.max_score:self.max_score=self.score
+        if self.player.score>=self.config.config_game["max_score"]:self.config.config_game["max_score"]=self.player.score
     def run(self):
         self.player.reward = 0
         while self.running and self.game_over is False:

@@ -31,8 +31,7 @@ class load_elements():
         self.RED=(255,0,0)
         self.GOLDEN=(255,199,51)
         self.background=self.GRAY
-    def image_direct_path(self,image,value):
-        return self.config.config_visuals[image][self.config.config_visuals[value]]
+    def image_direct_path(self,image,value):return self.config.config_visuals[image][self.config.config_visuals[value]]
     def load_images(self):
         self.image_path=os.path.join(self.config.base_dir, "images")
         self.apple_img=pygame.image.load(os.path.join(self.image_path,self.image_direct_path("food","value_foods")))
@@ -65,7 +64,3 @@ class load_elements():
         self.font4=pygame.font.Font(os.path.join(self.font_path,"ka1.ttf"),75)
         self.font5=pygame.font.Font(os.path.join(self.font_path,"ka1.ttf"),20)
         self.font5_5=pygame.font.Font(os.path.join(self.font_path,"8bitOperatorPlusSC-Bold.ttf"),20)
-    def load_scores(self):
-        self.scores_take=os.path.join(self.config.base_dir, "Config/score.txt")
-    def save_scores(self,max_score):
-        with open(self.scores_take, "w") as archive:archive.write(str(max_score) + "\n")
