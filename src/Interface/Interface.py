@@ -3,7 +3,7 @@ from .Elements_interface import *
 class interface(load_elements):
     def __init__(self):
         super().__init__()
-        self.main=-1 #-1=game, 0=menu, 1=game over, 2=game menu, 3=pausa, 4=options, 5=visuals, 6=menu keys, 7=sound menu
+        self.main=0 #-1=game, 0=menu, 1=game over, 2=game menu, 3=pausa, 4=options, 5=visuals, 6=menu keys, 7=sound menu
         self.mode_game={"Training AI":False,"Player":True,"AI":False}
         self.sound_type={"sound_menu":f"Sound Menu {"ON" if (x:=self.config.config_sounds["sound_menu"]) else "OFF"}","color_menu":self.SKYBLUE if x else self.RED,"value_menu":x}
         self.utils_keys={"key_jump":False}
@@ -34,8 +34,8 @@ class interface(load_elements):
         self.buttons_visual()
         self.buttons_keys()
         self.buttons_sounds()
-    def filt(self,width,height,number,color=(0,0,0),position=(0,0)):
-        background=pygame.Surface((width,height),pygame.SRCALPHA)
+    def filt(self,WIDTH,HEIGHT,number,color=(0,0,0),position=(0,0)):
+        background=pygame.Surface((WIDTH,HEIGHT),pygame.SRCALPHA)
         background.fill((*color, number))
         self.screen.blit(background,position)
     def check_item(self,dic,is_true,is_false,item,**kwargs):
@@ -44,7 +44,7 @@ class interface(load_elements):
         for button in args:button.draw()
     def main_menu(self):
         self.screen.fill(self.BLACK)
-        self.screen.blit(self.font4.render("Snake Game", True, "orange"),(35,self.height/2-250))
+        self.screen.blit(self.font4.render("Snake Game", True, "orange"),(35,self.HEIGHT/2-250))
     def buttons_main_menu(self):pass
     def game_over_menu(self):
         self.screen.fill(self.BLACK)
@@ -84,7 +84,7 @@ class interface(load_elements):
     def show_score(self,player):
         if self.main==-1 or self.main==1:self.screen.blit(self.font5.render(f"Score: {int(player.score)}", True, "orange"),(0,0))
     def fade_transition(self,fade_in,color=(0,0,0),limit=255):
-        overlay = pygame.Surface((self.width, self.height))
+        overlay = pygame.Surface((self.WIDTH, self.HEIGHT))
         overlay.fill(color)
         alpha=0 if not fade_in else 255
         while (not fade_in and alpha <= limit) or (fade_in and alpha >= limit):

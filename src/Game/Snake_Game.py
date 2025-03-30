@@ -57,6 +57,7 @@ class Snake_Game(interface):
         self.screen.blit(self.apple_img,self.fruit)
         for body in self.player.body:self.screen.blit(self.body_snake,body)
         self.screen.blit(self.head_snake,self.player.rect_head)
+        self.draw_interfaces()
     def collision(self):
         if self.player.check_collision(self.fruit):
             self.player.score += 1
