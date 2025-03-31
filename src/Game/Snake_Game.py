@@ -18,7 +18,7 @@ class Snake_Game(interface):
         self.play_music()
     def instances(self):
         self.player = Player(100,30, 25, 25,[[90,30],[80,30],[70,30],[60,30]]) 
-        self.fruit=Apple(random.randrange(1, (self.WIDTH//10)) * 10,random.randrange(1, (self.HEIGHT//10)) * 10,20,20)
+        self.fruit = Apple(random.randrange(1, (self.WIDTH//10)) * 10,random.randrange(1, (self.HEIGHT//10)) * 10,20,20)
     def handle_keys(self):
         for event in pygame.event.get():
             self.event_quit(event)
