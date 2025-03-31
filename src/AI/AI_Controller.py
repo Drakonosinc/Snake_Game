@@ -16,6 +16,6 @@ class AIHandler():
         probabilities = self.softmax(action)
         chosen_action = np.argmax(probabilities)
         if chosen_action == 0:self.game.player.direction = "UP"
-        elif chosen_action == 1:self.game.player
-        elif chosen_action == 2:self.game.player
-        elif chosen_action == 2:self.game.player
+        elif chosen_action == 1:self.game.player.direction = "DOWN"
+        elif chosen_action == 2:self.game.player.direction = "LEFT"
+        elif chosen_action == 2:self.game.player.direction = "RIGHT"
