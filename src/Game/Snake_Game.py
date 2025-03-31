@@ -75,20 +75,19 @@ class Snake_Game(interface):
     def check_score(self):
         if self.player.score>=self.config.config_game["max_score"]:self.config.config_game["max_score"]=self.player.score
     def item_repeat_run(self):
-            self.clock.tick(self.FPS)
-            pygame.display.flip()
+        self.draw()
+        self.clock.tick(self.FPS)
+        pygame.display.flip()
     def run(self):
-        while self.running:
+        while self.running:self.item_repeat_run()
+    def run_with_models(self):
+        self.running=True
+        self.player.reward = 0
+        while self.running and self.game_over==False:
             self.handle_keys()
-            self.draw()
             if self.main==-1:
                 if self.mode_game["AI"] or self.mode_game["Training AI"]:self.type_mode()
                 self.player.move()
                 self.collision()
             self.item_repeat_run()
         return self.player.reward
-    def run_with_models(self):
-        self.running=True
-        self.player.reward = 0
-        while self.running and self.game_over==False:
-            self.item_repeat_run()
