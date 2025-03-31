@@ -1,10 +1,12 @@
 import pygame,random
 from Entities import *
+from AI.AI_Controller import *
 from Interface.Interface import *
 class Snake_Game(interface):
     def __init__(self):
         super().__init__()
         self.models=None
+        self.ai_handler=AIHandler(self)
         self.clock=pygame.time.Clock()
         self.FPS=60
         self.running=True

@@ -1,10 +1,10 @@
 import torch
 import numpy as np
-class AIController():
+class AIHandler():
     def __init__(self, game):self.game = game
     def get_state(self):
-        return np.array([self.game.player.rect_head.x, self.game.player.rect_head.y,self.game.fruit.x, self.game.fruit.y,
-                        ])
+        return np.array([self.game.player.rect_head.x, self.game.player.rect_head.y
+                        ,self.game.fruit.x, self.game.fruit.y,*self.game.body, self.game.player.direction,])
     def actions_AI(self,model):
         state=self.get_state()
         action = model(torch.tensor(state, dtype=torch.float32)).detach().numpy()
