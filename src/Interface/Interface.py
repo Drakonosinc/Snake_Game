@@ -50,7 +50,9 @@ class interface(load_elements):
         self.quit_button = self.button_factory_f2_5.create_TextButton({"text": "QUIT","position": (self.WIDTH/2-60,self.HEIGHT/2-55),"sound_touch": self.sound_exit,"command1": self.close_game})
         self.options_button = self.button_factory_f2_5.create_TextButton({"text": "OPTIONS","position": (self.WIDTH-180,self.HEIGHT-50),"command1":lambda:self.change_mains({"main":4})})
     def game_over_menu(self):
-        self.screen.fill(self.BLACK)
+        self.filt(self.width,self.height,150,self.RED)
+        self.screen.blit(self.font4.render("Game Over", True, self.BLACK),(120,self.height/2-250))
+        self.execute_buttons(self.restar_button,self.exit_over_button,self.exit_menu_button)
     def buttons_game_over(self):pass
     def mode_game_menu(self):
         self.screen.fill(self.BLACK)

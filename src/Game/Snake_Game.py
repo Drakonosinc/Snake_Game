@@ -44,13 +44,13 @@ class Snake_Game(interface):
     def events(self,event):pass
         # if event.type == self.EVENT_BACKGROUND and self.main==-1:pass
     def restart(self):
-        if all(not player.active for player in self.players) and self.mode_game["Training AI"]:self.reset(False,1)
+        if all(not player.active for player in self.players) and self.mode_game["Training AI"]:self.reset(False)
         if self.mode_game["Player"] or self.mode_game["AI"]:self.change_mains({"main":1,"color":self.RED,"limit":100,"command":self.reset})
-    def reset(self,running=True,type_reset=0):
+    def reset(self,running=True):
         self.running=running
         self.check_score()
         self.instances()
-        if type_reset==0:self.player.reset()
+        self.player.reset()
     def type_mode(self):
         self.ai_handler.actions_AI(self.models if self.mode_game["Training AI"] else self.model_training)
     def draw(self):
@@ -72,7 +72,9 @@ class Snake_Game(interface):
         if self.player.rect_head.y < 0:self.player.rect_head.y = self.HEIGHT
         if self.player.rect_head.y > self.HEIGHT:self.player.rect_head.y = 0
         for body in self.player.body:
-            if self.player.collision_snake(self.player.rect_head,body):self.sound_dead.play(loops=0)
+            if self.player.collision_snake(self.player.rect_head,body):
+                self.sound_dead.play(loops=0)
+                self.restart()
     def check_score(self):
         if self.player.score>=self.config.config_game["max_score"]:self.config.config_game["max_score"]=self.player.score
     def item_repeat_run(self):
