@@ -23,7 +23,6 @@ class interface(load_elements):
         if self.main==5:self.visuals_menu()
         if self.main==6:self.keys_menu()
         if self.main==7:self.sounds_menu()
-        self.draw_generation()
     def draw_buttons(self):
         self.button_factory_f2_5 = ElementsFactory({"screen": self.screen,"font": self.font2_5,"hover_color": self.GOLDEN,"sound_hover": self.sound_buttonletters,"sound_touch": self.sound_touchletters})
         self.buttons_main_menu()
@@ -84,9 +83,9 @@ class interface(load_elements):
         self.screen.fill(self.BLACK)
     def buttons_sounds(self):pass
     def draw_generation(self):
-        if self.main==-1 and self.mode_game["Training AI"]:self.screen.blit(self.font3_5.render(f"Generation: {int(self.generation)}", True, "orange"),(35,0))
-    def show_score(self,player):
-        if self.main==-1 or self.main==1:self.screen.blit(self.font5.render(f"Score: {int(player.score)}", True, "orange"),(0,0))
+        if self.main==-1 and self.mode_game["Training AI"]:self.screen.blit(self.font5.render(f"Generation: {int(self.generation)}", True, "orange"),(0,25))
+    def show_score(self):
+        if self.main==-1 or self.main==1:self.screen.blit(self.font5.render(f"Score: {int(self.player.score)}", True, "orange"),(0,0))
     def fade_transition(self,fade_in,color=(0,0,0),limit=255):
         overlay = pygame.Surface((self.WIDTH, self.HEIGHT))
         overlay.fill(color)

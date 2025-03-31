@@ -55,7 +55,8 @@ class Snake_Game(interface):
         self.ai_handler.actions_AI(self.models if self.mode_game["Training AI"] else self.model_training)
     def draw(self):
         self.screen.blit(self.background_img,[0,0])
-        self.show_score(self.player)
+        self.show_score()
+        self.draw_generation()
         self.screen.blit(self.apple_img,self.fruit)
         for body in self.player.body:self.screen.blit(self.body_snake,body)
         self.screen.blit(self.head_snake,self.player.rect_head)
