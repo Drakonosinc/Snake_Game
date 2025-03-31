@@ -3,8 +3,8 @@ from .Neural_Network import *
 
 def fitness_function(models, game):
     game.models = models
-    scores = game.run_with_models()
-    return scores
+    score = game.run_with_models()
+    return score
 
 def initialize_population(size, input_size, output_size):
     population = []
@@ -15,11 +15,11 @@ def initialize_population(size, input_size, output_size):
 
 def evaluate_population(population, game, num_trials=3):
     fitness_scores = []
-    for _ in range(num_trials):
-        scores = fitness_function(population, game)
-        if len(fitness_scores) == 0:fitness_scores = scores
-        else:fitness_scores = [fs + s for fs, s in zip(fitness_scores, scores)]
-    fitness_scores = [fs / num_trials for fs in fitness_scores]
+    for model in population:
+        score = [fitness_function(model, game) for _ in range(num_trials)]
+        fitness_scores.append(sum(score) / num_trials)
+    min_score = abs(min(fitness_scores)) if min(fitness_scores) < 0 else 0
+    fitness_scores = [score + min_score + 1 for score in fitness_scores]  # Asegúrate de que todos los fitness sean positivos
     return fitness_scores
 
 def select_parents(population, fitness_scores):
