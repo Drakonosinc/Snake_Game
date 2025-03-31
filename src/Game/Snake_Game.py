@@ -79,7 +79,10 @@ class Snake_Game(interface):
         self.clock.tick(self.FPS)
         pygame.display.flip()
     def run(self):
-        while self.running:self.item_repeat_run()
+        self.running=True
+        while self.running:
+            self.handle_keys()
+            self.item_repeat_run()
     def run_with_models(self):
         self.running=True
         self.player.reward = 0
