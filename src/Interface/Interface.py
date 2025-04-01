@@ -85,6 +85,11 @@ class interface(load_elements):
         self.increase_try_for_ai = self.button_factory_f2_5.create_TextButton({"font":self.font3_5,"text": ">","position": (self.WIDTH-140,self.HEIGHT/2+80),"command1":lambda:self.increase_decrease_variable(self.config.config_AI,'try_for_ai')})
         self.decrease_try_for_ai = self.button_factory_f2_5.create_TextButton({"font":self.font3_5,"text": "<","position": (self.WIDTH-265,self.HEIGHT/2+80),"command1":lambda:self.increase_decrease_variable(self.config.config_AI,'try_for_ai',True,-1)})
         self.save_model = self.button_factory_f2_5.create_TextButton({"text": "OFF","color": self.SKYBLUE,"position": (self.WIDTH-105,self.HEIGHT/2+125),"command1":lambda:self.on_off(self.config.config_AI,"model_save"),"command2":self.config.save_config})
+    def type_game(self,mode_one=False,mode_two=False,mode_three=False):
+        self.mode_game["Training AI"]=mode_one
+        self.mode_game["Player"]=mode_two
+        if self.model_training!=None:self.mode_game["AI"]=mode_three
+        else:self.load_AI()
     def pausa_menu(self):
         self.screen.fill(self.BLACK)
     def buttons_pausa(self):pass
