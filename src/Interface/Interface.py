@@ -3,7 +3,7 @@ from .Elements_interface import *
 class interface(load_elements):
     def __init__(self):
         super().__init__()
-        self.main=0 #-1=game, 0=menu, 1=game over, 2=game menu, 3=pausa, 4=options, 5=visuals, 6=menu keys, 7=sound menu
+        self.main=1 #-1=game, 0=menu, 1=game over, 2=game menu, 3=pausa, 4=options, 5=visuals, 6=menu keys, 7=sound menu
         self.mode_game={"Training AI":False,"Player":True,"AI":False}
         self.sound_type={"sound_menu":f"Sound Menu {"ON" if (x:=self.config.config_sounds["sound_menu"]) else "OFF"}","color_menu":self.SKYBLUE if x else self.RED,"value_menu":x}
         self.utils_keys={"key_jump":False}
@@ -50,10 +50,13 @@ class interface(load_elements):
         self.quit_button = self.button_factory_f2_5.create_TextButton({"text": "QUIT","position": (self.WIDTH/2-60,self.HEIGHT/2-55),"sound_touch": self.sound_exit,"command1": self.close_game})
         self.options_button = self.button_factory_f2_5.create_TextButton({"text": "OPTIONS","position": (self.WIDTH-180,self.HEIGHT-50),"command1":lambda:self.change_mains({"main":4})})
     def game_over_menu(self):
-        self.filt(self.width,self.height,150,self.RED)
-        self.screen.blit(self.font4.render("Game Over", True, self.BLACK),(120,self.height/2-250))
+        self.filt(self.WIDTH,self.HEIGHT,150,self.RED)
+        self.screen.blit(self.font4.render("Game Over", True, self.BLACK),(120,self.HEIGHT/2-250))
         self.execute_buttons(self.restar_button,self.exit_over_button,self.exit_menu_button)
-    def buttons_game_over(self):pass
+    def buttons_game_over(self):
+        self.restar_button = self.button_factory_f2_5.create_TextButton({"text": "Press R to Restart","position": (120,self.HEIGHT/2-150),"command1":self.reset,"command2":lambda:self.change_mains({"main":-1})})
+        self.exit_over_button = self.button_factory_f2_5.create_TextButton({"text": "Exit The Game","position": (120,self.HEIGHT/2-100),"sound_touch": self.sound_exit,"command1":self.close_game})
+        self.exit_menu_button = self.button_factory_f2_5.create_TextButton({"text": "Exit The Menu","position": (120,self.HEIGHT/2-50),"command1":self.reset,"command2":lambda:self.change_mains({"main":0,"run":True,"command":self.check_sounds})})
     def mode_game_menu(self):
         self.screen.fill(self.BLACK)
     def buttons_mode_game(self):pass
