@@ -69,7 +69,14 @@ class interface(load_elements):
         self.continue_button = self.button_factory_f2_5.create_TextButton({"font": self.font1,"text": "→","position": (self.WIDTH-110,self.HEIGHT-100),"command1":lambda:self.type_game(False,True) if all(not mode for mode in self.mode_game.values()) else None,"command2":lambda:(self.change_mains({"main":-1,"run":True,"command":self.population}),self.sound_back.stop(),self.sound_back_game.play(loops=-1)if self.sound_type["value_game"] else None)})
         self.back_menu_button = self.button_factory_f2_5.create_TextButton({"font": self.font1,"text": "←","position": (35,self.HEIGHT-100),"command1":lambda:self.change_mains({"main":0})})
         self.buttons_config_AI()
-    def menu_AI(self):pass
+    def menu_AI(self):
+        self.screen.blit(self.font2_5.render(f"Config Training AI", True, "White"),(self.WIDTH/2+20,self.HEIGHT/2-150))
+        self.screen.blit(self.font2_5.render(f"Generation Size\n{self.config.config_AI['generation_value']:^36}", True, "White"),(self.WIDTH/2+40,self.HEIGHT/2-100))
+        self.screen.blit(self.font2_5.render(f"Population Size\n{self.config.config_AI['population_value']:^36}", True, "White"),(self.WIDTH/2+40,self.HEIGHT/2-25))
+        self.screen.blit(self.font2_5.render(f"Attempts By AI\n{self.config.config_AI['try_for_ai']:^{39 if self.config.config_AI['try_for_ai']<10 else 36}}", True, "White"),(self.WIDTH/2+40,self.HEIGHT/2+50))
+        self.screen.blit(self.font2_5.render(f"Save model", True, "White"),(self.WIDTH/2+40,self.HEIGHT/2+125))
+        self.execute_buttons(self.increase_generation,self.decrease_generation,self.increase_population,self.decrease_population,self.increase_try_for_ai,self.decrease_try_for_ai,self.save_model)
+        self.save_model.change_item({"color":self.SKYBLUE if self.config.config_AI["model_save"] else self.RED,"text":"ON" if self.config.config_AI["model_save"] else "OFF"})
     def buttons_config_AI(self):pass
     def pausa_menu(self):
         self.screen.fill(self.BLACK)
