@@ -4,7 +4,7 @@ class Player:
         self.rect_head = Rect(x, y, width, height)
         self.body = [Rect(*i, width, height) for i in body]
         self.reset_head_position = (x, y, width, height)
-        self.reset_body_position = [(*i, width, height) for i in body]
+        self.reset_body_position = [Rect(*i, width, height) for i in body]
         self.move_speed = 3
         self.direction = "RIGHT"
         self.reward = 0
@@ -25,7 +25,7 @@ class Player:
     def add_segment(self):self.body.append(Rect(*self.body[-1]))
     def reset(self):
         self.rect_head = Rect(*self.reset_head_position)
-        self.body = Rect(*self.reset_body_position)
+        self.body = [*self.reset_body_position]
         self.direction = "RIGHT"
         self.score = 0
         self.active = True

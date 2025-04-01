@@ -3,7 +3,7 @@ from .Elements_interface import *
 class interface(load_elements):
     def __init__(self):
         super().__init__()
-        self.main=1 #-1=game, 0=menu, 1=game over, 2=game menu, 3=pausa, 4=options, 5=visuals, 6=menu keys, 7=sound menu
+        self.main=2 #-1=game, 0=menu, 1=game over, 2=game menu, 3=pausa, 4=options, 5=visuals, 6=menu keys, 7=sound menu
         self.mode_game={"Training AI":False,"Player":True,"AI":False}
         self.sound_type={"sound_menu":f"Sound Menu {"ON" if (x:=self.config.config_sounds["sound_menu"]) else "OFF"}","color_menu":self.SKYBLUE if x else self.RED,"value_menu":x}
         self.utils_keys={"key_jump":False}
@@ -59,7 +59,13 @@ class interface(load_elements):
         self.exit_over_button = self.button_factory_f2_5.create_TextButton({"text": "Exit The Game","position": (50,self.HEIGHT/2),"sound_touch": self.sound_exit,"command1":self.close_game})
     def mode_game_menu(self):
         self.screen.fill(self.BLACK)
-    def buttons_mode_game(self):pass
+        self.screen.blit(self.font3.render("Mode Game", True, "orange"),(int(self.WIDTH * (52 / 600)),int(self.HEIGHT * (20 / 400 ))))
+        if self.mode_game["Training AI"]:self.menu_AI()
+        self.execute_buttons(self.Training_AI_button,self.player_button,self.ai_button,self.continue_button,self.back_menu_button)
+    def buttons_mode_game(self):
+        
+    def menu_AI(self):pass
+    def buttons_config_AI(self):pass
     def pausa_menu(self):
         self.screen.fill(self.BLACK)
     def buttons_pausa(self):pass
