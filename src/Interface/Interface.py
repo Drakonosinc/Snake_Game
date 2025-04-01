@@ -91,7 +91,9 @@ class interface(load_elements):
         if self.model_training!=None:self.mode_game["AI"]=mode_three
         else:self.load_AI()
     def pausa_menu(self):
-        self.screen.fill(self.BLACK)
+        self.filt(self.width,self.height,150,self.GRAY)
+        self.screen.blit(self.font3.render("Pause", True, "orange"),(35,self.height/2-250))
+        self.execute_buttons(self.reset_button,self.option_button,self.menu_button,self.exit_button)
     def buttons_pausa(self):pass
     def menu_options(self):
         self.screen.fill(self.BLACK)
