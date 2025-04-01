@@ -51,12 +51,12 @@ class interface(load_elements):
         self.options_button = self.button_factory_f2_5.create_TextButton({"text": "OPTIONS","position": (self.WIDTH-180,self.HEIGHT-50),"command1":lambda:self.change_mains({"main":4})})
     def game_over_menu(self):
         self.filt(self.WIDTH,self.HEIGHT,150,self.RED)
-        self.screen.blit(self.font4.render("Game Over", True, self.BLACK),(120,self.HEIGHT/2-250))
+        self.screen.blit(self.font3.render("Game Over", True, self.BLACK),(int(self.WIDTH * (52 / 600)),int(self.HEIGHT * (20 / 400 ))))
         self.execute_buttons(self.restar_button,self.exit_over_button,self.exit_menu_button)
     def buttons_game_over(self):
-        self.restar_button = self.button_factory_f2_5.create_TextButton({"text": "Press R to Restart","position": (120,self.HEIGHT/2-150),"command1":self.reset,"command2":lambda:self.change_mains({"main":-1})})
-        self.exit_over_button = self.button_factory_f2_5.create_TextButton({"text": "Exit The Game","position": (120,self.HEIGHT/2-100),"sound_touch": self.sound_exit,"command1":self.close_game})
-        self.exit_menu_button = self.button_factory_f2_5.create_TextButton({"text": "Exit The Menu","position": (120,self.HEIGHT/2-50),"command1":self.reset,"command2":lambda:self.change_mains({"main":0,"run":True,"command":self.check_sounds})})
+        self.restar_button = self.button_factory_f2_5.create_TextButton({"text": "Press R to Restart","position": (120,self.HEIGHT/2-100),"command1":self.reset,"command2":lambda:self.change_mains({"main":-1})})
+        self.exit_over_button = self.button_factory_f2_5.create_TextButton({"text": "Exit The Game","position": (120,self.HEIGHT/2-50),"sound_touch": self.sound_exit,"command1":self.close_game})
+        self.exit_menu_button = self.button_factory_f2_5.create_TextButton({"text": "Exit The Menu","position": (120,self.HEIGHT/2),"command1":self.reset,"command2":lambda:self.change_mains({"main":0,"run":True,"command":self.check_sounds})})
     def mode_game_menu(self):
         self.screen.fill(self.BLACK)
     def buttons_mode_game(self):pass
