@@ -95,19 +95,19 @@ class interface(load_elements):
         self.screen.blit(self.font3.render("Pause", True, "orange"),(int(self.WIDTH * (52 / 600)),int(self.HEIGHT * (20 / 400 ))))
         self.execute_buttons(self.reset_button,self.option_button,self.menu_button,self.exit_button)
     def buttons_pausa(self):
-        self.reset_button = self.button_factory_f2_5.create_TextButton({"text": "Reset","position": (50,self.HEIGHT/2-150),"command1":self.reset,"command2":lambda:self.change_mains({"main":-1})})
-        self.option_button = self.button_factory_f2_5.create_TextButton({"text": "Option","position": (50,self.HEIGHT/2-100),"command1":self.reset,"command2":lambda:self.change_mains({"main":4,"run":True}),"command3":self.check_sounds})
-        self.menu_button = self.button_factory_f2_5.create_TextButton({"text": "Menu","position": (50,self.HEIGHT/2-50),"command1":self.reset,"command2":lambda:self.change_mains({"main":0,"run":True}),"command3":self.check_sounds})
+        self.reset_button = self.button_factory_f2_5.create_TextButton({"text": "Reset","position": (50,self.HEIGHT/2-100),"command1":self.reset,"command2":lambda:self.change_mains({"main":-1})})
+        self.option_button = self.button_factory_f2_5.create_TextButton({"text": "Option","position": (50,self.HEIGHT/2-50),"command1":self.reset,"command2":lambda:self.change_mains({"main":4,"run":True}),"command3":self.check_sounds})
+        self.menu_button = self.button_factory_f2_5.create_TextButton({"text": "Menu","position": (50,self.HEIGHT/2),"command1":self.reset,"command2":lambda:self.change_mains({"main":0,"run":True}),"command3":self.check_sounds})
         self.exit_button = self.button_factory_f2_5.create_TextButton({"text": "Exit","position": (50,self.HEIGHT/2),"sound_touch": self.sound_exit,"command1":self.close_game})
     def menu_options(self):
         self.screen.fill(self.BLACK)
         self.screen.blit(self.font3.render("Options", True, "orange"),(int(self.WIDTH * (52 / 600)),int(self.HEIGHT * (20 / 400 ))))
         self.execute_buttons(self.visual_button,self.sounds_button,self.keys_button,self.back_button)
     def buttons_menu_options(self):
-        self.visual_button = self.button_factory_f2_5.create_TextButton({"text": "Visuals","position": (35,self.height/2-150),"command1":lambda:self.change_mains({"main":5})})
-        self.sounds_button = self.button_factory_f2_5.create_TextButton({"text": "Sounds","position": (35,self.height/2-100),"command1":lambda:self.change_mains({"main":7})})
-        self.keys_button = self.button_factory_f2_5.create_TextButton({"text": "Keys","position": (35,self.height/2-50),"command1":lambda:self.change_mains({"main":6})})
-        self.back_button = self.button_factory_f2_5.create_TextButton({"font": self.font1,"text": "←","position": (35,self.height-100),"command1":lambda:self.change_mains({"main":0})})
+        self.visual_button = self.button_factory_f2_5.create_TextButton({"text": "Visuals","position": (50,self.HEIGHT/2-100),"command1":lambda:self.change_mains({"main":5})})
+        self.sounds_button = self.button_factory_f2_5.create_TextButton({"text": "Sounds","position": (50,self.HEIGHT/2-50),"command1":lambda:self.change_mains({"main":7})})
+        self.keys_button = self.button_factory_f2_5.create_TextButton({"text": "Keys","position": (50,self.HEIGHT/2),"command1":lambda:self.change_mains({"main":6})})
+        self.back_button = self.button_factory_f2_5.create_TextButton({"font": self.font1,"text": "←","position": (50,self.HEIGHT-100),"command1":lambda:self.change_mains({"main":0})})
     def visuals_menu(self):
         self.screen.fill(self.BLACK)
     def buttons_visual(self):pass
