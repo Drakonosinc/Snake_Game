@@ -110,6 +110,9 @@ class interface(load_elements):
         self.back_button = self.button_factory_f2_5.create_TextButton({"font": self.font1,"text": "←","position": (50,self.HEIGHT-100),"command1":lambda:self.change_mains({"main":0})})
     def visuals_menu(self):
         self.screen.fill(self.BLACK)
+        self.items_visuals()
+        self.screen.blit(self.font3.render("Visuals", True, "orange"),(35,self.height/2-250))
+        self.execute_buttons(self.back_visual_button,self.decrease_player_button,self.increase_player_button,self.decrease_tube_button,self.increase_tube_button,self.save_visuals_button,self.default_visuals_button)
     def buttons_visual(self):pass
     def keys_menu(self):
         self.screen.fill(self.BLACK)
