@@ -113,6 +113,9 @@ class interface(load_elements):
         self.items_visuals()
         self.screen.blit(self.font3.render("Visuals", True, "orange"),(int(self.WIDTH * (52 / 600)),int(self.HEIGHT * (20 / 400 ))))
         self.execute_buttons(self.back_visual_button,self.decrease_player_button,self.increase_player_button,self.decrease_body_button,self.increase_body_button,self.decrease_food_button,self.increase_food_button,self.save_visuals_button,self.default_visuals_button)
+    def items_visuals(self):
+        self.screen.blit(self.head_snake,(self.player.rect_head.x,self.player.rect_head.y+50))
+        self.screen.blit(self.body_snake,(self.WIDTH/2-50,self.HEIGHT/2))
     def buttons_visual(self):
         self.back_visual_button = self.button_factory_f2_5.create_TextButton({"font": self.font1,"text": "←","position": (35,self.HEIGHT-100),"command1":lambda:self.change_mains({"main":4})})
         self.decrease_player_button = self.button_factory_f2_5.create_TextButton({"font": self.font3_5,"text": "<","position": (self.WIDTH/2-95,self.HEIGHT/2),"command1":lambda:self.change_items("value_snake_head","snake_head",-1)})
