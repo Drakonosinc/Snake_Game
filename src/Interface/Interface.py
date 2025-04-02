@@ -128,9 +128,11 @@ class interface(load_elements):
         self.default_visuals_button = self.button_factory_f2_5.create_TextButton({"text": "Default config","position": (self.WIDTH/2+50,self.HEIGHT-50),"command1":lambda:self.config.config(visuals=True),"command2":self.load_visuals})
     def change_items(self,item,background,number):
         self.config.config_visuals[item]=((self.config.config_visuals[item] + number) % len(self.config.config_visuals[background]))
-        self.load_visuals()
+        self.load_images()
     def keys_menu(self):
         self.screen.fill(self.BLACK)
+        self.screen.blit(self.font3.render("Keys", True, "orange"),(int(self.WIDTH * (52 / 600)),int(self.HEIGHT * (20 / 400 ))))
+        self.execute_buttons(self.back_keys_button,self.space_button,self.save_keys_button,self.default_keys_button)
     def buttons_keys(self):pass
     def change_keys(self,key,key_name,button=None):
         self.key=key
