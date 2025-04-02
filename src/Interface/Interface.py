@@ -103,7 +103,11 @@ class interface(load_elements):
         self.screen.fill(self.BLACK)
         self.screen.blit(self.font3.render("Options", True, "orange"),(int(self.WIDTH * (52 / 600)),int(self.HEIGHT * (20 / 400 ))))
         self.execute_buttons(self.visual_button,self.sounds_button,self.keys_button,self.back_button)
-    def buttons_menu_options(self):pass
+    def buttons_menu_options(self):
+        self.visual_button = self.button_factory_f2_5.create_TextButton({"text": "Visuals","position": (35,self.height/2-150),"command1":lambda:self.change_mains({"main":5})})
+        self.sounds_button = self.button_factory_f2_5.create_TextButton({"text": "Sounds","position": (35,self.height/2-100),"command1":lambda:self.change_mains({"main":7})})
+        self.keys_button = self.button_factory_f2_5.create_TextButton({"text": "Keys","position": (35,self.height/2-50),"command1":lambda:self.change_mains({"main":6})})
+        self.back_button = self.button_factory_f2_5.create_TextButton({"font": self.font1,"text": "←","position": (35,self.height-100),"command1":lambda:self.change_mains({"main":0})})
     def visuals_menu(self):
         self.screen.fill(self.BLACK)
     def buttons_visual(self):pass
