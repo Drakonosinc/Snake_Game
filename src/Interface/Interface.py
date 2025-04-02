@@ -133,7 +133,11 @@ class interface(load_elements):
         self.screen.fill(self.BLACK)
         self.screen.blit(self.font3.render("Keys", True, "orange"),(int(self.WIDTH * (52 / 600)),int(self.HEIGHT * (20 / 400 ))))
         self.execute_buttons(self.back_keys_button,self.space_button,self.save_keys_button,self.default_keys_button)
-    def buttons_keys(self):pass
+    def buttons_keys(self):
+        self.back_keys_button = self.button_factory_f2_5.create_TextButton({"font": self.font1,"text": "←","position": (35,self.HEIGHT-100),"command1":lambda:self.change_mains({"main":4})})
+        self.space_button = self.button_factory_f2_5.create_TextButton({"text": self.config.config_keys["Name_key1"],"position": (35,self.HEIGHT/2-150),"command1":lambda:self.change_keys("key_jump","Name_key1",self.space_button)})
+        self.save_keys_button = self.button_factory_f2_5.create_TextButton({"text": "Save config","position": (self.WIDTH/2+80,self.HEIGHT-85),"command1":self.config.save_config})
+        self.default_keys_button = self.button_factory_f2_5.create_TextButton({"text": "Default config","position": (self.WIDTH/2+50,self.HEIGHT-50),"command1":lambda:(self.config.config(keys=True),self.change_mains({"main":6,"command":self.buttons_keys}))})
     def change_keys(self,key,key_name,button=None):
         self.key=key
         self.key_name=key_name
