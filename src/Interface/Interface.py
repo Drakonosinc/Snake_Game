@@ -152,6 +152,10 @@ class interface(load_elements):
             self.change_keys(self.key,self.key_name)
     def sounds_menu(self):
         self.screen.fill(self.BLACK)
+        self.screen.blit(self.font3.render("Sounds", True, "orange"),(int(self.WIDTH * (52 / 600)),int(self.HEIGHT * (20 / 400 ))))
+        self.execute_buttons(self.back_sounds_button,self.sound_menu_button,self.sound_game_button)
+        self.sound_menu_button.change_item({"color":self.sound_type["color_menu"],"text":self.sound_type["sound_menu"]})
+        self.sound_game_button.change_item({"color":self.sound_type["color_game"],"text":self.sound_type["sound_Game"]})
     def buttons_sounds(self):pass
     def draw_generation(self):
         if self.main==-1 and self.mode_game["Training AI"]:self.screen.blit(self.font5.render(f"Generation: {int(self.generation)}", True, "orange"),(0,25))
