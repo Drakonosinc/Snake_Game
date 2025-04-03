@@ -43,7 +43,8 @@ class Snake_Game(interface):
                 if (event.key in {self.config.config_keys["key_left"], self.config.config_keys["key_left2"]}) and self.player.direction != "RIGHT":self.player.direction = "LEFT"
                 if (event.key in {self.config.config_keys["key_right"], self.config.config_keys["key_right2"]}) and self.player.direction != "LEFT":self.player.direction = "RIGHT"
     def events(self,event):pass
-        # if event.type == self.EVENT_BACKGROUND and self.main==-1:pass
+        if event.type == self.EVENT_BACKGROUND and self.main==-1:
+            print("Background event triggered")
     def restart(self):
         if self.mode_game["Training AI"]:self.reset(False)
         if self.mode_game["Player"] or self.mode_game["AI"]:self.change_mains({"main":1,"color":self.RED,"limit":100,"command":self.reset})
@@ -65,7 +66,7 @@ class Snake_Game(interface):
     def collision(self):
         if self.player.check_collision(self.fruit):
             self.player.score += 1
-            self.player.reward += 1
+            self.player.reward += 10
             self.sound_food.play(loops=0)
             self.fruit.respawn_food(self.WIDTH,self.HEIGHT)
             self.player.add_segment()
@@ -77,7 +78,7 @@ class Snake_Game(interface):
             if self.player.collision_snake(self.player.rect_head,body):
                 self.sound_dead.play(loops=0)
                 self.player.active=False
-                self.player.reward -= 1
+                self.player.reward -= 10
                 self.restart()
     def check_score(self):
         if self.player.score>=self.config.config_game["max_score"]:self.config.config_game["max_score"]=self.player.score
