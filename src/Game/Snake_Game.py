@@ -75,11 +75,12 @@ class Snake_Game(interface):
         if self.player.rect_head.y < 0:self.player.rect_head.y = self.HEIGHT
         if self.player.rect_head.y > self.HEIGHT:self.player.rect_head.y = 0
         for body in self.player.body:
-            if self.player.collision_snake(self.player.rect_head,body):
-                self.sound_dead.play(loops=0)
-                self.player.active=False
-                self.player.reward -= 10
-                self.restart()
+            if self.player.collision_snake(self.player.rect_head,body):self.handle_collision(self.player, -10)
+    def handle_collision(self, player, reward=-25):
+        self.sound_dead.play(loops=0)
+        player.reward += reward
+        player.active = False
+        self.restart()
     def check_score(self):
         if self.player.score>=self.config.config_game["max_score"]:self.config.config_game["max_score"]=self.player.score
     def item_repeat_run(self):
