@@ -67,5 +67,5 @@ class load_elements():
         self.font5=pygame.font.Font(os.path.join(self.font_path,"ka1.ttf"),20)
         self.font5_5=pygame.font.Font(os.path.join(self.font_path,"8bitOperatorPlusSC-Bold.ttf"),20)
     def new_events(self):
-        self.EVENT_BACKGROUND = pygame.USEREVENT + 2
-        pygame.time.set_timer(self.EVENT_BACKGROUND,10000)
+        self.EVENT_RESET_AI = pygame.USEREVENT + 2
+        pygame.time.set_timer(self.EVENT_RESET_AI,90000)
