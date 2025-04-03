@@ -3,16 +3,17 @@ from .Elements_interface import *
 class interface(load_elements):
     def __init__(self):
         super().__init__()
-        self.main=2 #-1=game, 0=menu, 1=game over, 2=game menu, 3=pausa, 4=options, 5=visuals, 6=menu keys, 7=sound menu
+        self.main=0 #-1=game, 0=menu, 1=game over, 2=game menu, 3=pausa, 4=options, 5=visuals, 6=menu keys, 7=sound menu
         self.mode_game={"Training AI":False,"Player":True,"AI":False}
-        self.sound_type={"sound_menu":f"Sound Menu {"ON" if (x:=self.config.config_sounds["sound_menu"]) else "OFF"}","color_menu":self.SKYBLUE if x else self.RED,"value_menu":x}
+        self.sound_type={"sound_menu":f"Sound Menu {"ON" if (x:=self.config.config_sounds["sound_menu"]) else "OFF"}","color_menu":self.SKYBLUE if x else self.RED,"value_menu":x,
+                        "sound_Game":f"Sound Game {"ON" if (j:=self.config.config_sounds["sound_game"]) else "OFF"}","color_game":self.SKYBLUE if j else self.RED,"value_game":j}
         self.utils_keys={"key_jump":False}
         self.key=None
     def play_music(self):
         self.check_sounds()
         self.sound_main.set_volume(0.5)
     def check_sounds(self):
-        # self.sound_back_game.stop()
+        self.sound_back_game.stop()
         self.sound_main.play(loops=-1) if self.sound_type["value_menu"] else None
     def draw_interfaces(self):
         if self.main==0:self.main_menu()
@@ -125,7 +126,7 @@ class interface(load_elements):
         self.decrease_food_button = self.button_factory_f2_5.create_TextButton({"font": self.font3_5,"text": "<","position": (self.WIDTH/2-95,self.HEIGHT/2),"command1":lambda:self.change_items("value_foods","food",-1)})
         self.increase_food_button = self.button_factory_f2_5.create_TextButton({"font": self.font3_5,"text": ">","position": (self.WIDTH/2+75,self.HEIGHT/2),"command1":lambda:self.change_items("value_foods","food",1)})
         self.save_visuals_button = self.button_factory_f2_5.create_TextButton({"text": "Save config","position": (self.WIDTH/2+80,self.HEIGHT-85),"command1":self.config.save_config})
-        self.default_visuals_button = self.button_factory_f2_5.create_TextButton({"text": "Default config","position": (self.WIDTH/2+50,self.HEIGHT-50),"command1":lambda:self.config.config(visuals=True),"command2":self.load_visuals})
+        self.default_visuals_button = self.button_factory_f2_5.create_TextButton({"text": "Default config","position": (self.WIDTH/2+50,self.HEIGHT-50),"command1":lambda:self.config.config(visuals=True),"command2":self.load_images})
     def change_items(self,item,background,number):
         self.config.config_visuals[item]=((self.config.config_visuals[item] + number) % len(self.config.config_visuals[background]))
         self.load_images()
