@@ -45,7 +45,7 @@ class Snake_Game(interface):
     def events(self,event):pass
         # if event.type == self.EVENT_BACKGROUND and self.main==-1:pass
     def restart(self):
-        if all(not player.active for player in self.players) and self.mode_game["Training AI"]:self.reset(False)
+        if all(not player.active for player in self.player) and self.mode_game["Training AI"]:self.reset(False)
         if self.mode_game["Player"] or self.mode_game["AI"]:self.change_mains({"main":1,"color":self.RED,"limit":100,"command":self.reset})
     def reset(self,running=True):
         self.running=running
@@ -65,6 +65,7 @@ class Snake_Game(interface):
     def collision(self):
         if self.player.check_collision(self.fruit):
             self.player.score += 1
+            self.player.reward += 1
             self.sound_food.play(loops=0)
             self.fruit.respawn_food(self.WIDTH,self.HEIGHT)
             self.player.add_segment()
@@ -75,6 +76,8 @@ class Snake_Game(interface):
         for body in self.player.body:
             if self.player.collision_snake(self.player.rect_head,body):
                 self.sound_dead.play(loops=0)
+                self.player.active=False
+                self.player.reward -= 1
                 self.restart()
     def check_score(self):
         if self.player.score>=self.config.config_game["max_score"]:self.config.config_game["max_score"]=self.player.score
