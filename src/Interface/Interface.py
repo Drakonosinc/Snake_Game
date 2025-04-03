@@ -3,7 +3,7 @@ from .Elements_interface import *
 class interface(load_elements):
     def __init__(self):
         super().__init__()
-        self.main=0 #-1=game, 0=menu, 1=game over, 2=game menu, 3=pausa, 4=options, 5=visuals, 6=menu keys, 7=sound menu
+        self.main=0 #-1=game, 0=menu, 1=game over, 2=game menu, 3=pausa, 4=options, 5=visuals, 6=menu keys, 7=sound menu, 8=AI menu
         self.mode_game={"Training AI":False,"Player":True,"AI":False}
         self.sound_type={"sound_menu":f"Sound Menu {"ON" if (x:=self.config.config_sounds["sound_menu"]) else "OFF"}","color_menu":self.SKYBLUE if x else self.RED,"value_menu":x,
                         "sound_Game":f"Sound Game {"ON" if (j:=self.config.config_sounds["sound_game"]) else "OFF"}","color_game":self.SKYBLUE if j else self.RED,"value_game":j}
@@ -24,11 +24,13 @@ class interface(load_elements):
         if self.main==5:self.visuals_menu()
         if self.main==6:self.keys_menu()
         if self.main==7:self.sounds_menu()
+        if self.main==8:self.menu_AI()
     def draw_buttons(self):
         self.button_factory_f2_5 = ElementsFactory({"screen": self.screen,"font": self.font2_5,"hover_color": self.GOLDEN,"sound_hover": self.sound_buttonletters,"sound_touch": self.sound_touchletters})
         self.buttons_main_menu()
         self.buttons_game_over()
         self.buttons_mode_game()
+        self.buttons_config_AI()
         self.buttons_pausa()
         self.buttons_menu_options()
         self.buttons_visual()
@@ -61,7 +63,6 @@ class interface(load_elements):
     def mode_game_menu(self):
         self.screen.fill(self.BLACK)
         self.screen.blit(self.font3.render("Mode Game", True, "orange"),(int(self.WIDTH * (52 / 600)),int(self.HEIGHT * (20 / 400 ))))
-        if self.mode_game["Training AI"]:self.menu_AI()
         self.execute_buttons(self.Training_AI_button,self.player_button,self.ai_button,self.continue_button,self.back_menu_button)
     def buttons_mode_game(self):
         self.Training_AI_button = self.button_factory_f2_5.create_TextButton({"text": "Training AI","position": (50,self.HEIGHT/2-100),"command1":lambda:self.type_game(True),"command2":lambda:self.check_item(self.mode_game,self.SKYBLUE,self.WHITE,"color",**{"Training AI":self.Training_AI_button,"Player":self.player_button,"AI":self.ai_button})})
@@ -69,13 +70,12 @@ class interface(load_elements):
         self.ai_button = self.button_factory_f2_5.create_TextButton({"text": "AI","position": (50,self.HEIGHT/2),"command1":lambda:self.type_game(False,False,True),"command2":lambda:self.check_item(self.mode_game,self.SKYBLUE,self.WHITE,"color",**{"AI":self.ai_button,"Player":self.player_button,"Training AI":self.Training_AI_button})})
         self.continue_button = self.button_factory_f2_5.create_TextButton({"font": self.font1,"text": "→","position": (self.WIDTH-110,self.HEIGHT-100),"command1":lambda:self.type_game(False,True) if all(not mode for mode in self.mode_game.values()) else None,"command2":lambda:(self.change_mains({"main":-1,"run":True,"command":None}),self.sound_main.stop(),self.sound_back_game.play(loops=-1)if self.sound_type["value_game"] else None)})
         self.back_menu_button = self.button_factory_f2_5.create_TextButton({"font": self.font1,"text": "←","position": (35,self.HEIGHT-100),"command1":lambda:self.change_mains({"main":0})})
-        self.buttons_config_AI()
     def menu_AI(self):
-        self.screen.blit(self.font2_5.render(f"Config Training AI", True, "White"),(self.WIDTH/2+20,self.HEIGHT/2-150))
-        self.screen.blit(self.font2_5.render(f"Generation Size\n{self.config.config_AI['generation_value']:^36}", True, "White"),(self.WIDTH/2+40,self.HEIGHT/2-100))
-        self.screen.blit(self.font2_5.render(f"Population Size\n{self.config.config_AI['population_value']:^36}", True, "White"),(self.WIDTH/2+40,self.HEIGHT/2-25))
-        self.screen.blit(self.font2_5.render(f"Attempts By AI\n{self.config.config_AI['try_for_ai']:^{39 if self.config.config_AI['try_for_ai']<10 else 36}}", True, "White"),(self.WIDTH/2+40,self.HEIGHT/2+50))
-        self.screen.blit(self.font2_5.render(f"Save model", True, "White"),(self.WIDTH/2+40,self.HEIGHT/2+125))
+        self.screen.blit(self.font5.render(f"Config Training AI", True, "White"),(self.WIDTH/2+20,self.HEIGHT/2-150))
+        self.screen.blit(self.font5.render(f"Generation Size\n{self.config.config_AI['generation_value']:^36}", True, "White"),(self.WIDTH/2+40,self.HEIGHT/2-100))
+        self.screen.blit(self.font5.render(f"Population Size\n{self.config.config_AI['population_value']:^36}", True, "White"),(self.WIDTH/2+40,self.HEIGHT/2-25))
+        self.screen.blit(self.font5.render(f"Attempts By AI\n{self.config.config_AI['try_for_ai']:^{39 if self.config.config_AI['try_for_ai']<10 else 36}}", True, "White"),(self.WIDTH/2+40,self.HEIGHT/2+50))
+        self.screen.blit(self.font5.render(f"Save model", True, "White"),(self.WIDTH/2+40,self.HEIGHT/2+125))
         self.execute_buttons(self.increase_generation,self.decrease_generation,self.increase_population,self.decrease_population,self.increase_try_for_ai,self.decrease_try_for_ai,self.save_model)
         self.save_model.change_item({"color":self.SKYBLUE if self.config.config_AI["model_save"] else self.RED,"text":"ON" if self.config.config_AI["model_save"] else "OFF"})
     def buttons_config_AI(self):

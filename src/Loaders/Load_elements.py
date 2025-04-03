@@ -13,6 +13,7 @@ class load_elements():
         self.load_fonts()
         self.load_sounds()
         self.config_screen()
+        self.new_events()
     def load_AI(self):
         self.model_path=os.path.join(self.config.base_dir, "AI/best_model.pth")
         self.model_training = load_model(self.model_path, 10, 4) if os.path.exists(self.model_path) else None
