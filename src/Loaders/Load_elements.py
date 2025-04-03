@@ -64,7 +64,7 @@ class load_elements():
         self.font2_5=pygame.font.Font(os.path.join(self.font_path,"ka1.ttf"),30)
         self.font3=pygame.font.Font(os.path.join(self.font_path,"ka1.ttf"),60)
         self.font3_5=pygame.font.Font(os.path.join(self.font_path,"8bitOperatorPlusSC-Bold.ttf"),30)
-        self.font4=pygame.font.Font(os.path.join(self.font_path,"ka1.ttf"),75)
+        self.font4=pygame.font.Font(os.path.join(self.font_path,"ka1.ttf"),40)
         self.font5=pygame.font.Font(os.path.join(self.font_path,"ka1.ttf"),20)
         self.font5_5=pygame.font.Font(os.path.join(self.font_path,"8bitOperatorPlusSC-Bold.ttf"),20)
     def new_events(self):

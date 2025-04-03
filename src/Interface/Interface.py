@@ -154,7 +154,7 @@ class interface(load_elements):
         self.config.save_config()
     def menu_AI(self):
         self.screen.fill(self.BLACK)
-        self.screen.blit(self.font2_5.render(f"Config Training AI", True, "White"),(self.WIDTH/2+20,self.HEIGHT/2-150))
+        self.screen.blit(self.font4.render(f"Config Training AI", True, "White"),(int(self.WIDTH * (52 / 600)),int(self.HEIGHT * (20 / 400 ))))
         self.screen.blit(self.font2_5.render(f"Generation Size\n{self.config.config_AI['generation_value']:^36}", True, "White"),(self.WIDTH/2+40,self.HEIGHT/2-100))
         self.screen.blit(self.font2_5.render(f"Population Size\n{self.config.config_AI['population_value']:^36}", True, "White"),(self.WIDTH/2+40,self.HEIGHT/2-25))
         self.screen.blit(self.font2_5.render(f"Attempts By AI\n{self.config.config_AI['try_for_ai']:^{39 if self.config.config_AI['try_for_ai']<10 else 36}}", True, "White"),(self.WIDTH/2+40,self.HEIGHT/2+50))
