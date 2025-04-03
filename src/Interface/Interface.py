@@ -160,6 +160,11 @@ class interface(load_elements):
         self.back_sounds_button = self.button_factory_f2_5.create_TextButton({"font": self.font1,"text": "←","position": (50,self.HEIGHT-100),"command1":lambda:self.change_mains({"main":4})})
         self.sound_menu_button = self.button_factory_f2_5.create_TextButton({"text": self.sound_type["sound_menu"],"position": (50,self.HEIGHT/2-100),"command1":lambda:self.sound_on_off("sound_menu","color_menu","value_menu","Sound Menu",self.sound_back,True),"command2":self.config.save_config})
         self.sound_game_button = self.button_factory_f2_5.create_TextButton({"text": self.sound_type["sound_Game"],"position": (50,self.HEIGHT/2-50),"command1":lambda:self.sound_on_off("sound_Game","color_game","value_game","Sound Game",self.sound_back_game),"command2":self.config.save_config})
+    def sound_on_off(self,sound:str,color,value=True,type_sound="",sound_back=None,play=False):
+        self.sound_type[value]=not self.sound_type[value]
+        self.sound_type[color]=self.SKYBLUE if self.sound_type[value] else self.RED
+        self.sound_type[sound]=type_sound+" ON" if self.sound_type[value] else type_sound+" OFF"
+        sound_back.play(loops=-1) if self.sound_type[value] and play else sound_back.stop()
     def draw_generation(self):
         if self.main==-1 and self.mode_game["Training AI"]:self.screen.blit(self.font5.render(f"Generation: {int(self.generation)}", True, "orange"),(0,25))
     def show_score(self):
