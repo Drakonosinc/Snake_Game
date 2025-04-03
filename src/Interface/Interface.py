@@ -125,8 +125,8 @@ class interface(load_elements):
         self.increase_body_button = self.button_factory_f2_5.create_TextButton({"font": self.font3_5,"text": ">","position": (self.WIDTH/2+75,self.HEIGHT/2),"command1":lambda:self.change_items("value_snake_body","snake_body",1)})
         self.decrease_food_button = self.button_factory_f2_5.create_TextButton({"font": self.font3_5,"text": "<","position": (self.WIDTH/2-95,self.HEIGHT/2),"command1":lambda:self.change_items("value_foods","food",-1)})
         self.increase_food_button = self.button_factory_f2_5.create_TextButton({"font": self.font3_5,"text": ">","position": (self.WIDTH/2+75,self.HEIGHT/2),"command1":lambda:self.change_items("value_foods","food",1)})
-        self.save_visuals_button = self.button_factory_f2_5.create_TextButton({"text": "Save config","position": (self.WIDTH/2+80,self.HEIGHT-85),"command1":self.config.save_config})
-        self.default_visuals_button = self.button_factory_f2_5.create_TextButton({"text": "Default config","position": (self.WIDTH/2+50,self.HEIGHT-50),"command1":lambda:self.config.config(visuals=True),"command2":self.load_images})
+        self.save_visuals_button = self.button_factory_f2_5.create_TextButton({"text": "Save config","position": (self.WIDTH/2,self.HEIGHT-85),"command1":self.config.save_config})
+        self.default_visuals_button = self.button_factory_f2_5.create_TextButton({"text": "Default config","position": (self.WIDTH/2-40,self.HEIGHT-50),"command1":lambda:self.config.config(visuals=True),"command2":self.load_images})
     def change_items(self,item,background,number):
         self.config.config_visuals[item]=((self.config.config_visuals[item] + number) % len(self.config.config_visuals[background]))
         self.load_images()
@@ -137,8 +137,8 @@ class interface(load_elements):
     def buttons_keys(self):
         self.back_keys_button = self.button_factory_f2_5.create_TextButton({"font": self.font1,"text": "←","position": (50,self.HEIGHT-100),"command1":lambda:self.change_mains({"main":4})})
         self.space_button = self.button_factory_f2_5.create_TextButton({"text": self.config.config_keys["Name_key1"],"position": (50,self.HEIGHT/2-100),"command1":lambda:self.change_keys("key_jump","Name_key1",self.space_button)})
-        self.save_keys_button = self.button_factory_f2_5.create_TextButton({"text": "Save config","position": (self.WIDTH/2+80,self.HEIGHT-85),"command1":self.config.save_config})
-        self.default_keys_button = self.button_factory_f2_5.create_TextButton({"text": "Default config","position": (self.WIDTH/2+50,self.HEIGHT-50),"command1":lambda:(self.config.config(keys=True),self.change_mains({"main":6,"command":self.buttons_keys}))})
+        self.save_keys_button = self.button_factory_f2_5.create_TextButton({"text": "Save config","position": (self.WIDTH/2,self.HEIGHT-85),"command1":self.config.save_config})
+        self.default_keys_button = self.button_factory_f2_5.create_TextButton({"text": "Default config","position": (self.WIDTH/2-40,self.HEIGHT-50),"command1":lambda:(self.config.config(keys=True),self.change_mains({"main":6,"command":self.buttons_keys}))})
     def change_keys(self,key,key_name,button=None):
         self.key=key
         self.key_name=key_name
