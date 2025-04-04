@@ -7,7 +7,7 @@ class interface(load_elements):
         self.mode_game={"Training AI":False,"Player":True,"AI":False}
         self.sound_type={"sound_menu":f"Sound Menu {"ON" if (x:=self.config.config_sounds["sound_menu"]) else "OFF"}","color_menu":self.SKYBLUE if x else self.RED,"value_menu":x,
                         "sound_Game":f"Sound Game {"ON" if (j:=self.config.config_sounds["sound_game"]) else "OFF"}","color_game":self.SKYBLUE if j else self.RED,"value_game":j}
-        self.utils_keys={"key_up":False,"key_up2":False,"key_down":False,"key_down2":False,"key_left":False,"key_left2":False,"key_right":False,"key_right2":False}
+        self.utils_keys = {key: False for i, key in enumerate(self.config.config_keys.keys()) if i % 2 == 0}
         self.key=None
     def play_music(self):
         self.check_sounds()
