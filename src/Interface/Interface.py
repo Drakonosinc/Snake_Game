@@ -117,22 +117,22 @@ class interface(load_elements):
     def keys_menu(self):
         self.screen.fill(self.BLACK)
         self.screen.blit(self.font3.render("Keys", True, "orange"),(int(self.WIDTH * (52 / 600)),int(self.HEIGHT * (20 / 400 ))))
-        self.execute_buttons(self.back_keys_button,self.up1_button,self.up2_button,self.down1_button,self.save_keys_button,self.default_keys_button)
+        self.execute_buttons(self.back_keys_button,self.save_keys_button,self.default_keys_button,*self.keys_buttons.values())
     def buttons_keys(self):
         self.back_keys_button = self.button_factory_f2_5.create_TextButton({"font": self.font1,"text": "←","position": (50,self.HEIGHT-100),"command1":lambda:self.change_mains({"main":4})})
-        self.up1_button = self.button_factory_f2_5.create_TextButton({"text": self.config.config_keys["Name_key1"],"position": (50,self.HEIGHT/2-100),"command1":lambda:self.change_keys("key_jump","Name_key1",self.space_button)})
-        self.up2_button = self.button_factory_f2_5.create_TextButton({"text": self.config.config_keys["Name_key2"],"position": (50,self.HEIGHT/2-50),"command1":lambda:self.change_keys("key_jump","Name_key1",self.space_button)})
-        self.down1_button = self.button_factory_f2_5.create_TextButton({"text": self.config.config_keys["Name_key3"],"position": (50,self.HEIGHT/2),"command1":lambda:self.change_keys("key_jump","Name_key1",self.space_button)})
+        self.up1_button = self.button_factory_f2_5.create_TextButton({"text": self.config.config_keys["Name_key1"],"position": (50,self.HEIGHT/2-100),"command1":lambda:self.change_keys("key_up","Name_key1",self.up1_button)})
+        self.up2_button = self.button_factory_f2_5.create_TextButton({"text": self.config.config_keys["Name_key2"],"position": (50,self.HEIGHT/2-50),"command1":lambda:self.change_keys("key_up2","Name_key2",self.up2_button)})
+        self.down1_button = self.button_factory_f2_5.create_TextButton({"text": self.config.config_keys["Name_key3"],"position": (50,self.HEIGHT/2),"command1":lambda:self.change_keys("key_down","Name_key3",self.down1_button)})
         
         self.save_keys_button = self.button_factory_f2_5.create_TextButton({"text": "Save config","position": (self.WIDTH/2,self.HEIGHT-85),"command1":self.config.save_config})
         self.default_keys_button = self.button_factory_f2_5.create_TextButton({"text": "Default config","position": (self.WIDTH/2-40,self.HEIGHT-50),"command1":lambda:(self.config.config(keys=True),self.change_mains({"main":6,"command":self.buttons_keys}))})
-        self.buttons_keys={"key_up":self.up1_button,"key_up2":self.up2_button,"key_down":self.down1_button}
+        self.keys_buttons={"key_up":self.up1_button,"key_up2":self.up2_button,"key_down":self.down1_button}
     def change_keys(self,key,key_name,button=None):
         self.key=key
         self.key_name=key_name
         self.button_key=button
         for k in self.utils_keys.keys():self.utils_keys[k]=False if k!=self.key else not self.utils_keys[self.key]
-        self.check_item(self.utils_keys,self.SKYBLUE,self.WHITE,"color",**self.buttons_keys)
+        self.check_item(self.utils_keys,self.SKYBLUE,self.WHITE,"color",**self.keys_buttons)
     def event_keys(self,event):
         if self.key!=None and (self.utils_keys[self.key] and event.type==KEYDOWN):
             self.config.config_keys[self.key]=event.key
