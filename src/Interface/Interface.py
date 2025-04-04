@@ -123,10 +123,14 @@ class interface(load_elements):
         self.up1_button = self.button_factory_f2_5.create_TextButton({"text": self.config.config_keys["Name_key1"],"position": (50,self.HEIGHT/2-100),"command1":lambda:self.change_keys("key_up","Name_key1",self.up1_button)})
         self.up2_button = self.button_factory_f2_5.create_TextButton({"text": self.config.config_keys["Name_key2"],"position": (50,self.HEIGHT/2-50),"command1":lambda:self.change_keys("key_up2","Name_key2",self.up2_button)})
         self.down1_button = self.button_factory_f2_5.create_TextButton({"text": self.config.config_keys["Name_key3"],"position": (50,self.HEIGHT/2),"command1":lambda:self.change_keys("key_down","Name_key3",self.down1_button)})
+        self.down2_button = self.button_factory_f2_5.create_TextButton({"text": self.config.config_keys["Name_key3"],"position": (50,self.HEIGHT/2),"command1":lambda:self.change_keys("key_down","Name_key3",self.down2_button)})
+        self.left1_button = self.button_factory_f2_5.create_TextButton({"text": self.config.config_keys["Name_key3"],"position": (50,self.HEIGHT/2),"command1":lambda:self.change_keys("key_down","Name_key3",self.left1_button)})
+        self.left2_button = self.button_factory_f2_5.create_TextButton({"text": self.config.config_keys["Name_key3"],"position": (50,self.HEIGHT/2),"command1":lambda:self.change_keys("key_down","Name_key3",self.left2_button)})
+        self.right1_button = self.button_factory_f2_5.create_TextButton({"text": self.config.config_keys["Name_key3"],"position": (50,self.HEIGHT/2),"command1":lambda:self.change_keys("key_down","Name_key3",self.right1_button)})
         
         self.save_keys_button = self.button_factory_f2_5.create_TextButton({"text": "Save config","position": (self.WIDTH/2,self.HEIGHT-85),"command1":self.config.save_config})
         self.default_keys_button = self.button_factory_f2_5.create_TextButton({"text": "Default config","position": (self.WIDTH/2-40,self.HEIGHT-50),"command1":lambda:(self.config.config(keys=True),self.change_mains({"main":6,"command":self.buttons_keys}))})
-        self.keys_buttons={"key_up":self.up1_button,"key_up2":self.up2_button,"key_down":self.down1_button}
+        self.keys_buttons={"key_up":self.up1_button,"key_up2":self.up2_button,"key_down":self.down1_button,"key_down2":self.down2_button,"key_left":self.left1_button,"key_left2":self.left2_button,"key_right":self.right1_button,"key_right2":self.right2_button}
     def change_keys(self,key,key_name,button=None):
         self.key=key
         self.key_name=key_name
