@@ -126,12 +126,13 @@ class interface(load_elements):
         
         self.save_keys_button = self.button_factory_f2_5.create_TextButton({"text": "Save config","position": (self.WIDTH/2,self.HEIGHT-85),"command1":self.config.save_config})
         self.default_keys_button = self.button_factory_f2_5.create_TextButton({"text": "Default config","position": (self.WIDTH/2-40,self.HEIGHT-50),"command1":lambda:(self.config.config(keys=True),self.change_mains({"main":6,"command":self.buttons_keys}))})
+        self.buttons_keys={"key_up":self.up1_button,"key_up2":self.up2_button,"key_down":self.down1_button}
     def change_keys(self,key,key_name,button=None):
         self.key=key
         self.key_name=key_name
         self.button_key=button
         for k in self.utils_keys.keys():self.utils_keys[k]=False if k!=self.key else not self.utils_keys[self.key]
-        self.check_item(self.utils_keys,self.SKYBLUE,self.WHITE,"color",**{"key_jump":self.space_button})
+        self.check_item(self.utils_keys,self.SKYBLUE,self.WHITE,"color",**self.buttons_keys)
     def event_keys(self,event):
         if self.key!=None and (self.utils_keys[self.key] and event.type==KEYDOWN):
             self.config.config_keys[self.key]=event.key
