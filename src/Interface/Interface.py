@@ -83,7 +83,7 @@ class interface(load_elements):
         self.reset_button = self.button_factory_f2_5.create_TextButton({"text": "Reset","position": (50,self.HEIGHT/2-100),"command1":self.reset,"command2":lambda:self.change_mains({"main":-1})})
         self.option_button = self.button_factory_f2_5.create_TextButton({"text": "Option","position": (50,self.HEIGHT/2-50),"command1":self.reset,"command2":lambda:self.change_mains({"main":4,"run":True}),"command3":self.check_sounds})
         self.menu_button = self.button_factory_f2_5.create_TextButton({"text": "Menu","position": (50,self.HEIGHT/2),"command1":self.reset,"command2":lambda:self.change_mains({"main":0,"run":True}),"command3":self.check_sounds})
-        self.exit_button = self.button_factory_f2_5.create_TextButton({"text": "Exit","position": (50,self.HEIGHT/2),"sound_touch": self.sound_exit,"command1":self.close_game})
+        self.exit_button = self.button_factory_f2_5.create_TextButton({"text": "Exit","position": (50,self.HEIGHT/2+50),"sound_touch": self.sound_exit,"command1":self.close_game})
     def menu_options(self):
         self.screen.fill(self.BLACK)
         self.screen.blit(self.font3.render("Options", True, "orange"),(int(self.WIDTH * (52 / 600)),int(self.HEIGHT * (20 / 400 ))))

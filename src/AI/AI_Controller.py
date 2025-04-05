@@ -1,10 +1,11 @@
 import torch
 import numpy as np
 class AIHandler():
-    def __init__(self, game):self.game = game
+    def __init__(self, game):
+        self.game = game
+        self.direction_to_int = {"UP": 0, "DOWN": 1, "LEFT": 2, "RIGHT": 3}
     def get_state(self):
-        return np.array([self.game.player.rect_head.x, self.game.player.rect_head.y,
-                        self.game.fruit.rect.x, self.game.fruit.rect.y, self.game.player.direction, *self.game.player.body])
+        
     def actions_AI(self,model):
         state=self.get_state()
         action = model(torch.tensor(state, dtype=torch.float32)).detach().numpy()
@@ -18,4 +19,4 @@ class AIHandler():
         if chosen_action == 0:self.game.player.direction = "UP"
         elif chosen_action == 1:self.game.player.direction = "DOWN"
         elif chosen_action == 2:self.game.player.direction = "LEFT"
-        elif chosen_action == 2:self.game.player.direction = "RIGHT"
+        elif chosen_action == 3:self.game.player.direction = "RIGHT"
