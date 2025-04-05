@@ -5,7 +5,14 @@ class AIHandler():
         self.game = game
         self.direction_to_int = {"UP": 0, "DOWN": 1, "LEFT": 2, "RIGHT": 3}
     def get_state(self):
-        
+        direction_value = self.direction_to_int.get(self.game.player.direction, 0)
+        body_coords = []
+        for segment in self.game.player.body:
+            if hasattr(segment, 'x') and hasattr(segment, 'y'):body_coords.extend([segment.x, segment.y])
+            else:body_coords.extend([0, 0]) 
+        state = [self.game.player.rect_head.x,self.game.player.rect_head.y,
+                self.game.fruit.rect.x,self.game.fruit.rect.y,direction_value] + body_coords
+        return np.array(state, dtype=np.float32)
     def actions_AI(self,model):
         state=self.get_state()
         action = model(torch.tensor(state, dtype=torch.float32)).detach().numpy()
