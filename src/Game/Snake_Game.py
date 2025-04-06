@@ -43,10 +43,10 @@ class Snake_Game(interface):
                 if (event.key in {self.config.config_keys["key_down"], self.config.config_keys["key_down2"]}) and self.player.direction != "UP":self.player.direction = "DOWN"
                 if (event.key in {self.config.config_keys["key_left"], self.config.config_keys["key_left2"]}) and self.player.direction != "RIGHT":self.player.direction = "LEFT"
                 if (event.key in {self.config.config_keys["key_right"], self.config.config_keys["key_right2"]}) and self.player.direction != "LEFT":self.player.direction = "RIGHT"
-    def events(self,event):
-        if event.type == self.EVENT_RESET_AI and self.main==-1:
-            if self.reset_ai<self.player.reward:self.reset_ai=self.player.reward
-            if self.reset_ai==self.player.reward:self.handle_collision(self.player, -20)
+    def events(self, event):
+        if event.type == self.EVENT_RESET_AI and self.main == -1:
+            if self.player.reward <= self.reset_ai:self.handle_collision(self.player, -20)
+            else:self.reset_ai = self.player.reward
     def restart(self):
         if self.mode_game["Training AI"]:self.reset(False)
         if self.mode_game["Player"] or self.mode_game["AI"]:self.change_mains({"main":1,"color":self.RED,"limit":100,"command":self.reset})
@@ -55,6 +55,7 @@ class Snake_Game(interface):
         self.check_score()
         self.player.reset()
         self.fruit.respawn_food(self.WIDTH,self.HEIGHT)
+        self.reset_ai = 0
     def type_mode(self):
         self.ai_handler.actions_AI(self.models if self.mode_game["Training AI"] else self.model_training)
     def draw(self):
