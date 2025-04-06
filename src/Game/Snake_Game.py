@@ -13,6 +13,7 @@ class Snake_Game(interface):
         self.game_over=False
         self.exit=False
         self.generation=0
+        self.reset_ai=0
         self.instances()
         self.draw_buttons()
         self.play_music()
@@ -43,6 +44,7 @@ class Snake_Game(interface):
                 if (event.key in {self.config.config_keys["key_left"], self.config.config_keys["key_left2"]}) and self.player.direction != "RIGHT":self.player.direction = "LEFT"
                 if (event.key in {self.config.config_keys["key_right"], self.config.config_keys["key_right2"]}) and self.player.direction != "LEFT":self.player.direction = "RIGHT"
     def events(self,event):
+        if self.reset_ai<self.player.reward:self.reset_score=self.player.score
         if event.type == self.EVENT_RESET_AI and self.main==-1:self.handle_collision(self.player, -20)
     def restart(self):
         if self.mode_game["Training AI"]:self.reset(False)
