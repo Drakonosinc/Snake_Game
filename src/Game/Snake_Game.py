@@ -50,8 +50,8 @@ class Snake_Game(interface):
     def reset(self,running=True):
         self.running=running
         self.check_score()
-        
         self.player.reset()
+        self.fruit.respawn_food(self.WIDTH,self.HEIGHT)
     def type_mode(self):
         self.ai_handler.actions_AI(self.models if self.mode_game["Training AI"] else self.model_training)
     def draw(self):
