@@ -164,4 +164,7 @@ class ScrollBar:
         self.screen=config["screen"]
         self.font = config.get("font", pygame.font.Font(None, 25))
         self.color = config.get("color", (255, 255, 255))
+        self.hover_color = config.get("hover_color", (255, 199, 51))
+        self.position = config["position"]
+        self.commands = [config.get(f"command{i}") for i in range(1,4)]
         
