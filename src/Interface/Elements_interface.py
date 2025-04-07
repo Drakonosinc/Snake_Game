@@ -167,4 +167,6 @@ class ScrollBar:
         self.hover_color = config.get("hover_color", (255, 199, 51))
         self.position = config["position"]
         self.commands = [config.get(f"command{i}") for i in range(1,4)]
+        self.sound_hover = config.get("sound_hover")
+        self.sound_touch = config.get("sound_touch")
         
