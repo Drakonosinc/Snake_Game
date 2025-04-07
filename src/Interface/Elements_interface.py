@@ -161,4 +161,7 @@ class Input_text:
     def show_player(self):return self.text
 class ScrollBar:
     def __init__(self,config:dict):
+        self.screen=config["screen"]
+        self.font = config.get("font", pygame.font.Font(None, 25))
+        self.color = config.get("color", (255, 255, 255))
         
