@@ -173,3 +173,6 @@ class ScrollBar:
         self.detect_mouse=config.get("detect_mouse",True)
         self.button_states=config.get("button_states",{"detect_hover":True,"presses_touch":True})
         self.rect = pygame.Rect(*self.position, *self.font.size(self.text))
+    def execute_commands(self):
+        for command in self.commands:
+            if callable(command):command()
