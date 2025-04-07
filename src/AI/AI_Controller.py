@@ -12,8 +12,7 @@ class AIHandler():
             if hasattr(segment, 'x') and hasattr(segment, 'y'):body_coords.extend([segment.x, segment.y])
             else:body_coords.extend([0, 0])
         while len(body_coords) < max_body_segments * 2:body_coords.extend([0, 0])
-        state = [self.game.player.rect_head.x,self.game.player.rect_head.y,
-                self.game.fruit.rect.x,self.game.fruit.rect.y,direction_value]
+        state = [self.game.player.rect_head.x,self.game.player.rect_head.y,self.game.fruit.rect.x,self.game.fruit.rect.y,direction_value]
         state.extend(body_coords[:8])
         return np.array(state, dtype=np.float32)
     def actions_AI(self,model):
