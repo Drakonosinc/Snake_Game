@@ -159,3 +159,6 @@ class Input_text:
         for command in self.commands:
             if callable(command):command()
     def show_player(self):return self.text
+class ScrollBar:
+    def __init__(self,config:dict):
+        

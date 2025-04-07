@@ -56,7 +56,7 @@ class Snake_Game(interface):
         self.player.reset()
         self.fruit.respawn_food(self.WIDTH,self.HEIGHT)
         pygame.time.set_timer(self.EVENT_RESET_AI, 0)
-        pygame.time.set_timer(self.EVENT_RESET_AI, 90000)
+        pygame.time.set_timer(self.EVENT_RESET_AI, 60000)
         self.reset_ai = 0
     def type_mode(self):
         self.ai_handler.actions_AI(self.models if self.mode_game["Training AI"] else self.model_training)
