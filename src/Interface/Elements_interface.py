@@ -171,11 +171,13 @@ class ScrollBar:
         self.sound_touch = config.get("sound_touch")
         self.pressed = config.get("pressed",True)
         self.detect_mouse=config.get("detect_mouse",True)
+        self.pressed_keep = config.get("pressed_keep",True)
         self.button_states=config.get("button_states",{"detect_hover":True,"presses_touch":True})
         self.rect = pygame.Rect(*self.position, *self.font.size(self.text))
     def draw(self):
         if self.detect_mouse:self.mouse_collision(pygame.mouse.get_pos())
         if self.pressed:self.pressed_button(pygame.mouse.get_pressed(),pygame.mouse.get_pos())
+        if self.pressed_keep:self.pressed_keep_button(pygame.mouse.get_pressed(),pygame.mouse.get_pos())
     def mouse_collision(self,mouse_pos):pass
     def pressed_button(self,pressed_mouse,mouse_pos):pass
     def pressed_keep_button(self,pressed_mouse,mouse_pos):pass
