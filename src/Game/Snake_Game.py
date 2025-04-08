@@ -8,7 +8,7 @@ class Snake_Game(interface):
         self.models=None
         self.ai_handler=AIHandler(self)
         self.clock=pygame.time.Clock()
-        self.FPS=60
+        self.FPS=120
         self.running=True
         self.game_over=False
         self.exit=False
@@ -38,7 +38,7 @@ class Snake_Game(interface):
         if event.type==pygame.KEYDOWN:
             if self.main==3 and event.key==K_p:self.main=-1
             elif self.main==-1 and event.key==K_p:self.main=3
-            if self.mode_game["Training AI"] and event.key==K_1:self.save_model(self.models, torch.optim.Adam(self.models.parameters(), lr=0.001),self.model_path)
+            if self.mode_game["Training AI"] and event.key==K_1:save_model(self.models, torch.optim.Adam(self.models.parameters(), lr=0.001),self.model_path)
             if self.mode_game["Player"] and self.main==-1:
                 if (event.key in {self.config.config_keys["key_up"], self.config.config_keys["key_up2"]}) and self.player.direction != "DOWN":self.player.direction = "UP"
                 if (event.key in {self.config.config_keys["key_down"], self.config.config_keys["key_down2"]}) and self.player.direction != "UP":self.player.direction = "DOWN"
