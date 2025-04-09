@@ -36,6 +36,8 @@ class interface(load_elements):
         self.buttons_visual()
         self.buttons_keys()
         self.buttons_sounds()
+    # def events_buttons(self,event):
+    #     for button in self.buttons_in_main_menu:button.events(event)
     def filt(self,WIDTH,HEIGHT,number,color=(0,0,0),position=(0,0)):
         background=pygame.Surface((WIDTH,HEIGHT),pygame.SRCALPHA)
         background.fill((*color, number))
@@ -47,11 +49,12 @@ class interface(load_elements):
     def main_menu(self):
         self.screen.fill(self.BLACK)
         self.screen.blit(self.font3.render("Snake Game", True, "orange"),(int(self.WIDTH * (52 / 600)),int(self.HEIGHT * (20 / 400 ))))
-        self.execute_buttons(self.play_button,self.quit_button,self.options_button)
+        self.execute_buttons(*self.buttons_in_main_menu)
     def buttons_main_menu(self):
-        self.play_button = self.button_factory_f2_5.create_TextButton({"text": "PLAY","position": (self.WIDTH/2-60, self.HEIGHT/2-100),"command1":lambda:self.change_mains({"main":2})})
-        self.quit_button = self.button_factory_f2_5.create_TextButton({"text": "QUIT","position": (self.WIDTH/2-60,self.HEIGHT/2-55),"sound_touch": self.sound_exit,"command1": self.close_game})
-        self.options_button = self.button_factory_f2_5.create_TextButton({"text": "OPTIONS","position": (self.WIDTH-180,self.HEIGHT-50),"command1":lambda:self.change_mains({"main":4})})
+        play_button = self.button_factory_f2_5.create_TextButton({"text": "PLAY","position": (self.WIDTH/2-60, self.HEIGHT/2-100),"command1":lambda:self.change_mains({"main":2})})
+        quit_button = self.button_factory_f2_5.create_TextButton({"text": "QUIT","position": (self.WIDTH/2-60,self.HEIGHT/2-55),"sound_touch": self.sound_exit,"command1": self.close_game})
+        options_button = self.button_factory_f2_5.create_TextButton({"text": "OPTIONS","position": (self.WIDTH-180,self.HEIGHT-50),"command1":lambda:self.change_mains({"main":4})})
+        self.buttons_in_main_menu=[play_button,quit_button,options_button]
     def game_over_menu(self):
         self.filt(self.WIDTH,self.HEIGHT,150,self.RED)
         self.screen.blit(self.font3.render("Game Over", True, self.BLACK),(int(self.WIDTH * (52 / 600)),int(self.HEIGHT * (20 / 400 ))))
