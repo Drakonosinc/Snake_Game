@@ -180,7 +180,12 @@ class ScrollBar:
         self.detect_mouse=config.get("detect_mouse",True)
         self.pressed_keep = config.get("pressed_keep",True)
         self.button_states=config.get("button_states",{"detect_hover":True,"presses_touch":True,"pressed_keep":True})
+        self.holding = False
         self.rect = pygame.Rect(*self.position)
+    def events(self, event):
+        if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+            if self.rect.collidepoint(pygame.mouse.get_pos()):self.holding = True
+        elif event.type == pygame.MOUSEBUTTONUP and event.button == 1:self.holding = False
     def draw(self):
         if self.detect_mouse:self.mouse_collision(pygame.mouse.get_pos())
         if self.pressed:self.pressed_button(pygame.mouse.get_pressed(),pygame.mouse.get_pos())
