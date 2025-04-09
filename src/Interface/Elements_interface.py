@@ -162,7 +162,6 @@ class Input_text:
 class ScrollBar:
     def __init__(self,config:dict):
         self.screen=config["screen"]
-        self.font = config.get("font", pygame.font.Font(None, 25))
         self.color = config.get("color", (255, 255, 255))
         self.hover_color = config.get("hover_color", (255, 199, 51))
         self.position = config["position"]
@@ -173,7 +172,7 @@ class ScrollBar:
         self.detect_mouse=config.get("detect_mouse",True)
         self.pressed_keep = config.get("pressed_keep",True)
         self.button_states=config.get("button_states",{"detect_hover":True,"presses_touch":True})
-        self.rect = pygame.Rect(*self.position, *self.font.size(self.text))
+        self.rect = pygame.Rect(*self.position)
     def draw(self):
         if self.detect_mouse:self.mouse_collision(pygame.mouse.get_pos())
         if self.pressed:self.pressed_button(pygame.mouse.get_pressed(),pygame.mouse.get_pos())
