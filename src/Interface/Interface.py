@@ -51,29 +51,30 @@ class interface(load_elements):
         self.screen.blit(self.font3.render("Snake Game", True, "orange"),(int(self.WIDTH * (52 / 600)),int(self.HEIGHT * (20 / 400 ))))
         self.execute_buttons(*self.buttons_in_main_menu)
     def buttons_main_menu(self):
-        play_button = self.button_factory_f2_5.create_TextButton({"text": "PLAY","position": (self.WIDTH/2-60, self.HEIGHT/2-100),"command1":lambda:self.change_mains({"main":2})})
-        quit_button = self.button_factory_f2_5.create_TextButton({"text": "QUIT","position": (self.WIDTH/2-60,self.HEIGHT/2-55),"sound_touch": self.sound_exit,"command1": self.close_game})
-        options_button = self.button_factory_f2_5.create_TextButton({"text": "OPTIONS","position": (self.WIDTH-180,self.HEIGHT-50),"command1":lambda:self.change_mains({"main":4})})
+        self.play_button = self.button_factory_f2_5.create_TextButton({"text": "PLAY","position": (self.WIDTH/2-60, self.HEIGHT/2-100),"command1":lambda:self.change_mains({"main":2})})
+        self.quit_button = self.button_factory_f2_5.create_TextButton({"text": "QUIT","position": (self.WIDTH/2-60,self.HEIGHT/2-55),"sound_touch": self.sound_exit,"command1": self.close_game})
+        self.options_button = self.button_factory_f2_5.create_TextButton({"text": "OPTIONS","position": (self.WIDTH-180,self.HEIGHT-50),"command1":lambda:self.change_mains({"main":4})})
         self.buttons_in_main_menu=[play_button,quit_button,options_button]
     def game_over_menu(self):
         self.filt(self.WIDTH,self.HEIGHT,150,self.RED)
         self.screen.blit(self.font3.render("Game Over", True, self.BLACK),(int(self.WIDTH * (52 / 600)),int(self.HEIGHT * (20 / 400 ))))
         self.execute_buttons(*self.buttons_in_game_over)
     def buttons_game_over(self):
-        restar_button = self.button_factory_f2_5.create_TextButton({"text": "Press R to Restart","position": (50,self.HEIGHT/2-100),"command1":self.reset,"command2":lambda:self.change_mains({"main":-1})})
-        exit_menu_button = self.button_factory_f2_5.create_TextButton({"text": "Exit The Menu","position": (50,self.HEIGHT/2-50),"command1":self.reset,"command2":lambda:self.change_mains({"main":0,"run":True,"command":self.check_sounds})})
-        exit_over_button = self.button_factory_f2_5.create_TextButton({"text": "Exit The Game","position": (50,self.HEIGHT/2),"sound_touch": self.sound_exit,"command1":self.close_game})
+        self.restar_button = self.button_factory_f2_5.create_TextButton({"text": "Press R to Restart","position": (50,self.HEIGHT/2-100),"command1":self.reset,"command2":lambda:self.change_mains({"main":-1})})
+        self.exit_menu_button = self.button_factory_f2_5.create_TextButton({"text": "Exit The Menu","position": (50,self.HEIGHT/2-50),"command1":self.reset,"command2":lambda:self.change_mains({"main":0,"run":True,"command":self.check_sounds})})
+        self.exit_over_button = self.button_factory_f2_5.create_TextButton({"text": "Exit The Game","position": (50,self.HEIGHT/2),"sound_touch": self.sound_exit,"command1":self.close_game})
         self.buttons_in_game_over=[restar_button,exit_menu_button,exit_over_button]
     def mode_game_menu(self):
         self.screen.fill(self.BLACK)
         self.screen.blit(self.font3.render("Mode Game", True, "orange"),(int(self.WIDTH * (52 / 600)),int(self.HEIGHT * (20 / 400 ))))
-        self.execute_buttons(self.Training_AI_button,self.player_button,self.ai_button,self.continue_button,self.back_menu_button)
+        self.execute_buttons(*self.buttons_in_mode_game)
     def buttons_mode_game(self):
         self.Training_AI_button = self.button_factory_f2_5.create_TextButton({"text": "Training AI","position": (50,self.HEIGHT/2-100),"command1":lambda:self.type_game(True),"command2":lambda:self.change_mains({"main":8})})
         self.player_button = self.button_factory_f2_5.create_TextButton({"text": "Player","position": (50,self.HEIGHT/2-50),"command1":lambda:self.type_game(False,True),"command2":lambda:self.check_item(self.mode_game,self.SKYBLUE,self.WHITE,"color",**{"Player":self.player_button,"Training AI":self.Training_AI_button,"AI":self.ai_button})})
         self.ai_button = self.button_factory_f2_5.create_TextButton({"text": "AI","position": (50,self.HEIGHT/2),"command1":lambda:self.type_game(False,False,True),"command2":lambda:self.check_item(self.mode_game,self.SKYBLUE,self.WHITE,"color",**{"AI":self.ai_button,"Player":self.player_button,"Training AI":self.Training_AI_button})})
         self.continue_button = self.button_factory_f2_5.create_TextButton({"font": self.font1,"text": "→","position": (self.WIDTH-110,self.HEIGHT-100),"command1":lambda:self.type_game(False,True) if all(not mode for mode in self.mode_game.values()) else None,"command2":lambda:(self.change_mains({"main":-1,"run":True,"command":None}),self.sound_main.stop(),self.sound_back_game.play(loops=-1)if self.sound_type["value_game"] else None)})
         self.back_menu_button = self.button_factory_f2_5.create_TextButton({"font": self.font1,"text": "←","position": (35,self.HEIGHT-100),"command1":lambda:self.change_mains({"main":0})})
+        self.buttons_in_mode_game=[Training_AI_button,player_button,ai_button,continue_button,back_menu_button]
     def type_game(self,mode_one=False,mode_two=False,mode_three=False):
         self.mode_game["Training AI"]=mode_one
         self.mode_game["Player"]=mode_two
