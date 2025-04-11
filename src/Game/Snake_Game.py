@@ -8,7 +8,7 @@ class Snake_Game(interface):
         self.models=None
         self.ai_handler=AIHandler(self)
         self.clock=pygame.time.Clock()
-        self.FPS=60
+        self.FPS=120
         self.running=True
         self.game_over=False
         self.exit=False
