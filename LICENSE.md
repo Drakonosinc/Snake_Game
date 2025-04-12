@@ -1,7 +1,7 @@
 SPDX-License-Identifier: GPL-3.0-or-later
 
-                    GNU GENERAL PUBLIC LICENSE
-                       Version 3, 29 June 2007
+                     GNU GENERAL PUBLIC LICENSE
+                        Version 3, 29 June 2007
 
  Copyright (C) 2023 Drakonosinc
  Everyone is permitted to copy and distribute verbatim copies
