@@ -61,7 +61,7 @@ class TextButton:
             self.button_states["presses_touch"]=False
             self.button_states["click_time"] = current_time
         if self.button_states["click_time"] is not None:
-            if current_time - self.button_states["click_time"] >= 500:
+            if current_time - self.button_states["click_time"] >= 200:
                 if self.sound_touch:self.sound_touch.play(loops=0)
                 self.button_states["click_time"] = None
                 self.button_states["presses_touch"] = True
