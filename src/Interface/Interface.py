@@ -36,8 +36,10 @@ class interface(load_elements):
         self.buttons_visual()
         self.buttons_keys()
         self.buttons_sounds()
+        self.buttons=[*self.buttons_in_main_menu,*self.buttons_in_game_over,*self.buttons_in_mode_game,*self.buttons_in_config_AI,*self.buttons_in_pausa,
+                *self.buttons_in_menu_options,*self.buttons_in_visuals,*self.buttons_in_keys,*self.buttons_in_sounds]
     def events_buttons(self,event):
-        for button in self.buttons_in_main_menu:button.events(event)
+        for button in self.buttons:button.events(event)
     def filt(self,WIDTH,HEIGHT,number,color=(0,0,0),position=(0,0)):
         background=pygame.Surface((WIDTH,HEIGHT),pygame.SRCALPHA)
         background.fill((*color, number))
