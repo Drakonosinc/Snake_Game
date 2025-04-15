@@ -35,10 +35,7 @@ class TextButton:
         self.rect = pygame.Rect(*self.position, *self.font.size(self.text))
         self.new_events(time=config.get("time",500))
     def events(self, event):
-        if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
-            if self.rect.collidepoint(pygame.mouse.get_pos()):self.holding = True
-        elif event.type == pygame.MOUSEBUTTONUP and event.button == 1:self.holding = False
-    def is_holding(self):return self.holding
+        pass
     def new_events(self,time):
         self.EVENT_NEW = pygame.USEREVENT + 1
         pygame.time.set_timer(self.EVENT_NEW,time)
