@@ -1,1 +1,1 @@
-This is a common snake game, it will eventually add more features and improvements, technical and visual.
+This game is created with pygame and pytorch, it is a snake game with complete interfaces created entirely with object-oriented programming and integrates an AI training system implemented with a neural network created in pytorch and trained through a genetic algorithm, eventually I will update it with technical and visual improvements.
