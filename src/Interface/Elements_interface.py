@@ -203,6 +203,9 @@ class ScrollBar:
     def mouse_collision(self,mouse_pos):pass
     def pressed_button(self,pressed_mouse,mouse_pos):
         current_time = pygame.time.get_ticks()
+        if pressed_mouse[0] and self.rect.collidepoint(mouse_pos) and self.button_states["presses_touch"]:
+            self.button_states["presses_touch"]=False
+            self.button_states["click_time"] = current_time
         
     def pressed_keep_button(self,pressed_mouse,mouse_pos):pass
     def execute_commands(self):
