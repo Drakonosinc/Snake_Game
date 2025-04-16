@@ -206,7 +206,12 @@ class ScrollBar:
         if pressed_mouse[0] and self.rect.collidepoint(mouse_pos) and self.button_states["presses_touch"]:
             self.button_states["presses_touch"]=False
             self.button_states["click_time"] = current_time
-        
+        if self.button_states["click_time"] is not None:
+            if current_time - self.button_states["click_time"] >= 200:
+                if self.sound_touch:self.sound_touch.play(loops=0)
+                self.button_states["click_time"] = None
+                self.button_states["presses_touch"] = True
+                self.execute_commands()
     def pressed_keep_button(self,pressed_mouse,mouse_pos):pass
     def execute_commands(self):
         for command in self.commands:
