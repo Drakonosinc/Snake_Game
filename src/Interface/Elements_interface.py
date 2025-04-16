@@ -188,7 +188,7 @@ class ScrollBar:
         self.pressed = config.get("pressed",True)
         self.detect_mouse=config.get("detect_mouse",True)
         self.pressed_keep = config.get("pressed_keep",True)
-        self.button_states=config.get("button_states",{"detect_hover":True,"presses_touch":True,"pressed_keep":True})
+        self.button_states=config.get("button_states",{"detect_hover":True,"presses_touch":True,"pressed_keep":True,"click_time": None})
         self.holding = False
         self.rect = pygame.Rect(*self.position)
         self.rect_bar = pygame.Rect(*self.position_bar,self.position.width,self.position.height*4)
