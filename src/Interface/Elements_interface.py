@@ -203,7 +203,10 @@ class ScrollBar:
     def mouse_collision(self,mouse_pos):
         if self.rect.collidepoint(mouse_pos):
             self.screen.blit(self.font.render(self.text,True,self.hover_color),self.position)
-            
+            if self.button_states["detect_hover"]:
+                if self.sound_hover:self.sound_hover.play(loops=0)
+                self.button_states["detect_hover"]=False
+        else:self.button_states["detect_hover"]=True
     def pressed_button(self,pressed_mouse,mouse_pos):
         current_time = pygame.time.get_ticks()
         if pressed_mouse[0] and self.rect.collidepoint(mouse_pos) and self.button_states["presses_touch"]:
