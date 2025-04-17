@@ -47,13 +47,12 @@ class interface(load_elements):
     def main_menu(self):
         self.screen.fill(self.BLACK)
         self.screen.blit(self.font3.render("Snake Game", True, "orange"),(int(self.WIDTH * (52 / 600)),int(self.HEIGHT * (20 / 400 ))))
-        self.execute_buttons(*self.buttons_in_main_menu,self.scroll)
+        self.execute_buttons(*self.buttons_in_main_menu)
     def buttons_main_menu(self):
         self.play_button = self.button_factory_f2_5.create_TextButton({"text": "PLAY","position": (self.WIDTH/2-60, self.HEIGHT/2-100),"command1":lambda:self.change_mains({"main":2})})
         self.quit_button = self.button_factory_f2_5.create_TextButton({"text": "QUIT","position": (self.WIDTH/2-60,self.HEIGHT/2-55),"sound_touch": self.sound_exit,"command1": self.close_game})
         self.options_button = self.button_factory_f2_5.create_TextButton({"text": "OPTIONS","position": (self.WIDTH-180,self.HEIGHT-50),"command1":lambda:self.change_mains({"main":4})})
         self.buttons_in_main_menu=[self.play_button,self.quit_button,self.options_button]
-        self.scroll=self.button_factory_f2_5.create_ScrollBar({"position": (self.WIDTH-30, 50, 20, self.HEIGHT-100),"thumb_height": 20,"thumb_ratio": 0.2,"elements": [*self.buttons_in_main_menu]})
     def game_over_menu(self):
         self.filt(self.WIDTH,self.HEIGHT,150,self.RED)
         self.screen.blit(self.font3.render("Game Over", True, self.BLACK),(int(self.WIDTH * (52 / 600)),int(self.HEIGHT * (20 / 400 ))))
