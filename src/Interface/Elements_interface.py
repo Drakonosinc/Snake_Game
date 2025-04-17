@@ -201,3 +201,5 @@ class ScrollBar:
             if self.thumb_rect.collidepoint(event.pos):
                 self.dragging = True
                 self.drag_offset = event.pos[1] - self.thumb_rect.y
+        elif event.type == pygame.MOUSEBUTTONUP and event.button == 1:
+            self.dragging = False
