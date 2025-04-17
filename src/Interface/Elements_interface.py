@@ -208,3 +208,7 @@ class ScrollBar:
             new_y = max(self.rect.top, min(new_y, self.rect.bottom - self.thumb_height))
             self.thumb_rect.y = new_y
             self.scroll_elements()
+    def scroll_elements(self):
+        max_scroll = max(self.content_height - self.rect.height, 0)
+        if max_scroll == 0:proportion = 0.0
+        else:proportion = (self.thumb_rect.y - self.rect.y) / (self.rect.height - self.thumb_height)
