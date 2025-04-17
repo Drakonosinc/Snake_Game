@@ -188,3 +188,11 @@ class ScrollBar:
         self.color_thumb = config.get("color_bar", (255, 199, 51))
         self.elements = config.get("elements", [])
         self.initial_positions = [(el.position[0], el.position[1]) for el in self.elements]
+        if self.elements:
+            top = min(y for _, y in self.initial_positions)
+            bottom = max(el.rect.bottom for el in self.elements)
+            self.content_height = bottom - top
+        else:self.content_height = self.rect.height
+        self.callback = config.get("command1")
+        self.dragging = False
+        self.drag_offset = 0
