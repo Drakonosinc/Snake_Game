@@ -186,3 +186,5 @@ class ScrollBar:
         self.thumb_rect = pygame.Rect(self.rect.x, self.rect.y, self.rect.width, self.thumb_height)
         self.color = config.get("color", (200, 200, 200))
         self.color_thumb = config.get("color_bar", (255, 199, 51))
+        self.elements = config.get("elements", [])
+        self.initial_positions = [(el.position[0], el.position[1]) for el in self.elements]
