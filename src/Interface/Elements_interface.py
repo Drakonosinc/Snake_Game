@@ -217,3 +217,5 @@ class ScrollBar:
             new_y = y0 - offset
             el.position = (x0, new_y)
             el.rect.y = new_y
+        if callable(self.callback):
+            self.callback(proportion)
