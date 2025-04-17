@@ -182,3 +182,7 @@ class ScrollBar:
         self.hover_color=config.get("hover_color",(255, 199, 51))
         self.sound_hover = config.get("sound_hover")
         self.sound_touch = config.get("sound_touch")
+        self.thumb_height = config.get("thumb_height", max(20, int(position[3] * config.get("thumb_ratio", 0.2))))
+        self.thumb_rect = pygame.Rect(self.rect.x, self.rect.y, self.rect.width, self.thumb_height)
+        self.color = config.get("color", (200, 200, 200))
+        self.color_thumb = config.get("color_bar", (255, 199, 51))
