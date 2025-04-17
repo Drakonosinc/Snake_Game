@@ -212,3 +212,8 @@ class ScrollBar:
         max_scroll = max(self.content_height - self.rect.height, 0)
         if max_scroll == 0:proportion = 0.0
         else:proportion = (self.thumb_rect.y - self.rect.y) / (self.rect.height - self.thumb_height)
+        offset = int(proportion * max_scroll)
+        for el, (x0, y0) in zip(self.elements, self.initial_positions):
+            new_y = y0 - offset
+            el.position = (x0, new_y)
+            el.rect.y = new_y
