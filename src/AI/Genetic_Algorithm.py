@@ -1,8 +1,12 @@
 import random
-from .Neural_Network import *
+import torch
+from typing import List, Tuple, Optional
+from tqdm import tqdm  # Barra de progreso para el bucle de generaciones
+from .Neural_Network import SimpleNN  # Import explícito en lugar de wildcard
 
-def fitness_function(models, game):
-    game.models = models
+def fitness_function(model: SimpleNN, game) -> float:
+    """Evalúa el fitness de un modelo en el juego y retorna el puntaje."""
+    game.models = model  # Asignar modelo al juego para evaluación
     score = game.run_with_models()
     print(f"Score: {score}")
     return score
@@ -14,7 +18,8 @@ def initialize_population(size, input_size, output_size):
         population.append(model)
     return population
 
-def evaluate_population(population, game, num_trials=3):
+def evaluate_population(population: List[SimpleNN], game, num_trials: int = 3) -> List[float]:
+    """Evalúa cada modelo en la población y retorna la lista de fitness promedio."""
     fitness_scores = []
     for model in population:
         score = [fitness_function(model, game) for _ in range(num_trials)]
@@ -48,13 +53,14 @@ def mutate(model, mutation_rate=0.02, strong_mutation_rate=0.1):
             if random.random() < strong_mutation_rate:param.add_(torch.clamp(torch.randn(param.size()) * 0.7, -1.0, 1.0))
     return model
 
-def genetic_algorithm(game, input_size, output_size, generations=100, population_size=20, initial_mutation_rate=0.01, strong_mutation_rate=0.05, elitism_rate=0.05, num_trials=3):
+def genetic_algorithm(game, input_size: int, output_size: int, generations: int = 100, population_size: int = 20, initial_mutation_rate: float = 0.01, strong_mutation_rate: float = 0.05, elitism_rate: float = 0.05, num_trials: int = 3) -> SimpleNN:
+    """Ejecuta algoritmo genético para optimizar redes neuronales."""
     population = initialize_population(population_size, input_size, output_size)
     elite_size = max(1, int(elitism_rate * population_size))
     mutation_rate = initial_mutation_rate
     previous_best_score = float('-inf')
 
-    for generation in range(generations):
+    for generation in tqdm(range(generations), desc="Generaciones GA"):
         game.generation = generation
         fitness_scores = evaluate_population(population, game, num_trials)
 
