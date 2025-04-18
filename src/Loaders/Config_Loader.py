@@ -22,7 +22,7 @@ class Config():
                                         "key_left":K_LEFT,"Name_key5":"LEFT","key_left2":K_a,"Name_key6":"A",
                                         "key_right":K_RIGHT,"Name_key7":"RIGHT","key_right2":K_d,"Name_key8":"D"}
         if sounds or alls:self.config_sounds={"sound_menu":True,"sound_game":True}
-        if AI or alls:self.config_AI={"generation_value":100,"population_value":20,"try_for_ai":3,"model_save":False}
+        if AI or alls:self.config_AI={"generation_value":100,"population_value":20,"try_for_ai":3,"model_save":False,"type_training":["genetic","q-learning"],"type_model":["DQN","CNN"]}
         if game or alls:self.config_game={"max_score":0}
     def save_config(self):
         self.config_path = os.path.join(self.base_dir, "Config")
