@@ -43,7 +43,15 @@
         "generation_value": 100,
         "population_value": 20,
         "try_for_ai": 3,
-        "model_save": false
+        "model_save": false,
+        "type_training": [
+            "genetic",
+            "q-learning"
+        ],
+        "type_model": [
+            "DQN",
+            "CNN"
+        ]
     },
     "config_game": {
         "max_score": 0
