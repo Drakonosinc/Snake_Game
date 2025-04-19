@@ -113,3 +113,5 @@ def train_dqn(episodes: int = 500):
             state = next_state
             total_reward += reward
         print(f"Episodio {episode}/{episodes} - Recompensa total: {total_reward:.2f} - Epsilon: {agent.epsilon:.3f}")
+    torch.save(agent.policy_net.state_dict(), 'qlearning_snake.pth')
+    return agent
