@@ -81,3 +81,5 @@ class DQNAgent:
             return
         transitions = self.memory.sample(self.batch_size)
         states, actions, rewards, next_states, dones = zip(*transitions)
+        states = torch.tensor(states, dtype=torch.float32)
+        actions = torch.tensor(actions, dtype=torch.int64).unsqueeze(1)
