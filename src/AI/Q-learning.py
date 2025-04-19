@@ -101,3 +101,7 @@ def train_dqn(episodes: int = 500):
     env = SnakeEnv()
     state = env.reset()
     agent = DQNAgent(state_size=len(state), action_size=env.action_space)
+    for episode in range(1, episodes + 1):
+        state = env.reset()
+        total_reward = 0
+        done = False
