@@ -67,3 +67,6 @@ class DQNAgent:
         self.target_net.eval()
         self.optimizer = optim.Adam(self.policy_net.parameters(), lr=lr)
         self.memory = ReplayMemory(memory_size)
+    def select_action(self, state: np.ndarray) -> int:
+        if random.random() < self.epsilon:
+            return random.randrange(self.action_size)
