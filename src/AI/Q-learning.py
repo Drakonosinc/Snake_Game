@@ -112,3 +112,4 @@ def train_dqn(episodes: int = 500):
             agent.optimize_model()
             state = next_state
             total_reward += reward
+        print(f"Episodio {episode}/{episodes} - Recompensa total: {total_reward:.2f} - Epsilon: {agent.epsilon:.3f}")
