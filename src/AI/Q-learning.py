@@ -74,3 +74,5 @@ class DQNAgent:
             tensor_state = torch.tensor(state, dtype=torch.float32)
             q_values = self.policy_net(tensor_state)
             return int(torch.argmax(q_values).item())
+    def store_transition(self, state, action, reward, next_state, done):
+        self.memory.push((state, action, reward, next_state, done))
