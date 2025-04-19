@@ -56,3 +56,8 @@ class DQNAgent:
         self.action_size = action_size
         self.gamma = gamma
         self.epsilon = epsilon_start
+        self.epsilon_min = epsilon_end
+        self.epsilon_decay = epsilon_decay
+        self.batch_size = batch_size
+        self.steps_done = 0
+        self.target_update = target_update
