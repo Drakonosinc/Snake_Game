@@ -95,3 +95,5 @@ class DQNAgent:
         self.optimizer.step()
         self.epsilon = max(self.epsilon_min, self.epsilon * self.epsilon_decay)
         self.steps_done += 1
+        if self.steps_done % self.target_update == 0:
+            self.target_net.load_state_dict(self.policy_net.state_dict())
