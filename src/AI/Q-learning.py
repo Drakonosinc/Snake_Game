@@ -70,3 +70,7 @@ class DQNAgent:
     def select_action(self, state: np.ndarray) -> int:
         if random.random() < self.epsilon:
             return random.randrange(self.action_size)
+        with torch.no_grad():
+            tensor_state = torch.tensor(state, dtype=torch.float32)
+            q_values = self.policy_net(tensor_state)
+            return int(torch.argmax(q_values).item())
