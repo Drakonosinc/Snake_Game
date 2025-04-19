@@ -89,3 +89,7 @@ class DQNAgent:
         current_q = self.policy_net(states).gather(1, actions)
         next_q = self.target_net(next_states).max(1)[0].detach().unsqueeze(1)
         expected_q = rewards + (1 - dones) * self.gamma * next_q
+        loss = nn.MSELoss()(current_q, expected_q)
+        self.optimizer.zero_grad()
+        loss.backward()
+        self.optimizer.step()
