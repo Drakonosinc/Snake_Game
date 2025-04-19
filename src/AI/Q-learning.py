@@ -10,3 +10,5 @@ from AI.Neural_Network import SimpleNN
 class ReplayMemory:
     def __init__(self, capacity: int):
         self.memory = deque(maxlen=capacity)
+    def push(self, transition: tuple):
+        self.memory.append(transition)
