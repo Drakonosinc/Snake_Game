@@ -105,3 +105,7 @@ def train_dqn(episodes: int = 500):
         state = env.reset()
         total_reward = 0
         done = False
+        while not done:
+            action = agent.select_action(state)
+            next_state, reward, done = env.step(action)
+            agent.store_transition(state, action, reward, next_state, done)
