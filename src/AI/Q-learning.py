@@ -97,3 +97,7 @@ class DQNAgent:
         self.steps_done += 1
         if self.steps_done % self.target_update == 0:
             self.target_net.load_state_dict(self.policy_net.state_dict())
+def train_dqn(episodes: int = 500):
+    env = SnakeEnv()
+    state = env.reset()
+    agent = DQNAgent(state_size=len(state), action_size=env.action_space)
