@@ -201,8 +201,7 @@ class ScrollBar:
             if self.thumb_rect.collidepoint(event.pos):
                 self.dragging = True
                 self.drag_offset = event.pos[1] - self.thumb_rect.y
-        elif event.type == pygame.MOUSEBUTTONUP and event.button == 1:
-            self.dragging = False
+        elif event.type == pygame.MOUSEBUTTONUP and event.button == 1:self.dragging = False
         elif event.type == pygame.MOUSEMOTION and self.dragging:
             new_y = event.pos[1] - self.drag_offset
             new_y = max(self.rect.top, min(new_y, self.rect.bottom - self.thumb_height))
@@ -217,8 +216,7 @@ class ScrollBar:
             new_y = y0 - offset
             el.position = (x0, new_y)
             el.rect.y = new_y
-        if callable(self.callback):
-            self.callback(proportion)
+        if callable(self.callback):self.callback(proportion)
     def draw(self):
         pygame.draw.rect(self.screen, self.color, self.rect)
         pygame.draw.rect(self.screen, self.color_thumb, self.thumb_rect)

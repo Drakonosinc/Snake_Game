@@ -16,6 +16,7 @@ class ReplayMemory:
         return random.sample(self.memory, batch_size)
     def __len__(self) -> int:
         return len(self.memory)
+
 class SnakeEnv:
     """Wrapper del juego Snake para interfaz Gym-like."""
     def __init__(self):
@@ -97,6 +98,7 @@ class DQNAgent:
         self.steps_done += 1
         if self.steps_done % self.target_update == 0:
             self.target_net.load_state_dict(self.policy_net.state_dict())
+
 def train_dqn(episodes: int = 500):
     env = SnakeEnv()
     state = env.reset()
