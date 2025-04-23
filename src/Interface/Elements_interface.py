@@ -9,6 +9,8 @@ class ElementsFactory:
         self.color_back=config.get("color_back",(255,255,255))
         self.sound_hover=config.get("sound_hover",None)
         self.sound_touch=config.get("sound_touch",None)
+    def create_Text(self,config:dict):
+        return Text({"screen": self.screen,"font": self.font,"color": self.color,"hover_color": self.hover_color,**config})
     def create_TextButton(self,config:dict):
         return TextButton({"screen": self.screen,"font": self.font,"color": self.color,"hover_color": self.hover_color,"sound_hover": self.sound_hover,"sound_touch": self.sound_touch,**config})
     def create_PolygonButton(self,config:dict):
@@ -156,14 +158,8 @@ class ScrollBar:
         self.thumb_rect = pygame.Rect(self.rect.x, self.rect.y, self.rect.width, self.thumb_height)
         self.color = config.get("color", (200, 200, 200))
         self.color_thumb = config.get("color_bar", (255, 199, 51))
-        self.elements = config.get("elements", [])
-        self.initial_positions = [(el.position[0], el.position[1]) for el in self.elements]
-        if self.elements:
-            top = min(y for _, y in self.initial_positions)
-            bottom = max(el.rect.bottom for el in self.elements)
-            self.content_height = bottom - top
-        else:self.content_height = self.rect.height
-        self.callback = config.get("command1")
+        self.commands = config.get("command1")
+        self.elements = None
         self.dragging = False
         self.drag_offset = 0
     def events(self, event):
@@ -178,7 +174,7 @@ class ScrollBar:
             self.thumb_rect.y = new_y
             self.scroll_elements()
     def scroll_elements(self):
-        max_scroll = max(self.content_height - self.rect.height, 0)
+        max_scroll = self.content_height
         if max_scroll == 0:proportion = 0.0
         else:proportion = (self.thumb_rect.y - self.rect.y) / (self.rect.height - self.thumb_height)
         offset = int(proportion * max_scroll)
@@ -186,7 +182,16 @@ class ScrollBar:
             new_y = y0 - offset
             el.position = (x0, new_y)
             el.rect.y = new_y
-        if callable(self.callback):self.callback(proportion)
+        if callable(self.commands):self.commands(proportion)
     def draw(self):
         pygame.draw.rect(self.screen, self.color, self.rect)
         pygame.draw.rect(self.screen, self.color_thumb, self.thumb_rect)
+    def update_elements(self, elements: list):
+        if self.elements is None:
+            self.elements = elements
+            self.initial_positions = [(el.position[0], el.position[1]) for el in self.elements]
+            if self.elements:
+                top = min(y for _, y in self.initial_positions)
+                bottom = max(el.rect.bottom for el in self.elements)
+                self.content_height = bottom - top
+            else:self.content_height = self.rect.height
