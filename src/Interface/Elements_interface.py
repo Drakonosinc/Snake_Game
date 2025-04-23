@@ -42,7 +42,9 @@ class ElementBehavior:
                 self.states["click_time"] = None
                 self.states["presses_touch"] = True
                 self.execute_commands()
-    
+    def execute_commands(self):
+        for command in self.commands:
+            if callable(command):command()
 class TextButton:
     def __init__(self,config:dict):
         self.screen = config["screen"]
