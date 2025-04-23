@@ -45,6 +45,9 @@ class ElementBehavior:
     def execute_commands(self):
         for command in self.commands:
             if callable(command):command()
+class Text:
+    def __init__(self,config:dict):
+        
 class TextButton:
     def __init__(self,config:dict):
         self.screen = config["screen"]
