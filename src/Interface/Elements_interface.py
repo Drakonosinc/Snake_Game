@@ -36,7 +36,13 @@ class ElementBehavior:
         if pressed_mouse[0] and self.rect.collidepoint(mouse_pos) and self.states["presses_touch"]:
             self.states["presses_touch"]=False
             self.states["click_time"] = current_time
-        
+        if self.states["click_time"] is not None:
+            if current_time - self.states["click_time"] >= 200:
+                if self.sound_touch:self.sound_touch.play(loops=0)
+                self.states["click_time"] = None
+                self.states["presses_touch"] = True
+                self.execute_commands()
+    
 class TextButton:
     def __init__(self,config:dict):
         self.screen = config["screen"]
