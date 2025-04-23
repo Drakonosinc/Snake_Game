@@ -47,6 +47,10 @@ class ElementBehavior:
             if callable(command):command()
 class Text:
     def __init__(self,config:dict):
+        self.screen = config["screen"]
+        self.font = config.get("font", pygame.font.Font(None, 25))
+        self.text = config["text"]
+        self.color = config.get("color", (255, 255, 255))
         
 class TextButton:
     def __init__(self,config:dict):
