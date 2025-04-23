@@ -78,26 +78,16 @@ class TextButton(Text,ElementBehavior):
         self.text=config.get("text",self.text)
         self.detect_mouse=config.get("detect_mouse",self.detect_mouse)
         self.pressed=config.get("pressed",self.pressed)
-class PolygonButton:
+class PolygonButton(ElementBehavior):
     def __init__(self,config:dict):
+        super().__init__(config)
         self.screen = config["screen"]
         self.position = config["position"]
         self.hover_position = config.get("hover_position",self.position)
         self.color = config.get("color", (255, 255, 255))
         self.hover_color = config.get("hover_color", (255, 199, 51))
-        self.commands = [config.get(f"command{i}") for i in range(1,4)]
-        self.sound_hover = config.get("sound_hover")
-        self.sound_touch = config.get("sound_touch")
         self.detect_mouse=config.get("detect_mouse",True)
-        self.pressed = config.get("pressed",True)
-        self.button_states=config.get("button_states",{"detect_hover":True,"presses_touch":True,"click_time": None})
         self.rect = pygame.draw.polygon(self.screen, self.color, self.position).copy()
-        self.new_events(time=config.get("time",500))
-    def new_events(self,time):
-        self.EVENT_NEW = pygame.USEREVENT + 1
-        pygame.time.set_timer(self.EVENT_NEW,time)
-    def reactivate_pressed(self,event):
-        if event.type==self.EVENT_NEW:self.button_states["presses_touch"]=True
     def draw(self):
         pygame.draw.polygon(self.screen, self.color, self.position)
         if self.detect_mouse:self.mouse_collision(pygame.mouse.get_pos())
@@ -105,28 +95,14 @@ class PolygonButton:
     def mouse_collision(self,mouse_pos):
         if self.rect.collidepoint(mouse_pos):
             pygame.draw.polygon(self.screen, self.hover_color, self.hover_position)
-            if self.button_states["detect_hover"]:
+            if self.states["detect_hover"]:
                 if self.sound_hover:self.sound_hover.play(loops=0)
-                self.button_states["detect_hover"]=False
-        else:self.button_states["detect_hover"]=True
-    def pressed_button(self,pressed_mouse,mouse_pos):
-        current_time = pygame.time.get_ticks()
-        if pressed_mouse[0] and self.rect.collidepoint(mouse_pos) and self.button_states["presses_touch"]:
-            self.button_states["presses_touch"]=False
-            self.button_states["click_time"] = current_time
-        if self.button_states["click_time"] is not None:
-            if current_time - self.button_states["click_time"] >= 200:
-                if self.sound_touch:self.sound_touch.play(loops=0)
-                self.button_states["click_time"] = None
-                self.button_states["presses_touch"] = True
-                self.execute_commands()
+                self.states["detect_hover"]=False
+        else:self.states["detect_hover"]=True
     def change_item(self,config:dict):
         self.color=config.get("color",self.color)
         self.detect_mouse=config.get("detect_mouse",self.detect_mouse)
         self.pressed=config.get("pressed",self.pressed)
-    def execute_commands(self):
-        for command in self.commands:
-            if callable(command):command()
 class Input_text:
     def __init__(self,config:dict):
         self.screen=config["screen"]
