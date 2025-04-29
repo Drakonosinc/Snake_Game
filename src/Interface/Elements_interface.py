@@ -45,6 +45,7 @@ class ElementBehavior:
     def pressed_button(self,pressed_mouse,mouse_pos):
         current_time = pygame.time.get_ticks()
         if pressed_mouse[0] and self.rect.collidepoint(mouse_pos) and self.states["presses_touch"]:
+            self.states["active"]=True
             self.states["presses_touch"]=False
             self.states["click_time"] = current_time
         if self.states["click_time"] is not None:
@@ -129,11 +130,7 @@ class Input_text(ElementBehavior):
         self.screen.blit(self.font.render(self.text, True, self.color), (input_player.x+5, input_player.y-2))
     def draw_hover_effect(self):return pygame.draw.rect(self.screen,self.hover_color,self.rect)
     def pressed_button(self,pressed_mouse,mouse_pos):
-        if pressed_mouse[0] and self.rect.collidepoint(mouse_pos) and self.states["presses_touch"]:
-            self.states["active"]=True
-            if self.sound_touch:self.sound_touch.play(loops=0)
-            self.states["presses_touch"]=False
-            self.execute_commands()
+        super().pressed_button(pressed_mouse,mouse_pos)
         if pressed_mouse[0] and not self.rect.collidepoint(mouse_pos):self.states["active"],self.states["presses_touch"]=False,True
         if self.states["active"]:pygame.draw.rect(self.screen,self.pressed_color,self.rect)
     def show_player(self):return self.text
