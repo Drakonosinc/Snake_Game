@@ -72,6 +72,10 @@ class Text:
         self.screen.blit(self.font.render(self.text, True,self.color), self.position)
         if self.Behavior.detect_mouse:self.Behavior.mouse_collision(self.rect,pygame.mouse.get_pos(),self.draw_hover_effect)
     def draw_hover_effect(self):return self.screen.blit(self.font.render(self.text,True,self.hover_color),self.position)
+    def change_item(self,config:dict):
+        self.position = config.get("position",self.position)
+        self.color=config.get("color",self.color)
+        self.text=config.get("text",self.text)
 class TextButton(Text,ElementBehavior):
     def __init__(self,config:dict):
         Text.__init__(self, config)
@@ -80,8 +84,7 @@ class TextButton(Text,ElementBehavior):
         super().draw()
         if self.pressed:self.pressed_button(pygame.mouse.get_pressed(),pygame.mouse.get_pos())
     def change_item(self,config:dict):
-        self.color=config.get("color",self.color)
-        self.text=config.get("text",self.text)
+        super().change_item(config)
         self.detect_mouse=config.get("detect_mouse",self.detect_mouse)
         self.pressed=config.get("pressed",self.pressed)
 class PolygonButton(ElementBehavior):
