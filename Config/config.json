@@ -40,9 +40,9 @@
         "sound_game": true
     },
     "config_AI": {
-        "generation_value": 104,
-        "population_value": 24,
-        "try_for_ai": 4,
+        "generation_value": 100,
+        "population_value": 20,
+        "try_for_ai": 3,
         "model_save": true,
         "type_training": [
             "genetic",
