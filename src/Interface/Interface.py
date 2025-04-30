@@ -171,8 +171,6 @@ class interface(load_elements):
         self.config.save_config()
     def menu_AI(self):
         self.screen.fill(self.BLACK)
-        self.screen.blit(self.font4.render(f"Config Training AI", True, "White"),(int(self.WIDTH * (52 / 600)),int(self.HEIGHT * (20 / 400 ))))
-        self.screen.blit(self.font2_5.render(f"Generation Size\n{self.config.config_AI['generation_value']:^36}", True, "White"),(50,self.HEIGHT/2-125))
         self.screen.blit(self.font2_5.render(f"Population Size\n{self.config.config_AI['population_value']:^36}", True, "White"),(50,self.HEIGHT/2-50))
         self.screen.blit(self.font2_5.render(f"Attempts By AI\n{self.config.config_AI['try_for_ai']:^{39 if self.config.config_AI['try_for_ai']<10 else 36}}", True, "White"),(50,self.HEIGHT/2+25))
         self.screen.blit(self.font2_5.render(f"Save model", True, "White"),(50,self.HEIGHT/2+100))
@@ -181,8 +179,10 @@ class interface(load_elements):
         self.scroll.update_elements([*self.buttons_in_config_AI[:-2]])
     def text_training_ai(self):
         if not hasattr(self, "text_in_training_ai"):
+            self.text_C=self.button_factory_f2_5.create_Text({"text":(f"Config Training AI"),"position":(int(self.WIDTH * (52 / 600)),int(self.HEIGHT * (20 / 400 ))),"detect_mouse":False})
+            self.text_G=self.button_factory_f2_5.create_Text({"text":(f"Generation Size\n{self.config.config_AI['generation_value']:^36}"),"position":(50,self.HEIGHT/2-125),"detect_mouse":False})
             
-        else:
+        else:pass
     def buttons_config_AI(self):
         self.increase_generation = self.button_factory_f2_5.create_TextButton({"font":self.font3_5,"text": ">","position": (300,self.HEIGHT/2-95),"command1":lambda:self.increase_decrease_variable(self.config.config_AI,'generation_value')})
         self.decrease_generation = self.button_factory_f2_5.create_TextButton({"font":self.font3_5,"text": "<","position": (120,self.HEIGHT/2-95),"command1":lambda:self.increase_decrease_variable(self.config.config_AI,'generation_value',True,-1)})
