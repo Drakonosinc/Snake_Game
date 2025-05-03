@@ -17,14 +17,14 @@ class interface(load_elements):
         self.sound_main.play(loops=-1) if self.sound_type["value_menu"] else None
     def draw_interfaces(self):
         if self.main==0:self.main_menu()
-        if self.main==1:self.game_over_menu()
-        if self.main==2:self.mode_game_menu()
-        if self.main==3:self.pausa_menu()
-        if self.main==4:self.menu_options()
-        if self.main==5:self.visuals_menu()
-        if self.main==6:self.keys_menu()
-        if self.main==7:self.sounds_menu()
-        if self.main==8:self.menu_AI()
+        elif self.main==1:self.game_over_menu()
+        elif self.main==2:self.mode_game_menu()
+        elif self.main==3:self.pausa_menu()
+        elif self.main==4:self.menu_options()
+        elif self.main==5:self.visuals_menu()
+        elif self.main==6:self.keys_menu()
+        elif self.main==7:self.sounds_menu()
+        elif self.main==8:self.menu_AI()
     def draw_buttons(self):
         self.button_factory_f2_5 = ElementsFactory({"screen": self.screen,"font": self.font2_5,"hover_color": self.GOLDEN,"sound_hover": self.sound_buttonletters,"sound_touch": self.sound_touchletters})
         self.buttons_main_menu()
