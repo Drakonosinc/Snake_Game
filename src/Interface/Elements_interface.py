@@ -186,5 +186,12 @@ class ScrollBar:
                 bottom = max(el.rect.bottom for el in self.elements)
                 self.content_height = bottom - top
             else:self.content_height = self.rect.height
-class Combo_Box:
-    def __init__(self, config: dict):pass
+class Combo_Box(ElementBehavior):
+    def __init__(self, config: dict):
+        ElementBehavior.__init__(self, config)
+        self.screen = config["screen"]
+        self.position = config["position"]
+        self.color = config.get("color", (255, 255, 255))
+        self.rect = pygame.Rect(*self.position)
+    def draw(self):pass
+    def charge_elements(self, elements: list):pass
