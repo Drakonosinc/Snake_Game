@@ -1,5 +1,5 @@
 import sys
-from Game import *
+from Game.Snake_Game import *
 from AI.Genetic_Algorithm import *
 if __name__=="__main__":
     while True:
