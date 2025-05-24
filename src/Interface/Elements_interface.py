@@ -30,8 +30,9 @@ class ElementBehavior:
         self.new_events(time=config.get("time",500))
     def events(self, event):pass
     def new_events(self,time):
-        self.EVENT_NEW = pygame.USEREVENT + 1
+        self.EVENT_NEW = pygame.USEREVENT + self.define_event()
         pygame.time.set_timer(self.EVENT_NEW,time)
+    def define_event(self):return 1
     def reactivate_pressed(self,event):
         if event.type==self.EVENT_NEW:self.states["presses_touch"]=True
     def draw_hover_effect(self):raise NotImplementedError
@@ -42,9 +43,9 @@ class ElementBehavior:
                 if self.sound_hover:self.sound_hover.play(loops=0)
                 self.states["detect_hover"]=False
         else:self.states["detect_hover"]=True
-    def pressed_button(self,pressed_mouse,mouse_pos):
+    def pressed_button(self,rect,pressed_mouse,mouse_pos):
         current_time = pygame.time.get_ticks()
-        if pressed_mouse[0] and self.rect.collidepoint(mouse_pos) and self.states["presses_touch"]:
+        if pressed_mouse[0] and rect.collidepoint(mouse_pos) and self.states["presses_touch"]:
             self.states["active"]=True
             self.states["presses_touch"]=False
             self.states["click_time"] = current_time
@@ -55,8 +56,10 @@ class ElementBehavior:
                 self.states["presses_touch"] = True
                 self.execute_commands()
     def execute_commands(self):
-        for command in self.commands:
-            if callable(command):command()
+        try:
+            for command in self.commands:
+                if callable(command):command()
+        except TypeError:return None
 class Text:
     def __init__(self,config:dict):
         self.screen = config["screen"]
@@ -66,7 +69,6 @@ class Text:
         self.color = config.get("color", (255, 255, 255))
         self.hover_color = config.get("hover_color", (255, 199, 51))
         self.position = config["position"]
-        self.states=config.get("states",{"detect_hover":True})
         self.rect = pygame.Rect(*self.position, *self.font.size(self.text))
     def draw(self):
         self.screen.blit(self.font.render(self.text, True,self.color), self.position)
@@ -82,7 +84,7 @@ class TextButton(Text,ElementBehavior):
         ElementBehavior.__init__(self, config)
     def draw(self):
         super().draw()
-        if self.pressed:self.pressed_button(pygame.mouse.get_pressed(),pygame.mouse.get_pos())
+        if self.pressed:self.pressed_button(self.rect,pygame.mouse.get_pressed(),pygame.mouse.get_pos())
     def change_item(self,config:dict):
         super().change_item(config)
         self.detect_mouse=config.get("detect_mouse",self.detect_mouse)
@@ -100,7 +102,7 @@ class PolygonButton(ElementBehavior):
     def draw(self):
         pygame.draw.polygon(self.screen, self.color, self.position)
         if self.detect_mouse:self.mouse_collision(self.rect,pygame.mouse.get_pos())
-        if self.pressed:self.pressed_button(pygame.mouse.get_pressed(),pygame.mouse.get_pos())
+        if self.pressed:self.pressed_button(self.rect,pygame.mouse.get_pressed(),pygame.mouse.get_pos())
     def draw_hover_effect(self):return pygame.draw.polygon(self.screen, self.hover_color, self.hover_position)
     def change_item(self,config:dict):
         self.color=config.get("color",self.color)
@@ -128,27 +130,26 @@ class Input_text(ElementBehavior):
     def draw(self):
         pygame.draw.rect(self.screen,self.color_back,self.rect)
         if self.detect_mouse:self.mouse_collision(self.rect,pygame.mouse.get_pos())
-        if self.pressed:self.pressed_button(pygame.mouse.get_pressed(),pygame.mouse.get_pos())
+        if self.pressed:self.pressed_button(self.rect,pygame.mouse.get_pressed(),pygame.mouse.get_pos())
         input_player=pygame.draw.rect(self.screen,self.border_color,self.rect,self.border)
         self.screen.blit(self.font.render(self.text, True, self.color), (input_player.x+5, input_player.y-2))
     def draw_hover_effect(self):return pygame.draw.rect(self.screen,self.hover_color,self.rect)
-    def pressed_button(self,pressed_mouse,mouse_pos):
-        super().pressed_button(pressed_mouse,mouse_pos)
-        if pressed_mouse[0] and not self.rect.collidepoint(mouse_pos):self.states["active"],self.states["presses_touch"]=False,True
+    def pressed_button(self,rect,pressed_mouse,mouse_pos):
+        super().pressed_button(rect,pressed_mouse,mouse_pos)
+        if pressed_mouse[0] and not rect.collidepoint(mouse_pos):self.states["active"],self.states["presses_touch"]=False,True
         if self.states["active"]:pygame.draw.rect(self.screen,self.pressed_color,self.rect)
     def show_player(self):return self.text
-class ScrollBar:
+class ScrollBar(ElementBehavior):
     def __init__(self, config: dict):
+        super().__init__(config)
         self.screen = config["screen"]
         position = config["position"]
         self.rect = pygame.Rect(*position)
         self.hover_color=config.get("hover_color",(255, 199, 51))
-        self.sound_hover = config.get("sound_hover")
-        self.sound_touch = config.get("sound_touch")
         self.thumb_height = config.get("thumb_height", max(20, int(position[3] * config.get("thumb_ratio", 0.2))))
         self.thumb_rect = pygame.Rect(self.rect.x, self.rect.y, self.rect.width, self.thumb_height)
         self.color = config.get("color", (200, 200, 200))
-        self.color_thumb = config.get("color_bar", (255, 199, 51))
+        self.color_thumb = config.get("color_bar", (135, 206, 235))
         self.commands = config.get("command1")
         self.elements = None
         self.dragging = False
@@ -177,6 +178,9 @@ class ScrollBar:
     def draw(self):
         pygame.draw.rect(self.screen, self.color, self.rect)
         pygame.draw.rect(self.screen, self.color_thumb, self.thumb_rect)
+        if self.detect_mouse:self.mouse_collision(self.thumb_rect,pygame.mouse.get_pos())
+        if self.pressed:self.pressed_button(self.thumb_rect,pygame.mouse.get_pressed(),pygame.mouse.get_pos())
+    def draw_hover_effect(self):return pygame.draw.rect(self.screen, self.hover_color, self.thumb_rect)
     def update_elements(self, elements: list):
         if self.elements is None:
             self.elements = elements
@@ -186,14 +190,35 @@ class ScrollBar:
                 bottom = max(el.rect.bottom for el in self.elements)
                 self.content_height = bottom - top
             else:self.content_height = self.rect.height
-class Combo_Box(ElementBehavior):
+class ComboBox(ElementBehavior):
     def __init__(self, config: dict):
         ElementBehavior.__init__(self, config)
         self.screen = config["screen"]
+        self.font = config.get("font", pygame.font.Font(None, 25))
+        self.text = config.get("text","")
         self.position = config["position"]
+        self.dropdown = config.get("size", (self.font.size(self.text).x, 200))
+        self.type_dropdown = self.icon_dropdown(config.get("type_dropdown", "down"))
         self.color = config.get("color", (255, 255, 255))
-        self.rect = pygame.Rect(*self.position)
-    def draw(self):pass
+        self.elements = None
+        self.rect = pygame.Rect(*self.position,*self.font.size(self.type_dropdown))
+        self.rect_dropdown = pygame.Rect(*self.position,*self.dropdown)
+    def icon_dropdown(self,type_dropdown):
+        match type_dropdown:
+            case "down":return "V"
+            case "up":return "Λ"
+            case "right":return ">"
+            case "left":return "<"
+    def events(self, event):pass
+    def draw(self):
+        self.screen.blit(self.font.render(f"{self.text} {self.type_dropdown}", True,self.color), (self.position[0]+len(self.text),self.position[1]))
+        if self.detect_mouse:self.mouse_collision(self.rect,pygame.mouse.get_pos())
+        if self.pressed:self.pressed_button(self.rect,pygame.mouse.get_pressed(),pygame.mouse.get_pos())
     def draw_hover_effect(self):pass
-    def pressed_button(self,pressed_mouse,mouse_pos):pass
-    def charge_elements(self, elements: list):pass
+    def pressed_button(self,rect,pressed_mouse,mouse_pos):
+        super().pressed_button(rect,pressed_mouse,mouse_pos)
+        if pressed_mouse[0] and not rect.collidepoint(mouse_pos):self.states["active"],self.states["presses_touch"]=False,True
+        if self.states["active"]:pass
+    def charge_elements(self, elements: list):
+        if self.elements is None:
+            self.elements = elements
