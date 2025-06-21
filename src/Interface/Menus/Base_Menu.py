@@ -13,4 +13,5 @@ class BaseMenu:
         self.screen.blit(background,position)
     def check_item(self,dic,is_true,is_false,item,**kwargs):
         for key,button in kwargs.items():setattr(button,item,(is_true if dic[key] else is_false))
-    
+    def execute_buttons(self,*args):
+        for button in args:button.draw()
