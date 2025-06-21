@@ -38,10 +38,6 @@ class interface(load_elements):
         self.buttons_visual()
         self.buttons_keys()
         self.buttons_sounds()
-    def filt(self,WIDTH,HEIGHT,number,color=(0,0,0),position=(0,0)):
-        background=pygame.Surface((WIDTH,HEIGHT),pygame.SRCALPHA)
-        background.fill((*color, number))
-        self.screen.blit(background,position)
     def check_item(self,dic,is_true,is_false,item,**kwargs):
         for key,button in kwargs.items():setattr(button,item,(is_true if dic[key] else is_false))
     def execute_buttons(self,*args):
