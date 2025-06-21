@@ -1,3 +1,4 @@
+import pygame
 class BaseMenu:
     def __init__(self, interface=None):
         self.interface = interface

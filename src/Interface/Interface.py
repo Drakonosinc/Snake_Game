@@ -9,6 +9,8 @@ class interface(load_elements):
                         "sound_Game":f"Sound Game {"ON" if (j:=self.config.config_sounds["sound_game"]) else "OFF"}","color_game":self.SKYBLUE if j else self.RED,"value_game":j}
         self.utils_keys = {key: False for i, key in enumerate(self.config.config_keys.keys()) if i % 2 == 0}
         self.key=None
+        self.initialize_menus()
+    def initialize_menus(self):pass
     def play_music(self):
         self.check_sounds()
         self.sound_main.set_volume(0.5)
