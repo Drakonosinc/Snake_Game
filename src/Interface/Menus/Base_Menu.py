@@ -15,3 +15,6 @@ class BaseMenu:
         for key,button in kwargs.items():setattr(button,item,(is_true if dic[key] else is_false))
     def execute_buttons(self,*args):
         for button in args:button.draw()
+    def change_items(self,item,background,number):
+        self.config.config_visuals[item]=((self.config.config_visuals[item] + number) % len(self.config.config_visuals[background]))
+        self.interface.load_images()

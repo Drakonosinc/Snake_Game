@@ -114,9 +114,6 @@ class interface(load_elements,BaseMenu):
         self.save_visuals_button = self.button_factory_f2_5.create_TextButton({"text": "Save config","position": (self.WIDTH/2,self.HEIGHT-85),"command1":self.config.save_config})
         self.default_visuals_button = self.button_factory_f2_5.create_TextButton({"text": "Default config","position": (self.WIDTH/2-40,self.HEIGHT-50),"command1":lambda:self.config.config(visuals=True),"command2":self.load_images})
         self.buttons_in_visuals=[self.back_visual_button,self.decrease_player_button,self.increase_player_button,self.decrease_body_button,self.increase_body_button,self.decrease_food_button,self.increase_food_button,self.save_visuals_button,self.default_visuals_button]
-    def change_items(self,item,background,number):
-        self.config.config_visuals[item]=((self.config.config_visuals[item] + number) % len(self.config.config_visuals[background]))
-        self.load_images()
     def keys_menu(self):
         self.screen.fill(self.BLACK)
         self.screen.blit(self.font3.render("Keys", True, "orange"),(int(self.WIDTH * (52 / 600)),int(self.HEIGHT * (20 / 400 ))))
