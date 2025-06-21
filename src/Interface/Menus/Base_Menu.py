@@ -18,3 +18,6 @@ class BaseMenu:
     def change_items(self,item,background,number):
         self.config.config_visuals[item]=((self.config.config_visuals[item] + number) % len(self.config.config_visuals[background]))
         self.interface.load_images()
+    def on_off(self,dic=None,variable=""):
+        if dic:dic[variable]=not dic[variable]
+        else:setattr(self,variable,not getattr(self,variable))
