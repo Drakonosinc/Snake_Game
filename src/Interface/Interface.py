@@ -40,10 +40,6 @@ class interface(load_elements,BaseMenu):
         self.buttons_visual()
         self.buttons_keys()
         self.buttons_sounds()
-    def check_item(self,dic,is_true,is_false,item,**kwargs):
-        for key,button in kwargs.items():setattr(button,item,(is_true if dic[key] else is_false))
-    def execute_buttons(self,*args):
-        for button in args:button.draw()
     def main_menu(self):
         self.screen.fill(self.BLACK)
         self.screen.blit(self.font3.render("Snake Game", True, "orange"),(int(self.WIDTH * (52 / 600)),int(self.HEIGHT * (20 / 400 ))))
