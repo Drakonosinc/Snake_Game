@@ -12,7 +12,8 @@ class interface(load_elements,BaseMenu):
         self.utils_keys = {key: False for i, key in enumerate(self.config.config_keys.keys()) if i % 2 == 0}
         self.key=None
         self.initialize_menus()
-    def initialize_menus(self):pass
+    def initialize_menus(self):
+        self.main_menu = MainMenu(self)
     def play_music(self):
         self.check_sounds()
         self.sound_main.set_volume(0.5)
@@ -20,8 +21,9 @@ class interface(load_elements,BaseMenu):
         self.sound_back_game.stop()
         self.sound_main.play(loops=-1) if self.sound_type["value_menu"] else None
     def draw_interfaces(self):
-        if self.main==0:self.main_menu()
-        elif self.main==1:self.game_over_menu()
+        menu_routes = {
+            0: self.main_menu.render,}
+        if self.main==1:self.game_over_menu()
         elif self.main==2:self.mode_game_menu()
         elif self.main==3:self.pausa_menu()
         elif self.main==4:self.menu_options()
@@ -29,6 +31,7 @@ class interface(load_elements,BaseMenu):
         elif self.main==6:self.keys_menu()
         elif self.main==7:self.sounds_menu()
         elif self.main==8:self.menu_AI()
+        if self.main in menu_routes:menu_routes[self.main]()
     def draw_buttons(self):
         self.button_factory_f2_5 = ElementsFactory({"screen": self.screen,"font": self.font2_5,"hover_color": self.GOLDEN,"sound_hover": self.sound_buttonletters,"sound_touch": self.sound_touchletters})
         self.buttons_main_menu()
