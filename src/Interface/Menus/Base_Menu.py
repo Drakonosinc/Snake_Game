@@ -36,3 +36,10 @@ class BaseMenu:
             pygame.display.flip()
             self.clock.tick(20)
             alpha += -15 if fade_in else 15
+    def change_mains(self,config):
+        if fade_in:=config.get("fade_in",True):self.fade_transition(False,config.get("color",(0,0,0)),config.get("limit",255))
+        if fade_out:=config.get("fade_out",False):self.fade_transition(True,config.get("color2",(0,0,0)),0)
+        self.main=config.get("main",None)
+        if config.get("command",None):config["command"]()
+        if config.get("run",False):setattr(self,"running",False),setattr(self, "game_over", True)
+        if config.get("recursive",False):self.change_mains({"main":self.main,"fade_in":fade_in,"fade_out":fade_out})
