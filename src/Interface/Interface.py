@@ -48,7 +48,7 @@ class interface(load_elements,BaseMenu):
         self.screen.blit(self.font3.render("Snake Game", True, "orange"),(int(self.WIDTH * (52 / 600)),int(self.HEIGHT * (20 / 400 ))))
         self.execute_buttons(*self.buttons_in_main_menu)
     def buttons_main_menu(self):
-        self.play_button = self.button_factory_f2_5.create_TextButton({"text": "PLAY","position": (self.WIDTH/2-60, self.HEIGHT/2-100),"command1":lambda:self.change_mains({"main":2})})
+        
         self.quit_button = self.button_factory_f2_5.create_TextButton({"text": "QUIT","position": (self.WIDTH/2-60,self.HEIGHT/2-55),"sound_touch": self.sound_exit,"command1": self.close_game})
         self.options_button = self.button_factory_f2_5.create_TextButton({"text": "OPTIONS","position": (self.WIDTH-180,self.HEIGHT-50),"command1":lambda:self.change_mains({"main":4})})
         self.buttons_in_main_menu=[self.play_button,self.quit_button,self.options_button]
