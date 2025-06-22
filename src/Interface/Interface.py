@@ -47,10 +47,6 @@ class interface(load_elements,BaseMenu):
         self.screen.fill(self.BLACK)
         self.screen.blit(self.font3.render("Snake Game", True, "orange"),(int(self.WIDTH * (52 / 600)),int(self.HEIGHT * (20 / 400 ))))
         self.execute_buttons(*self.buttons_in_main_menu)
-    def buttons_main_menu(self):
-        
-        
-        self.options_button = self.button_factory_f2_5.create_TextButton({"text": "OPTIONS","position": (self.WIDTH-180,self.HEIGHT-50),"command1":lambda:self.change_mains({"main":4})})
     def game_over_menu(self):
         self.filt(self.WIDTH,self.HEIGHT,150,self.RED)
         self.screen.blit(self.font3.render("Game Over", True, self.BLACK),(int(self.WIDTH * (52 / 600)),int(self.HEIGHT * (20 / 400 ))))
