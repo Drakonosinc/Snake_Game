@@ -21,3 +21,8 @@ class BaseMenu:
     def on_off(self,dic=None,variable=""):
         if dic:dic[variable]=not dic[variable]
         else:setattr(self,variable,not getattr(self,variable))
+    def increase_decrease_variable(self,dic=None,variable="",length=None,number=1,save=True):
+        if dic!=None and length!=None:dic[variable]=max(1, dic[variable] + number)
+        elif dic!=None:dic[variable]+=number
+        else:setattr(self,variable,getattr(self,variable)+number)
+        if save:self.config.save_config()
