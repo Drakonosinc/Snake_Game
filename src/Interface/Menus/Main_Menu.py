@@ -11,3 +11,4 @@ class MainMenu(BaseMenu):
     def render(self):
         self.screen.fill(self.interface.BLACK)
         self.screen.blit(self.interface.font3.render("Snake Game", True, "orange"),(int(self.WIDTH * (52 / 600)),int(self.HEIGHT * (20 / 400 ))))
+        self.execute_buttons(self.buttons['play'],self.buttons['quit'],self.buttons['options'])
