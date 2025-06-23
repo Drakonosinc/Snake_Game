@@ -14,6 +14,7 @@ class interface(load_elements,BaseMenu):
         self.initialize_menus()
     def initialize_menus(self):
         self.main_menu = MainMenu(self)
+        self.game_over_menu = GameOver(self)
     def play_music(self):
         self.check_sounds()
         self.sound_main.set_volume(0.5)
@@ -22,9 +23,9 @@ class interface(load_elements,BaseMenu):
         self.sound_main.play(loops=-1) if self.sound_type["value_menu"] else None
     def draw_interfaces(self):
         menu_routes = {
-            0: self.main_menu.render,}
-        if self.main==1:self.game_over_menu()
-        elif self.main==2:self.mode_game_menu()
+            0: self.main_menu.render,
+            1: self.game_over_menu.render,}
+        if self.main==2:self.mode_game_menu()
         elif self.main==3:self.pausa_menu()
         elif self.main==4:self.menu_options()
         elif self.main==5:self.visuals_menu()
