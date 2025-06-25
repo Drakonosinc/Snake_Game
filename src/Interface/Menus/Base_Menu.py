@@ -43,3 +43,8 @@ class BaseMenu:
         if config.get("command",None):config["command"]()
         if config.get("run",False):setattr(self.interface,"running",False),setattr(self.interface, "game_over", True)
         if config.get("recursive",False):self.change_mains({"main":self.interface.main,"fade_in":fade_in,"fade_out":fade_out})
+    def type_game(self,mode_one=False,mode_two=False,mode_three=False):
+        self.mode_game["Training AI"]=mode_one
+        self.mode_game["Player"]=mode_two
+        if self.model_training!=None:self.mode_game["AI"]=mode_three
+        else:self.load_AI()
