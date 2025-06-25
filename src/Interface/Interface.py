@@ -46,7 +46,7 @@ class interface(load_elements,BaseMenu):
         self.buttons_sounds()
     def buttons_game_over(self):
         self.restar_button = self.button_factory_f2_5.create_TextButton({"text": "Press R to Restart","position": (50,self.HEIGHT/2-100),"command1":self.reset,"command2":lambda:self.change_mains({"main":-1})})
-        self.exit_menu_button = self.button_factory_f2_5.create_TextButton({"text": "Exit The Menu","position": (50,self.HEIGHT/2-50),"command1":self.reset,"command2":lambda:self.change_mains({"main":0,"run":True,"command":self.check_sounds})})
+        
         self.exit_over_button = self.button_factory_f2_5.create_TextButton({"text": "Exit The Game","position": (50,self.HEIGHT/2),"sound_touch": self.sound_exit,"command1":self.close_game})
         self.buttons_in_game_over=[self.restar_button,self.exit_menu_button,self.exit_over_button]
     def mode_game_menu(self):
