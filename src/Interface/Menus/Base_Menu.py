@@ -44,10 +44,10 @@ class BaseMenu:
         if config.get("run",False):setattr(self.interface,"running",False),setattr(self.interface, "game_over", True)
         if config.get("recursive",False):self.change_mains({"main":self.interface.main,"fade_in":fade_in,"fade_out":fade_out})
     def type_game(self,mode_one=False,mode_two=False,mode_three=False):
-        self.mode_game["Training AI"]=mode_one
-        self.mode_game["Player"]=mode_two
-        if self.model_training!=None:self.mode_game["AI"]=mode_three
-        else:self.load_AI()
+        self.interface.mode_game["Training AI"]=mode_one
+        self.interface.mode_game["Player"]=mode_two
+        if self.interface.model_training!=None:self.interface.mode_game["AI"]=mode_three
+        else:self.interface.load_AI()
     def update_mode_buttons(self,buttons):
         mode_buttons = {"Training AI": buttons['training_ai'],"Player": buttons['player'],"AI": buttons['ai']}
         self.check_item(self.interface.mode_game,self.interface.SKYBLUE,self.interface.WHITE,"color",**mode_buttons)
