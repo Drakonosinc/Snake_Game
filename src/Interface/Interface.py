@@ -47,7 +47,7 @@ class interface(load_elements,BaseMenu):
         self.buttons_sounds()
     def buttons_mode_game(self):
         
-        self.player_button = self.button_factory_f2_5.create_TextButton({"text": "Player","position": (50,self.HEIGHT/2-50),"command1":lambda:self.type_game(False,True),"command2":lambda:self.check_item(self.mode_game,self.SKYBLUE,self.WHITE,"color",**{"Player":self.player_button,"Training AI":self.Training_AI_button,"AI":self.ai_button})})
+        
         self.ai_button = self.button_factory_f2_5.create_TextButton({"text": "AI","position": (50,self.HEIGHT/2),"command1":lambda:self.type_game(False,False,True),"command2":lambda:self.check_item(self.mode_game,self.SKYBLUE,self.WHITE,"color",**{"AI":self.ai_button,"Player":self.player_button,"Training AI":self.Training_AI_button})})
     def pausa_menu(self):
         self.filt(self.WIDTH,self.HEIGHT,150,self.GRAY)
