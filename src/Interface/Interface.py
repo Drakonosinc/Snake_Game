@@ -47,10 +47,6 @@ class interface(load_elements,BaseMenu):
         self.buttons_visual()
         self.buttons_keys()
         self.buttons_sounds()
-    def menu_options(self):
-        self.screen.fill(self.BLACK)
-        self.screen.blit(self.font3.render("Options", True, "orange"),(int(self.WIDTH * (52 / 600)),int(self.HEIGHT * (20 / 400 ))))
-        self.execute_buttons(*self.buttons_in_menu_options)
     def buttons_menu_options(self):
         self.visual_button = self.button_factory_f2_5.create_TextButton({"text": "Visuals","position": (50,self.HEIGHT/2-100),"command1":lambda:self.change_mains({"main":5})})
         self.sounds_button = self.button_factory_f2_5.create_TextButton({"text": "Sounds","position": (50,self.HEIGHT/2-50),"command1":lambda:self.change_mains({"main":7})})
