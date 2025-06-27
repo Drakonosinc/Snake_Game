@@ -47,11 +47,6 @@ class interface(load_elements,BaseMenu):
         self.buttons_visual()
         self.buttons_keys()
         self.buttons_sounds()
-    def buttons_menu_options(self):
-        
-        
-        self.keys_button = self.button_factory_f2_5.create_TextButton({"text": "Keys","position": (50,self.HEIGHT/2),"command1":lambda:self.change_mains({"main":6})})
-        
     def visuals_menu(self):
         self.screen.fill(self.BLACK)
         self.items_visuals()
