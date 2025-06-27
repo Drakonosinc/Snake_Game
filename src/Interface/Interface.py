@@ -17,6 +17,7 @@ class interface(load_elements,BaseMenu):
         self.game_over_menu = GameOver(self)
         self.game_mode_menu = GameMode(self)
         self.pause_menu = Pause(self)
+        self.options_menu = OptionsMenu(self)
     def play_music(self):
         self.check_sounds()
         self.sound_main.set_volume(0.5)
@@ -28,9 +29,9 @@ class interface(load_elements,BaseMenu):
             0: self.main_menu.render,
             1: self.game_over_menu.render,
             2: self.game_mode_menu.render,
-            3: self.pause_menu.render,}
-        if self.main==4:self.menu_options()
-        elif self.main==5:self.visuals_menu()
+            3: self.pause_menu.render,
+            4: self.options_menu.render,}
+        if self.main==5:self.visuals_menu()
         elif self.main==6:self.keys_menu()
         elif self.main==7:self.sounds_menu()
         elif self.main==8:self.menu_AI()
@@ -41,8 +42,8 @@ class interface(load_elements,BaseMenu):
         self.game_over_menu.setup_buttons()
         self.game_mode_menu.setup_buttons()
         self.pause_menu.setup_buttons()
+        self.options_menu.setup_buttons()
         self.buttons_config_AI()
-        self.buttons_menu_options()
         self.buttons_visual()
         self.buttons_keys()
         self.buttons_sounds()
