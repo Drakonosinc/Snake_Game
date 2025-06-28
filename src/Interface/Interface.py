@@ -49,7 +49,7 @@ class interface(load_elements,BaseMenu):
         self.buttons_keys()
         self.buttons_sounds()
     def buttons_visual(self):
-        self.back_visual_button = self.button_factory_f2_5.create_TextButton({"font": self.font1,"text": "←","position": (35,self.HEIGHT-100),"command1":lambda:self.change_mains({"main":4})})
+        
         self.decrease_player_button = self.button_factory_f2_5.create_TextButton({"font": self.font3_5,"text": "<","position": (50,self.HEIGHT/2-100),"command1":lambda:self.change_items("value_snake_head","snake_head",-1)})
         self.increase_player_button = self.button_factory_f2_5.create_TextButton({"font": self.font3_5,"text": ">","position": (self.WIDTH/2-100,self.HEIGHT/2-100),"command1":lambda:self.change_items("value_snake_head","snake_head",1)})
         self.decrease_body_button = self.button_factory_f2_5.create_TextButton({"font": self.font3_5,"text": "<","position": (50,self.HEIGHT/2-50),"command1":lambda:self.change_items("value_snake_body","snake_body",-1)})
@@ -58,7 +58,6 @@ class interface(load_elements,BaseMenu):
         self.increase_food_button = self.button_factory_f2_5.create_TextButton({"font": self.font3_5,"text": ">","position": (self.WIDTH/2-100,self.HEIGHT/2),"command1":lambda:self.change_items("value_foods","food",1)})
         self.save_visuals_button = self.button_factory_f2_5.create_TextButton({"text": "Save config","position": (self.WIDTH/2,self.HEIGHT-85),"command1":self.config.save_config})
         self.default_visuals_button = self.button_factory_f2_5.create_TextButton({"text": "Default config","position": (self.WIDTH/2-40,self.HEIGHT-50),"command1":lambda:self.config.config(visuals=True),"command2":self.load_images})
-        self.buttons_in_visuals=[self.back_visual_button,self.decrease_player_button,self.increase_player_button,self.decrease_body_button,self.increase_body_button,self.decrease_food_button,self.increase_food_button,self.save_visuals_button,self.default_visuals_button]
     def keys_menu(self):
         self.screen.fill(self.BLACK)
         self.screen.blit(self.font3.render("Keys", True, "orange"),(int(self.WIDTH * (52 / 600)),int(self.HEIGHT * (20 / 400 ))))
