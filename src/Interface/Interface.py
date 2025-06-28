@@ -48,10 +48,6 @@ class interface(load_elements,BaseMenu):
         self.buttons_visual()
         self.buttons_keys()
         self.buttons_sounds()
-    def items_visuals(self):
-        self.screen.blit(self.head_snake,(120,self.HEIGHT/2-100))
-        self.screen.blit(self.body_snake,(120,self.HEIGHT/2-50))
-        self.screen.blit(self.apple_img,(120,self.HEIGHT/2))
     def buttons_visual(self):
         self.back_visual_button = self.button_factory_f2_5.create_TextButton({"font": self.font1,"text": "←","position": (35,self.HEIGHT-100),"command1":lambda:self.change_mains({"main":4})})
         self.decrease_player_button = self.button_factory_f2_5.create_TextButton({"font": self.font3_5,"text": "<","position": (50,self.HEIGHT/2-100),"command1":lambda:self.change_items("value_snake_head","snake_head",-1)})
