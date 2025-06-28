@@ -48,10 +48,6 @@ class interface(load_elements,BaseMenu):
         self.buttons_visual()
         self.buttons_keys()
         self.buttons_sounds()
-    def visuals_menu(self):
-        self.screen.fill(self.BLACK)
-        self.items_visuals()
-        self.screen.blit(self.font3.render("Visuals", True, "orange"),(int(self.WIDTH * (52 / 600)),int(self.HEIGHT * (20 / 400 ))))
     def items_visuals(self):
         self.screen.blit(self.head_snake,(120,self.HEIGHT/2-100))
         self.screen.blit(self.body_snake,(120,self.HEIGHT/2-50))
