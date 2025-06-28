@@ -44,8 +44,8 @@ class interface(load_elements,BaseMenu):
         self.game_mode_menu.setup_buttons()
         self.pause_menu.setup_buttons()
         self.options_menu.setup_buttons()
+        self.visuals_menu.setup_buttons()
         self.buttons_config_AI()
-        self.buttons_visual()
         self.buttons_keys()
         self.buttons_sounds()
     def buttons_visual(self):
