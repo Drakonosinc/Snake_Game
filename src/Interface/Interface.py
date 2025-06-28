@@ -56,7 +56,7 @@ class interface(load_elements,BaseMenu):
         self.increase_body_button = self.button_factory_f2_5.create_TextButton({"font": self.font3_5,"text": ">","position": (self.WIDTH/2-100,self.HEIGHT/2-50),"command1":lambda:self.change_items("value_snake_body","snake_body",1)})
         self.decrease_food_button = self.button_factory_f2_5.create_TextButton({"font": self.font3_5,"text": "<","position": (50,self.HEIGHT/2),"command1":lambda:self.change_items("value_foods","food",-1)})
         self.increase_food_button = self.button_factory_f2_5.create_TextButton({"font": self.font3_5,"text": ">","position": (self.WIDTH/2-100,self.HEIGHT/2),"command1":lambda:self.change_items("value_foods","food",1)})
-        self.save_visuals_button = self.button_factory_f2_5.create_TextButton({"text": "Save config","position": (self.WIDTH/2,self.HEIGHT-85),"command1":self.config.save_config})
+        
         self.default_visuals_button = self.button_factory_f2_5.create_TextButton({"text": "Default config","position": (self.WIDTH/2-40,self.HEIGHT-50),"command1":lambda:self.config.config(visuals=True),"command2":self.load_images})
     def keys_menu(self):
         self.screen.fill(self.BLACK)
