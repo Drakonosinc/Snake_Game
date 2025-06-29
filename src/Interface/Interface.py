@@ -48,11 +48,6 @@ class interface(load_elements,BaseMenu):
         self.buttons_config_AI()
         self.buttons_keys()
         self.buttons_sounds()
-    def buttons_visual(self):
-        
-        
-        
-        self.increase_food_button = self.button_factory_f2_5.create_TextButton({"font": self.font3_5,"text": ">","position": (self.WIDTH/2-100,self.HEIGHT/2),"command1":lambda:self.change_items("value_foods","food",1)})
     def keys_menu(self):
         self.screen.fill(self.BLACK)
         self.screen.blit(self.font3.render("Keys", True, "orange"),(int(self.WIDTH * (52 / 600)),int(self.HEIGHT * (20 / 400 ))))
