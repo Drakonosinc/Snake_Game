@@ -33,9 +33,9 @@ class interface(load_elements,BaseMenu):
             2: self.game_mode_menu.render,
             3: self.pause_menu.render,
             4: self.options_menu.render,
-            5: self.visuals_menu.render,}
-        if self.main==6:self.keys_menu()
-        elif self.main==7:self.sounds_menu()
+            5: self.visuals_menu.render,
+            6: self.keys_menu.render,}
+        if self.main==7:self.sounds_menu()
         elif self.main==8:self.menu_AI()
         if self.main in menu_routes:menu_routes[self.main]()
     def draw_buttons(self):
@@ -46,8 +46,8 @@ class interface(load_elements,BaseMenu):
         self.pause_menu.setup_buttons()
         self.options_menu.setup_buttons()
         self.visuals_menu.setup_buttons()
+        self.keys_menu.setup_buttons()
         self.buttons_config_AI()
-        self.buttons_keys()
         self.buttons_sounds()
     def keys_menu(self):
         self.screen.fill(self.BLACK)
