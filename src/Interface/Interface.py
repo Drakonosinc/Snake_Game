@@ -19,6 +19,7 @@ class interface(load_elements,BaseMenu):
         self.pause_menu = Pause(self)
         self.options_menu = OptionsMenu(self)
         self.visuals_menu = VisualsMenu(self)
+        self.keys_menu = KeysMenu(self)
     def play_music(self):
         self.check_sounds()
         self.sound_main.set_volume(0.5)
