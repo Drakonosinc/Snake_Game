@@ -5,9 +5,11 @@ class KeysMenu(BaseMenu):
         super().__init__(interface)
         self.utils_keys = {key: False for i, key in enumerate(self.config.config_keys.keys()) if i % 2 == 0}
         self.buttons = {}
+        self.buttons_keys = {}
     def setup_buttons(self):
         factory = self.interface.button_factory_f2_5
         self.buttons['back'] = factory.create_TextButton({"font": self.interface.font1,"text": "←","position": (50,self.HEIGHT-100),"command1":lambda:self.change_mains({"main":4})})
+        self.buttons['save_visual'] = factory.create_TextButton({"text": "Save config","position": (self.WIDTH/2,self.HEIGHT-85),"command1":self.config.save_config})
     def render(self):
         self.screen.fill(self.interface.BLACK)
         self.screen.blit(self.interface.font3.render("Keys", True, "orange"),(int(self.WIDTH * (52 / 600)),int(self.HEIGHT * (20 / 400 ))))
