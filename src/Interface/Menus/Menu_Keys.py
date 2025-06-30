@@ -1,4 +1,5 @@
 from .Base_Menu import BaseMenu
+from pygame.locals import KEYDOWN
 class KeysMenu(BaseMenu):
     def __init__(self, interface):
         super().__init__(interface)
