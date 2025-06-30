@@ -9,8 +9,6 @@ class interface(load_elements,BaseMenu):
         self.mode_game={"Training AI":False,"Player":True,"AI":False}
         self.sound_type={"sound_menu":f"Sound Menu {"ON" if (x:=self.config.config_sounds["sound_menu"]) else "OFF"}","color_menu":self.SKYBLUE if x else self.RED,"value_menu":x,
                         "sound_Game":f"Sound Game {"ON" if (j:=self.config.config_sounds["sound_game"]) else "OFF"}","color_game":self.SKYBLUE if j else self.RED,"value_game":j}
-        
-        self.key=None
         self.initialize_menus()
     def initialize_menus(self):
         self.main_menu = MainMenu(self)
@@ -63,12 +61,7 @@ class interface(load_elements,BaseMenu):
         self.keys_buttons={"key_up":self.up1_button,"key_up2":self.up2_button,"key_down":self.down1_button,"key_down2":self.down2_button,"key_left":self.left1_button,"key_left2":self.left2_button,"key_right":self.right1_button,"key_right2":self.right2_button}
         self.buttons_in_keys=[self.back_keys_button,self.save_keys_button,self.default_keys_button,*self.keys_buttons.values()]
     
-    def event_keys(self,event):
-        if self.key!=None and (self.utils_keys[self.key] and event.type==KEYDOWN):
-            self.config.config_keys[self.key]=event.key
-            self.config.config_keys[self.key_name]=event.unicode.upper()
-            self.check_item(self.config.config_keys,self.config.config_keys[self.key_name],self.WHITE,"text",**{self.key:self.button_key})
-            self.change_keys(self.key,self.key_name)
+    
     def sounds_menu(self):
         self.screen.fill(self.BLACK)
         self.screen.blit(self.font3.render("Sounds", True, "orange"),(int(self.WIDTH * (52 / 600)),int(self.HEIGHT * (20 / 400 ))))
