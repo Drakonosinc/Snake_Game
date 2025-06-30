@@ -48,16 +48,15 @@ class interface(load_elements,BaseMenu):
         self.buttons_config_AI()
         self.buttons_sounds()
     def buttons_keys(self):
-        self.up1_button = self.button_factory_f2_5.create_TextButton({"text": self.config.config_keys["Name_key1"],"position": (125,self.HEIGHT/2-100),"command1":lambda:self.change_keys("key_up","Name_key1",self.up1_button)})
-        self.down1_button = self.button_factory_f2_5.create_TextButton({"text": self.config.config_keys["Name_key3"],"position": (100,self.HEIGHT/2),"command1":lambda:self.change_keys("key_down","Name_key3",self.down1_button)})
-        self.left1_button = self.button_factory_f2_5.create_TextButton({"text": self.config.config_keys["Name_key5"],"position": (25,self.HEIGHT/2-50),"command1":lambda:self.change_keys("key_left","Name_key5",self.left1_button)})
-        self.right1_button = self.button_factory_f2_5.create_TextButton({"text": self.config.config_keys["Name_key7"],"position": (175,self.HEIGHT/2-50),"command1":lambda:self.change_keys("key_right","Name_key7",self.right1_button)})
-        self.up2_button = self.button_factory_f2_5.create_TextButton({"text": self.config.config_keys["Name_key2"],"position": (self.WIDTH-125,self.HEIGHT/2-100),"command1":lambda:self.change_keys("key_up2","Name_key2",self.up2_button)})
-        self.down2_button = self.button_factory_f2_5.create_TextButton({"text": self.config.config_keys["Name_key4"],"position": (self.WIDTH-125,self.HEIGHT/2),"command1":lambda:self.change_keys("key_down2","Name_key4",self.down2_button)})
-        self.left2_button = self.button_factory_f2_5.create_TextButton({"text": self.config.config_keys["Name_key6"],"position": (self.WIDTH-50,self.HEIGHT/2-50),"command1":lambda:self.change_keys("key_left2","Name_key6",self.left2_button)})
-        self.right2_button = self.button_factory_f2_5.create_TextButton({"text": self.config.config_keys["Name_key8"],"position": (self.WIDTH-190,self.HEIGHT/2-50),"command1":lambda:self.change_keys("key_right2","Name_key8",self.right2_button)})
+        self.up1_button = self.button_factory_f2_5.create_TextButton({"text": self.config.config_keys["Name_key1"],"position": (125,self.HEIGHT/2-100),"command1":lambda:self._change_keys("key_up","Name_key1",self.up1_button)})
+        self.down1_button = self.button_factory_f2_5.create_TextButton({"text": self.config.config_keys["Name_key3"],"position": (100,self.HEIGHT/2),"command1":lambda:self._change_keys("key_down","Name_key3",self.down1_button)})
+        self.left1_button = self.button_factory_f2_5.create_TextButton({"text": self.config.config_keys["Name_key5"],"position": (25,self.HEIGHT/2-50),"command1":lambda:self._change_keys("key_left","Name_key5",self.left1_button)})
+        self.right1_button = self.button_factory_f2_5.create_TextButton({"text": self.config.config_keys["Name_key7"],"position": (175,self.HEIGHT/2-50),"command1":lambda:self._change_keys("key_right","Name_key7",self.right1_button)})
+        self.up2_button = self.button_factory_f2_5.create_TextButton({"text": self.config.config_keys["Name_key2"],"position": (self.WIDTH-125,self.HEIGHT/2-100),"command1":lambda:self._change_keys("key_up2","Name_key2",self.up2_button)})
+        self.down2_button = self.button_factory_f2_5.create_TextButton({"text": self.config.config_keys["Name_key4"],"position": (self.WIDTH-125,self.HEIGHT/2),"command1":lambda:self._change_keys("key_down2","Name_key4",self.down2_button)})
+        self.left2_button = self.button_factory_f2_5.create_TextButton({"text": self.config.config_keys["Name_key6"],"position": (self.WIDTH-50,self.HEIGHT/2-50),"command1":lambda:self._change_keys("key_left2","Name_key6",self.left2_button)})
+        self.right2_button = self.button_factory_f2_5.create_TextButton({"text": self.config.config_keys["Name_key8"],"position": (self.WIDTH-190,self.HEIGHT/2-50),"command1":lambda:self._change_keys("key_right2","Name_key8",self.right2_button)})
         
-        self.default_keys_button = self.button_factory_f2_5.create_TextButton({"text": "Default config","position": (self.WIDTH/2-40,self.HEIGHT-50),"command1":lambda:(self.config.config(keys=True),self.change_mains({"main":6,"command":self.buttons_keys}))})
         
         self.keys_buttons={"key_up":self.up1_button,"key_up2":self.up2_button,"key_down":self.down1_button,"key_down2":self.down2_button,"key_left":self.left1_button,"key_left2":self.left2_button,"key_right":self.right1_button,"key_right2":self.right2_button}
     def sounds_menu(self):
