@@ -49,10 +49,6 @@ class interface(load_elements,BaseMenu):
         self.keys_menu.setup_buttons()
         self.buttons_config_AI()
         self.buttons_sounds()
-    def keys_menu(self):
-        self.screen.fill(self.BLACK)
-        self.screen.blit(self.font3.render("Keys", True, "orange"),(int(self.WIDTH * (52 / 600)),int(self.HEIGHT * (20 / 400 ))))
-        self.execute_buttons(*self.buttons_in_keys)
     def buttons_keys(self):
         self.back_keys_button = self.button_factory_f2_5.create_TextButton({"font": self.font1,"text": "←","position": (50,self.HEIGHT-100),"command1":lambda:self.change_mains({"main":4})})
         self.up1_button = self.button_factory_f2_5.create_TextButton({"text": self.config.config_keys["Name_key1"],"position": (125,self.HEIGHT/2-100),"command1":lambda:self.change_keys("key_up","Name_key1",self.up1_button)})
