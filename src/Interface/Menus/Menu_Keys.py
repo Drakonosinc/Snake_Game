@@ -11,6 +11,7 @@ class KeysMenu(BaseMenu):
         self.buttons['back'] = factory.create_TextButton({"font": self.interface.font1,"text": "←","position": (50,self.HEIGHT-100),"command1":lambda:self.change_mains({"main":4})})
         self.buttons_keys['up1_button'] = factory.create_TextButton({"text": self.config.config_keys["Name_key1"],"position": (125,self.HEIGHT/2-100),"command1":lambda:self._change_keys("key_up","Name_key1",self.buttons_keys["up1_button"])})
         self.buttons_keys['down1_button'] = factory.create_TextButton({"text": self.config.config_keys["Name_key3"],"position": (100,self.HEIGHT/2),"command1":lambda:self._change_keys("key_down","Name_key3",self.buttons_keys["down1_button"])})
+        self.buttons_keys['left1_button'] = factory.create_TextButton({"text": self.config.config_keys["Name_key5"],"position": (25,self.HEIGHT/2-50),"command1":lambda:self._change_keys("key_left","Name_key5",self.buttons_keys["left1_button"])})
         self.buttons['save_visual'] = factory.create_TextButton({"text": "Save config","position": (self.WIDTH/2,self.HEIGHT-85),"command1":self.config.save_config})
         self.buttons['default_visual'] = factory.create_TextButton({"text": "Default config","position": (self.WIDTH/2-40,self.HEIGHT-50),"command1":lambda:(self.config.config(keys=True),self.change_mains({"main":6,"command":self.setup_buttons}))})
     def render(self):

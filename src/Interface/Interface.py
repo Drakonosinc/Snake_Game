@@ -50,7 +50,7 @@ class interface(load_elements,BaseMenu):
     def buttons_keys(self):
         
         
-        self.left1_button = self.button_factory_f2_5.create_TextButton({"text": self.config.config_keys["Name_key5"],"position": (25,self.HEIGHT/2-50),"command1":lambda:self._change_keys("key_left","Name_key5",self.left1_button)})
+        
         self.right1_button = self.button_factory_f2_5.create_TextButton({"text": self.config.config_keys["Name_key7"],"position": (175,self.HEIGHT/2-50),"command1":lambda:self._change_keys("key_right","Name_key7",self.right1_button)})
         self.up2_button = self.button_factory_f2_5.create_TextButton({"text": self.config.config_keys["Name_key2"],"position": (self.WIDTH-125,self.HEIGHT/2-100),"command1":lambda:self._change_keys("key_up2","Name_key2",self.up2_button)})
         self.down2_button = self.button_factory_f2_5.create_TextButton({"text": self.config.config_keys["Name_key4"],"position": (self.WIDTH-125,self.HEIGHT/2),"command1":lambda:self._change_keys("key_down2","Name_key4",self.down2_button)})
