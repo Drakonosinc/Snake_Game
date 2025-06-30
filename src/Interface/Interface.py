@@ -9,7 +9,7 @@ class interface(load_elements,BaseMenu):
         self.mode_game={"Training AI":False,"Player":True,"AI":False}
         self.sound_type={"sound_menu":f"Sound Menu {"ON" if (x:=self.config.config_sounds["sound_menu"]) else "OFF"}","color_menu":self.SKYBLUE if x else self.RED,"value_menu":x,
                         "sound_Game":f"Sound Game {"ON" if (j:=self.config.config_sounds["sound_game"]) else "OFF"}","color_game":self.SKYBLUE if j else self.RED,"value_game":j}
-        self.utils_keys = {key: False for i, key in enumerate(self.config.config_keys.keys()) if i % 2 == 0}
+        
         self.key=None
         self.initialize_menus()
     def initialize_menus(self):
@@ -62,12 +62,7 @@ class interface(load_elements,BaseMenu):
         self.default_keys_button = self.button_factory_f2_5.create_TextButton({"text": "Default config","position": (self.WIDTH/2-40,self.HEIGHT-50),"command1":lambda:(self.config.config(keys=True),self.change_mains({"main":6,"command":self.buttons_keys}))})
         self.keys_buttons={"key_up":self.up1_button,"key_up2":self.up2_button,"key_down":self.down1_button,"key_down2":self.down2_button,"key_left":self.left1_button,"key_left2":self.left2_button,"key_right":self.right1_button,"key_right2":self.right2_button}
         self.buttons_in_keys=[self.back_keys_button,self.save_keys_button,self.default_keys_button,*self.keys_buttons.values()]
-    def change_keys(self,key,key_name,button=None):
-        self.key=key
-        self.key_name=key_name
-        self.button_key=button
-        for k in self.utils_keys.keys():self.utils_keys[k]=False if k!=self.key else not self.utils_keys[self.key]
-        self.check_item(self.utils_keys,self.SKYBLUE,self.WHITE,"color",**self.keys_buttons)
+    
     def event_keys(self,event):
         if self.key!=None and (self.utils_keys[self.key] and event.type==KEYDOWN):
             self.config.config_keys[self.key]=event.key
