@@ -25,7 +25,7 @@ class Snake_Game(interface):
             self.event_quit(event)
             if self.mode_game["Training AI"]:self.events(event)
             self.event_keydown(event)
-            if self.main==6:self.event_keys(event)
+            if self.main==6:self.keys_menu.event_keys(event)
             self.scroll.events(event)
         self.pressed_keys=pygame.key.get_pressed()
         self.pressed_mouse=pygame.mouse.get_pressed()
