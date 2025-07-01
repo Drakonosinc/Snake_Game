@@ -48,8 +48,6 @@ class interface(load_elements,BaseMenu):
         self.buttons_config_AI()
         self.buttons_sounds()
     def buttons_keys(self):
-        
-        self.left2_button = self.button_factory_f2_5.create_TextButton({"text": self.config.config_keys["Name_key6"],"position": (self.WIDTH-50,self.HEIGHT/2-50),"command1":lambda:self._change_keys("key_left2","Name_key6",self.left2_button)})
         self.right2_button = self.button_factory_f2_5.create_TextButton({"text": self.config.config_keys["Name_key8"],"position": (self.WIDTH-190,self.HEIGHT/2-50),"command1":lambda:self._change_keys("key_right2","Name_key8",self.right2_button)})
         
         
