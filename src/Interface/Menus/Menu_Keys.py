@@ -6,6 +6,7 @@ class KeysMenu(BaseMenu):
         self.utils_keys = {key: False for i, key in enumerate(self.config.config_keys.keys()) if i % 2 == 0}
         self.buttons = {}
         self.buttons_keys = {}
+        self.key = None
     def setup_buttons(self):
         factory = self.interface.button_factory_f2_5
         self.buttons['back'] = factory.create_TextButton({"font": self.interface.font1,"text": "←","position": (50,self.HEIGHT-100),"command1":lambda:self.change_mains({"main":4})})
