@@ -47,11 +47,6 @@ class interface(load_elements,BaseMenu):
         self.keys_menu.setup_buttons()
         self.buttons_config_AI()
         self.buttons_sounds()
-    def buttons_keys(self):
-        
-        
-        
-        self.keys_buttons={"key_up":self.up1_button,"key_up2":self.up2_button,"key_down":self.down1_button,"key_down2":self.down2_button,"key_left":self.left1_button,"key_left2":self.left2_button,"key_right":self.right1_button,"key_right2":self.right2_button}
     def sounds_menu(self):
         self.screen.fill(self.BLACK)
         self.screen.blit(self.font3.render("Sounds", True, "orange"),(int(self.WIDTH * (52 / 600)),int(self.HEIGHT * (20 / 400 ))))

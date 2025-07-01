@@ -19,6 +19,7 @@ class KeysMenu(BaseMenu):
         self.buttons_keys['right2_button'] = factory.create_TextButton({"text": self.config.config_keys["Name_key8"],"position": (self.WIDTH-190,self.HEIGHT/2-50),"command1":lambda:self._change_keys("key_right2","Name_key8",self.buttons_keys["right2_button"])})
         self.buttons['save_visual'] = factory.create_TextButton({"text": "Save config","position": (self.WIDTH/2,self.HEIGHT-85),"command1":self.config.save_config})
         self.buttons['default_visual'] = factory.create_TextButton({"text": "Default config","position": (self.WIDTH/2-40,self.HEIGHT-50),"command1":lambda:(self.config.config(keys=True),self.change_mains({"main":6,"command":self.setup_buttons}))})
+        self.keys_buttons={"key_up":self.buttons_keys["up1_button"],"key_up2":self.buttons_keys["up2_button"],"key_down":self.buttons_keys["down1_button"],"key_down2":self.buttons_keys["down2_button"],"key_left":self.buttons_keys["left1_button"],"key_left2":self.buttons_keys["left2_button"],"key_right":self.buttons_keys["right1_button"],"key_right2":self.buttons_keys["right2_button"]}
     def render(self):
         self.screen.fill(self.interface.BLACK)
         self.screen.blit(self.interface.font3.render("Keys", True, "orange"),(int(self.WIDTH * (52 / 600)),int(self.HEIGHT * (20 / 400 ))))
