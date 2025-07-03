@@ -46,8 +46,8 @@ class interface(load_elements,BaseMenu):
         self.options_menu.setup_buttons()
         self.visuals_menu.setup_buttons()
         self.keys_menu.setup_buttons()
+        self.sounds_menu.setup_buttons()
         self.buttons_config_AI()
-        self.buttons_sounds()
     def sound_on_off(self,sound:str,color,value=True,type_sound="",sound_back=None,play=False):
         self.sound_type[value]=not self.sound_type[value]
         self.sound_type[color]=self.SKYBLUE if self.sound_type[value] else self.RED
