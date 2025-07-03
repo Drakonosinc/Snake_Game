@@ -12,4 +12,5 @@ class SoundsMenu(BaseMenu):
         self.screen.fill(self.interface.BLACK)
         self.screen.blit(self.interface.font3.render("Sounds", True, "orange"),(int(self.WIDTH * (52 / 600)),int(self.HEIGHT * (20 / 400 ))))
         self.buttons['sound_menu_button'].change_item({"color":self.interface.sound_type["color_menu"],"text":self.interface.sound_type["sound_menu"]})
+        self.buttons['sound_game_button'].change_item({"color":self.interface.sound_type["color_game"],"text":self.interface.sound_type["sound_Game"]})
         self.execute_buttons(*self.buttons.values())
