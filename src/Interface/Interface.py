@@ -48,9 +48,7 @@ class interface(load_elements,BaseMenu):
         self.buttons_config_AI()
         self.buttons_sounds()
     def sounds_menu(self):
-        self.screen.fill(self.BLACK)
-        self.screen.blit(self.font3.render("Sounds", True, "orange"),(int(self.WIDTH * (52 / 600)),int(self.HEIGHT * (20 / 400 ))))
-        self.execute_buttons(*self.buttons_in_sounds)
+        
         self.sound_menu_button.change_item({"color":self.sound_type["color_menu"],"text":self.sound_type["sound_menu"]})
         self.sound_game_button.change_item({"color":self.sound_type["color_game"],"text":self.sound_type["sound_Game"]})
     def buttons_sounds(self):
