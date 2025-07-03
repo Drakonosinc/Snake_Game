@@ -51,10 +51,6 @@ class interface(load_elements,BaseMenu):
         
         self.sound_menu_button.change_item({"color":self.sound_type["color_menu"],"text":self.sound_type["sound_menu"]})
         self.sound_game_button.change_item({"color":self.sound_type["color_game"],"text":self.sound_type["sound_Game"]})
-    def buttons_sounds(self):
-        
-        
-        self.sound_game_button = self.button_factory_f2_5.create_TextButton({"text": self.sound_type["sound_Game"],"position": (50,self.HEIGHT/2-50),"command1":lambda:self.sound_on_off("sound_Game","color_game","value_game","Sound Game",self.sound_back_game)})
     def sound_on_off(self,sound:str,color,value=True,type_sound="",sound_back=None,play=False):
         self.sound_type[value]=not self.sound_type[value]
         self.sound_type[color]=self.SKYBLUE if self.sound_type[value] else self.RED
