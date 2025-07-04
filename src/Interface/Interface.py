@@ -51,7 +51,6 @@ class interface(load_elements,BaseMenu):
         self.menu_AI.setup_buttons()
         self.buttons_config_AI()
     def menu_AI(self):
-        
         self.save_model.change_item({"color":self.SKYBLUE if self.config.config_AI["model_save"] else self.RED,"text":"ON" if self.config.config_AI["model_save"] else "OFF"})
         self.scroll.update_elements([*self.buttons_in_config_AI[:-2],*self.text_in_training_ai])
     def text_training_ai(self):
@@ -75,7 +74,7 @@ class interface(load_elements,BaseMenu):
         self.decrease_try_for_ai = self.button_factory_f2_5.create_TextButton({"font":self.font3_5,"text": "<","position": (120,self.HEIGHT/2+55),"command1":lambda:self.increase_decrease_variable(self.config.config_AI,'try_for_ai',True,-1),"command2":self.text_training_ai})
         self.save_model = self.button_factory_f2_5.create_TextButton({"text": "OFF","color": self.SKYBLUE,"position": (self.WIDTH/2+10,self.HEIGHT/2+100),"command1":lambda:self.on_off(self.config.config_AI,"model_save"),"command2":self.config.save_config})
         self.continue_button = self.button_factory_f2_5.create_TextButton({"font": self.font1,"text": "→","position": (self.WIDTH-110,self.HEIGHT-100),"command1":lambda:self.type_game(True) if all(not mode for mode in self.mode_game.values()) else None,"command2":lambda:(self.change_mains({"main":-1,"run":True,"command":None}),self.sound_main.stop(),self.sound_back_game.play(loops=-1)if self.sound_type["value_game"] else None)})
-        self.B_mode_game_button = self.button_factory_f2_5.create_TextButton({"font": self.font1,"text": "←","position": (35,self.HEIGHT-100),"command1":lambda:self.change_mains({"main":2})})
+        
         self.buttons_in_config_AI=[self.increase_generation,self.decrease_generation,self.increase_population,self.decrease_population,self.increase_try_for_ai,self.decrease_try_for_ai,self.save_model,self.continue_button,self.B_mode_game_button]
         self.scroll=self.button_factory_f2_5.create_ScrollBar({"position": (self.WIDTH-30, 50, 20, self.HEIGHT-100),"thumb_height": 20})
         self.text_training_ai()
