@@ -51,8 +51,7 @@ class interface(load_elements,BaseMenu):
         self.menu_AI.setup_buttons()
         self.buttons_config_AI()
     def menu_AI(self):
-        self.screen.fill(self.BLACK)
-        self.execute_buttons(*self.buttons_in_config_AI,self.scroll,*self.text_in_training_ai)
+        
         self.save_model.change_item({"color":self.SKYBLUE if self.config.config_AI["model_save"] else self.RED,"text":"ON" if self.config.config_AI["model_save"] else "OFF"})
         self.scroll.update_elements([*self.buttons_in_config_AI[:-2],*self.text_in_training_ai])
     def text_training_ai(self):

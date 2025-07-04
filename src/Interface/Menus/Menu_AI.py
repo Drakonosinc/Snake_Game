@@ -6,4 +6,5 @@ class AIMenu(BaseMenu):
     def setup_buttons(self):
         factory = self.interface.button_factory_f2_5
     def render(self):
+        self.screen.fill(self.interface.BLACK)
         self.execute_buttons(*self.buttons.values())
