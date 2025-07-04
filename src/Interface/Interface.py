@@ -19,6 +19,7 @@ class interface(load_elements,BaseMenu):
         self.visuals_menu = VisualsMenu(self)
         self.keys_menu = KeysMenu(self)
         self.sounds_menu = SoundsMenu(self)
+        self.menu_AI = AIMenu(self)
     def play_music(self):
         self.check_sounds()
         self.sound_main.set_volume(0.5)
@@ -34,8 +35,8 @@ class interface(load_elements,BaseMenu):
             4: self.options_menu.render,
             5: self.visuals_menu.render,
             6: self.keys_menu.render,
-            7: self.sounds_menu.render,}
-        if self.main==8:self.menu_AI()
+            7: self.sounds_menu.render,
+            8: self.menu_AI.render}
         if self.main in menu_routes:menu_routes[self.main]()
     def draw_buttons(self):
         self.button_factory_f2_5 = ElementsFactory({"screen": self.screen,"font": self.font2_5,"hover_color": self.GOLDEN,"sound_hover": self.sound_buttonletters,"sound_touch": self.sound_touchletters})
