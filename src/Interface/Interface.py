@@ -67,11 +67,6 @@ class interface(load_elements,BaseMenu):
             self.text_A.change_item({"text": f"Attempts By AI\n{self.config.config_AI['try_for_ai']:^{39 if self.config.config_AI['try_for_ai']<10 else 36}}"})
     def buttons_config_AI(self):
         
-        
-        
-        
-        
-        self.decrease_try_for_ai = self.button_factory_f2_5.create_TextButton({"font":self.font3_5,"text": "<","position": (120,self.HEIGHT/2+55),"command1":lambda:self.increase_decrease_variable(self.config.config_AI,'try_for_ai',True,-1),"command2":self.text_training_ai})
         self.save_model = self.button_factory_f2_5.create_TextButton({"text": "OFF","color": self.SKYBLUE,"position": (self.WIDTH/2+10,self.HEIGHT/2+100),"command1":lambda:self.on_off(self.config.config_AI,"model_save"),"command2":self.config.save_config})
         
         
