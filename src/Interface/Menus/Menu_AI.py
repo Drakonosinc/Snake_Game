@@ -23,4 +23,4 @@ class AIMenu(BaseMenu):
     def _update_training_ai_texts(self):pass
     def render(self):
         self.screen.fill(self.interface.BLACK)
-        self.execute_buttons(*self.buttons.values())
+        self.execute_buttons(*self.buttons.values(),*self.config_buttons.values())

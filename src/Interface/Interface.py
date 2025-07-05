@@ -71,7 +71,6 @@ class interface(load_elements,BaseMenu):
         
         
         self.scroll=self.button_factory_f2_5.create_ScrollBar({"position": (self.WIDTH-30, 50, 20, self.HEIGHT-100),"thumb_height": 20})
-        self.text_training_ai()
     def draw_generation(self):
         if self.main==-1 and self.mode_game["Training AI"]:self.screen.blit(self.font5.render(f"Generation: {int(self.generation)}", True, "orange"),(0,25))
     def show_score(self):
