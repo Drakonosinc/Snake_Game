@@ -12,8 +12,10 @@ class AIMenu(BaseMenu):
         self._setup_training_ai_texts()
     def _setup_training_ai_buttons(self):
         factory = self.interface.button_factory_f2_5
+        self.config_buttons['increase_generation'] = factory.create_TextButton({"font":self.interface.font3_5,"text": ">","position": (300,self.HEIGHT/2-95),"command1":lambda:self.increase_decrease_variable(self.config.config_AI,'generation_value'),"command2":self._update_training_ai_texts})
     def _setup_training_ai_texts(self):
         factory = self.interface.button_factory_f2_5
+    def _update_training_ai_texts(self):pass
     def render(self):
         self.screen.fill(self.interface.BLACK)
         self.execute_buttons(*self.buttons.values())
