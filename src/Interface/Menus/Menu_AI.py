@@ -30,4 +30,5 @@ class AIMenu(BaseMenu):
     def _update_training_ai_texts(self):pass
     def render(self):
         self.screen.fill(self.interface.BLACK)
+        self.config_buttons['save_model'].change_item({"color":self.SKYBLUE if self.config.config_AI["model_save"] else self.RED,"text":"ON" if self.config.config_AI["model_save"] else "OFF"})
         self.execute_buttons(*self.buttons.values(),*self.config_buttons.values())
