@@ -50,7 +50,7 @@ class interface(load_elements,BaseMenu):
         self.sounds_menu.setup_buttons()
         self.menu_AI.setup_buttons()
     def text_training_ai(self):
-            self.text_G.change_item({"text": f"Generation Size\n{self.config.config_AI['generation_value']:^36}"})
+            
             self.text_P.change_item({"text": f"Population Size\n{self.config.config_AI['population_value']:^36}"})
             self.text_A.change_item({"text": f"Attempts By AI\n{self.config.config_AI['try_for_ai']:^{39 if self.config.config_AI['try_for_ai']<10 else 36}}"})
     def draw_generation(self):
