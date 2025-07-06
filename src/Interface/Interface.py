@@ -49,10 +49,6 @@ class interface(load_elements,BaseMenu):
         self.keys_menu.setup_buttons()
         self.sounds_menu.setup_buttons()
         self.menu_AI.setup_buttons()
-        self.buttons_config_AI()
-    def menu_AI(self):
-        
-        self.scroll.update_elements([*self.buttons_in_config_AI[:-2],*self.text_in_training_ai])
     def text_training_ai(self):
             self.text_G.change_item({"text": f"Generation Size\n{self.config.config_AI['generation_value']:^36}"})
             self.text_P.change_item({"text": f"Population Size\n{self.config.config_AI['population_value']:^36}"})
