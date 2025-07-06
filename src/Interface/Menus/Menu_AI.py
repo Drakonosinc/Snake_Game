@@ -25,6 +25,7 @@ class AIMenu(BaseMenu):
         self.config_buttons['text_C'] = factory.create_Text({"text":(f"Config Training AI"),"position":(int(self.WIDTH * (52 / 600)),int(self.HEIGHT * (20 / 400 ))),"detect_mouse":False})
         self.config_buttons['text_G'] = factory.create_Text({"text":(f"Generation Size\n{self.config.config_AI['generation_value']:^36}"),"position":(50,self.HEIGHT/2-125),"detect_mouse":False})
         self.config_buttons['text_P'] = factory.create_Text({"text":(f"Population Size\n{self.config.config_AI['population_value']:^36}"),"position":(50,self.HEIGHT/2-50),"detect_mouse":False})
+        self.config_buttons['text_A'] = factory.create_Text({"text":(f"Attempts By AI\n{self.config.config_AI['try_for_ai']:^{39 if self.config.config_AI['try_for_ai']<10 else 36}}"),"position":(50,self.HEIGHT/2+25),"detect_mouse":False})
     def _update_training_ai_texts(self):pass
     def render(self):
         self.screen.fill(self.interface.BLACK)
