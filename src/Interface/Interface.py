@@ -56,7 +56,7 @@ class interface(load_elements,BaseMenu):
     def text_training_ai(self):
         if not hasattr(self, "text_in_training_ai"):
             
-            self.text_G=self.button_factory_f2_5.create_Text({"text":(f"Generation Size\n{self.config.config_AI['generation_value']:^36}"),"position":(50,self.HEIGHT/2-125),"detect_mouse":False})
+            
             self.text_P=self.button_factory_f2_5.create_Text({"text":(f"Population Size\n{self.config.config_AI['population_value']:^36}"),"position":(50,self.HEIGHT/2-50),"detect_mouse":False})
             self.text_A=self.button_factory_f2_5.create_Text({"text":(f"Attempts By AI\n{self.config.config_AI['try_for_ai']:^{39 if self.config.config_AI['try_for_ai']<10 else 36}}"),"position":(50,self.HEIGHT/2+25),"detect_mouse":False})
             self.text_S=self.button_factory_f2_5.create_Text({"text":(f"Save model"),"position":(50,self.HEIGHT/2+100),"detect_mouse":False})
