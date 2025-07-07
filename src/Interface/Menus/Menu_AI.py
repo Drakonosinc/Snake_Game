@@ -30,6 +30,7 @@ class AIMenu(BaseMenu):
         self.config_buttons['text_S'] = factory.create_Text({"text":(f"Save model"),"position":(50,self.HEIGHT/2+100),"detect_mouse":False})
     def _update_training_ai_texts(self):
         if 'text_G' in self.config_buttons:self.config_buttons['text_G'].change_item({"text": f"Generation Size\n{self.config.config_AI['generation_value']:^36}"})
+        if 'text_P' in self.config_buttons:self.config_buttons['text_P'].change_item({"text": f"Population Size\n{self.config.config_AI['population_value']:^36}"})
     def render(self):
         self.screen.fill(self.interface.BLACK)
         self.config_buttons['save_model'].change_item({"color":self.SKYBLUE if self.config.config_AI["model_save"] else self.RED,"text":"ON" if self.config.config_AI["model_save"] else "OFF"})
