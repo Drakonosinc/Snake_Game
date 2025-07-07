@@ -49,10 +49,6 @@ class interface(load_elements,BaseMenu):
         self.keys_menu.setup_buttons()
         self.sounds_menu.setup_buttons()
         self.menu_AI.setup_buttons()
-    def text_training_ai(self):
-            
-            
-            self.text_A.change_item({"text": f"Attempts By AI\n{self.config.config_AI['try_for_ai']:^{39 if self.config.config_AI['try_for_ai']<10 else 36}}"})
     def draw_generation(self):
         if self.main==-1 and self.mode_game["Training AI"]:self.screen.blit(self.font5.render(f"Generation: {int(self.generation)}", True, "orange"),(0,25))
     def show_score(self):
