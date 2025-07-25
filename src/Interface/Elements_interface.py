@@ -45,10 +45,6 @@ class ElementBehavior:
                 if self.sound_hover:self.sound_hover.play(loops=0)
                 self.states["detect_hover"]=False
         else:self.states["detect_hover"]=True
-    def filter_mouse_collision(self,rects: dict, mouse_pos, draws: list):
-        for rect, draw in zip(rects, draws):
-            if rects[rect].collidepoint(mouse_pos):
-                self.mouse_collision(rects[rect], mouse_pos, draw)
     def pressed_button(self,rect,pressed_mouse,mouse_pos,draw=None):
         current_time = pygame.time.get_ticks()
         if pressed_mouse[0] and rect.collidepoint(mouse_pos) and self.states["presses_touch"]:
@@ -64,6 +60,12 @@ class ElementBehavior:
         if pressed_mouse[0] and not rect.collidepoint(mouse_pos):self.states["active"],self.states["presses_touch"]=False,True
         if self.states["active"]:self.draw_pressed_effect() if draw is None else draw()
     def draw_pressed_effect(self):return NotImplementedError
+    def filter_rects_collision(self,rects: dict, mouse_pos, draws: list, option: bool=False):
+        for rect, draw in zip(rects, draws):
+            if rects[rect].collidepoint(mouse_pos):
+                if option is True: self.pressed_button(rects[rect], pygame.mouse.get_pressed(), mouse_pos, draw)
+                else:self.mouse_collision(rects[rect], mouse_pos, draw)
+            if all(not rects[rect].collidepoint(mouse_pos) for rect in rects):self.states["detect_hover"],self.states["presses_touch"] = True,True
     def execute_commands(self):
         try:
             for command in self.commands:
