@@ -182,7 +182,12 @@ class ScrollBar(ElementBehavior):
             new_y = y0 - offset
             el.position = (x0, new_y)
             if isinstance(el.rect, dict):
-                for i in el.rect:el.rect[i].y = new_y
+                for key in el.rect:
+                    item = el.rect[key]
+                    if hasattr(item, 'y'):item.y = new_y
+                    elif hasattr(item, 'rect') and hasattr(item, 'position'):
+                        item.rect.y = new_y
+                        item.position = (item.position[0], new_y)
             else:el.rect.y = new_y
         if callable(self.commands):self.commands(proportion)
     def draw(self):
@@ -202,8 +207,7 @@ class ScrollBar(ElementBehavior):
             else:self.content_height = self.rect.height
     def return_rect(self):
         for el in self.elements:
-            if isinstance(el.rect, dict):
-                return max(el.rect.bottom for el in self.elements.values() if isinstance(el.rect, dict))
+            if isinstance(el.rect, dict):return max(el.rect.bottom for el in self.elements.values() if isinstance(el.rect, dict))
             else:return max(el.rect.bottom for el in self.elements if not isinstance(el.rect, dict))
 class ComboBox(TextButton):
     def __init__(self, config: dict):
@@ -224,6 +228,8 @@ class ComboBox(TextButton):
             "text": self.type_dropdown,
             "sound_hover": self.sound_hover,
             "sound_touch": self.sound_touch})
+        self.rect = {"button": pygame.Rect(*self.position, *self.font.size(self.text)),
+                    "dropdown": self.button_dropdown}
     def icon_dropdown(self,type_dropdown):
         match type_dropdown:
             case "down":return " V"
@@ -232,10 +238,9 @@ class ComboBox(TextButton):
             case "left":return " <"
     def events(self, event):pass
     def draw(self):
-        super().draw()
         self.screen.blit(self.font.render(self.text, True,self.color),(self.position))
         self.button_dropdown.draw()
-        if self.detect_mouse:self.mouse_collision(self.rect,pygame.mouse.get_pos(),self.draw_hover_effect)
+        if self.detect_mouse:self.mouse_collision(self.rect["button"],pygame.mouse.get_pos(),self.draw_hover_effect)
         if self.pressed:pass
     def draw_hover_effect(self):return self.screen.blit(self.font.render(f"{self.text}{self.type_dropdown}", True,self.hover_color), (self.position))
     def draw_pressed_effect(self):pass
@@ -253,8 +258,7 @@ class ComboBox(TextButton):
                 "hover_color": self.hover_color,
                 "position": position,
                 "text": option,
-                "command1": lambda idx=i: self.select_option(idx)
-            })
+                "command1": lambda idx=i: self.select_option(idx)})
             self.option_buttons.append(button)
         if options and not self.text:
             self.text = options[0]
