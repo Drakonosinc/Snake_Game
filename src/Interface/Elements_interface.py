@@ -23,6 +23,8 @@ class ElementsFactory:
         return ComboBox({"screen": self.screen,"font": self.font,"color": self.color,"hover_color": self.hover_color,"sound_hover": self.sound_hover,"sound_touch": self.sound_touch,**config})
 class ElementBehavior:
     def __init__(self, config: dict):
+        self.screen = config["screen"]
+        self.position = config["position"]
         self.sound_hover = config.get("sound_hover")
         self.sound_touch = config.get("sound_touch")
         self.detect_mouse=config.get("detect_mouse",True)
@@ -76,7 +78,7 @@ class Text:
         self.screen = config["screen"]
         self.font = config.get("font", pygame.font.Font(None, 25))
         self.Behavior = ElementBehavior(config)
-        self.text = config["text"]
+        self.text = config.get("text","")
         self.color = config.get("color", (255, 255, 255))
         self.hover_color = config.get("hover_color", (255, 199, 51))
         self.position = config["position"]
@@ -103,12 +105,9 @@ class TextButton(Text,ElementBehavior):
 class PolygonButton(ElementBehavior):
     def __init__(self,config:dict):
         super().__init__(config)
-        self.screen = config["screen"]
-        self.position = config["position"]
         self.hover_position = config.get("hover_position",self.position)
         self.color = config.get("color", (255, 255, 255))
         self.hover_color = config.get("hover_color", (255, 199, 51))
-        self.detect_mouse=config.get("detect_mouse",True)
         self.rect = pygame.draw.polygon(self.screen, self.color, self.position).copy()
     def draw(self):
         pygame.draw.polygon(self.screen, self.color, self.position)
@@ -122,14 +121,11 @@ class PolygonButton(ElementBehavior):
 class Input_text(ElementBehavior):
     def __init__(self,config:dict):
         super().__init__(config)
-        self.screen = config["screen"]
         self.font = config.get("font", pygame.font.Font(None, 25))
         self.text = config.get("text","")
         self.color=config.get("color",(0,0,0))
         self.color_back=config.get("color_back",(255,255,255))
         self.hover_color = config.get("hover_color", (255, 199, 51))
-        self.position = config["position"]
-        self.detect_mouse=config.get("detect_mouse",True)
         self.pressed_color=config.get("pressed_color",(135,206,235))
         self.border_color=config.get("border_color",(127,127,127))
         self.border=config.get("border",2)
@@ -150,11 +146,9 @@ class Input_text(ElementBehavior):
 class ScrollBar(ElementBehavior):
     def __init__(self, config: dict):
         super().__init__(config)
-        self.screen = config["screen"]
-        position = config["position"]
-        self.rect = pygame.Rect(*position)
+        self.rect = pygame.Rect(*self.position)
         self.hover_color=config.get("hover_color",(255, 199, 51))
-        self.thumb_height = config.get("thumb_height", max(20, int(position[3] * config.get("thumb_ratio", 0.2))))
+        self.thumb_height = config.get("thumb_height", max(20, int(self.position[3] * config.get("thumb_ratio", 0.2))))
         self.thumb_rect = pygame.Rect(self.rect.x, self.rect.y, self.rect.width, self.thumb_height)
         self.color = config.get("color", (200, 200, 200))
         self.color_thumb = config.get("color_bar", (135, 206, 235))
@@ -211,7 +205,7 @@ class ScrollBar(ElementBehavior):
             else:return max(el.rect.bottom for el in self.elements if not isinstance(el.rect, dict))
 class ComboBox(TextButton):
     def __init__(self, config: dict):
-        TextButton.__init__(self, config)
+        super().__init__(config)
         self.dropdown = config.get("size", (self.font.size(self.text)[0], 200))
         self.type_dropdown = self.icon_dropdown(config.get("type_dropdown", "down"))
         self.hover_dropdown=config.get("hover_dropdown",(135,206,235))
