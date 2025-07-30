@@ -209,6 +209,8 @@ class ComboBox(TextButton):
         self.type_dropdown = self.icon_dropdown(config.get("type_dropdown", "down"))
         self.dropdown = config.get("size", (self.font.size(self.text)[0]+self.font.size(self.type_dropdown)[0], 200))
         self.hover_dropdown=config.get("hover_dropdown",(135,206,235))
+        self.replace_text = config.get("replace_text", False)
+        self.anim_height_dropdown = 0
         self.is_dropdown_open = False
         self.selected_index = None
         self.options = []
@@ -233,7 +235,9 @@ class ComboBox(TextButton):
             case "left":return " <"
     def get_rect_dropdown(self):
         match self.type_dropdown:
-            case " V":return pygame.Rect(self.position[0], self.position[1] + self.font.get_height(), *self.dropdown)
+            case " V":
+                self.anim_height_dropdown += 1 if self.anim_height_dropdown<=self.dropdown[1] else 0
+                return pygame.Rect(self.position[0], self.position[1] + self.font.get_height(), self.dropdown[0], self.anim_height_dropdown)
             case " Λ":return None
             case " >":return None
             case " <":return None
@@ -241,7 +245,9 @@ class ComboBox(TextButton):
         self.screen.blit(self.font.render(self.text, True,self.color),(self.position))
         self.button_dropdown.draw()
         if self.is_dropdown_open:self.draw_rect_dropdown()
-        else:self.button_dropdown.change_item({"color": self.color})
+        else:
+            self.anim_height_dropdown = 0
+            self.button_dropdown.change_item({"color": self.color})
         if self.detect_mouse:self.mouse_collision(self.rect["button"],pygame.mouse.get_pos(),self.draw_hover_effect)
         if self.pressed:self.pressed_button(self.rect["button"],pygame.mouse.get_pressed(),pygame.mouse.get_pos())
     def draw_hover_effect(self):return self.screen.blit(self.font.render(f"{self.text}{self.type_dropdown}", True,self.hover_color), (self.position))
@@ -263,9 +269,9 @@ class ComboBox(TextButton):
                 "hover_color": self.hover_color,
                 "position": position,
                 "text": option,
-                "command1": lambda idx=i: self.select_option(idx)})
+                "command1": lambda idx=i: self.select_option(idx) if self.replace_text else None})
             self.option_buttons.append(button)
-        if options and not self.text:
+        if (options and not self.text) and self.replace_text:
             self.text = options[0]
             self.selected_index = 0
     def select_option(self, index):
