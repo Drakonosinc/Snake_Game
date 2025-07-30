@@ -279,7 +279,3 @@ class ComboBox(TextButton):
             self.text = self.options[index]
             self.selected_index = index
             self.is_dropdown_open = False
-    def events(self, event):
-        if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
-            if self.rect["dropdown"].collidepoint(event.pos):self.is_dropdown_open = not self.is_dropdown_open
-            elif self.is_dropdown_open and not self.dropdown_rect.collidepoint(event.pos):self.is_dropdown_open = False
