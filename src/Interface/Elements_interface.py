@@ -255,31 +255,32 @@ class ComboBox(TextButton):
         self.button_dropdown.change_item({"color": self.hover_dropdown})
         self.dropdown_rect = self.get_rect_dropdown()
         pygame.draw.rect(self.screen, self.hover_dropdown, self.dropdown_rect)
-        for button in self.option_buttons:button.draw()
+        for i,button in enumerate(self.option_buttons):
+            button.change_item({"position": (self.position[0], self.position[1] + self.font.get_height() + i * (self.font.get_height() + 5))})
+            button.rect.y =button.position[1]
+            button.draw()
     def charge_elements(self, options: list[str]):
         self.options = options
         for i, option in enumerate(options):
-            x = self.position[0]
-            y = self.position[1] + self.font.get_height() + i * (self.font.get_height() + 5)
-            position = (x, y)
             button = TextButton({
                 "screen": self.screen,
                 "font": self.font,
                 "color": self.color,
                 "hover_color": self.hover_color,
-                "position": position,
+                "position": (self.position[0], self.position[1] + self.font.get_height() + i * (self.font.get_height() + 5)),
                 "text": option,
                 "command1": lambda idx=i: self.select_option(idx) if self.replace_text else None})
-            if y>self.dropdown[1]:
-                self.scroll = ScrollBar({
-                    "screen": self.screen,
-                    "position": (self.dropdown_rect.x + self.dropdown_rect.width - 10, self.dropdown_rect.y),
-                    "thumb_height": 20,
-                    "color": (200, 200, 200),
-                    "color_bar": (135, 206, 235),
-                    "hover_color": (255, 199, 51),
-                    "command1": lambda proportion: self.scroll_elements(proportion)})
-            self.option_buttons.append(button,self.scroll if hasattr(self, 'scroll') else None)
+            # if y>self.dropdown[1]:
+            #     self.scroll = ScrollBar({
+            #         "screen": self.screen,
+            #         "position": (self.dropdown[0]+20, self.position[1] + self.font.get_height(), 20, self.dropdown[1]),
+            #         "thumb_height": 20,
+            #         "color": (200, 200, 200),
+            #         "color_bar": (135, 206, 235),
+            #         "hover_color": (255, 199, 51),
+            #         "command1": lambda proportion: self.scroll_elements(proportion)})
+            self.option_buttons.append(button)
+            self.option_buttons.append(self.scroll) if hasattr(self, 'scroll') else None
         if (options and not self.text) and self.replace_text:
             self.text = options[0]
             self.selected_index = 0
