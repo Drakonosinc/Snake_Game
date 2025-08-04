@@ -146,16 +146,17 @@ class Input_text(ElementBehavior):
 class ScrollBar(ElementBehavior):
     def __init__(self, config: dict):
         super().__init__(config)
-        self.rect = pygame.Rect(*self.position)
+        rect = pygame.Rect(*self.position)
         self.hover_color=config.get("hover_color",(255, 199, 51))
         self.thumb_height = config.get("thumb_height", max(20, int(self.position[3] * config.get("thumb_ratio", 0.2))))
-        self.thumb_rect = pygame.Rect(self.rect.x, self.rect.y, self.rect.width, self.thumb_height)
+        self.thumb_rect = pygame.Rect(rect.x, rect.y, rect.width, self.thumb_height)
         self.color = config.get("color", (200, 200, 200))
         self.color_thumb = config.get("color_bar", (135, 206, 235))
         self.commands = config.get("command1")
         self.elements = None
         self.dragging = False
         self.drag_offset = 0
+        self.rect = {"rect": rect, "thumb": self.thumb_rect} 
     def events(self, event):
         if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
             if self.thumb_rect.collidepoint(event.pos):
@@ -164,13 +165,13 @@ class ScrollBar(ElementBehavior):
         elif event.type == pygame.MOUSEBUTTONUP and event.button == 1:self.dragging = False
         elif event.type == pygame.MOUSEMOTION and self.dragging:
             new_y = event.pos[1] - self.drag_offset
-            new_y = max(self.rect.top, min(new_y, self.rect.bottom - self.thumb_height))
+            new_y = max(self.rect["rect"].top, min(new_y, self.rect["rect"].bottom - self.thumb_height))
             self.thumb_rect.y = new_y
             self.scroll_elements()
     def scroll_elements(self):
         max_scroll = self.content_height
         if max_scroll == 0:proportion = 0.0
-        else:proportion = (self.thumb_rect.y - self.rect.y) / (self.rect.height - self.thumb_height)
+        else:proportion = (self.thumb_rect.y - self.rect["rect"].y) / (self.rect["rect"].height - self.thumb_height)
         offset = int(proportion * max_scroll)
         for el, (x0, y0) in zip(self.elements, self.initial_positions):
             new_y = y0 - offset
@@ -185,7 +186,7 @@ class ScrollBar(ElementBehavior):
             else:el.rect.y = new_y
         if callable(self.commands):self.commands(proportion)
     def draw(self):
-        pygame.draw.rect(self.screen, self.color, self.rect)
+        pygame.draw.rect(self.screen, self.color, self.rect["rect"])
         pygame.draw.rect(self.screen, self.color_thumb, self.thumb_rect)
         if self.detect_mouse:self.mouse_collision(self.thumb_rect,pygame.mouse.get_pos())
         if self.pressed:self.pressed_button(self.thumb_rect,pygame.mouse.get_pressed(),pygame.mouse.get_pos())
@@ -203,6 +204,8 @@ class ScrollBar(ElementBehavior):
         for el in self.elements:
             if isinstance(el.rect, dict):return max(el.rect.bottom for el in self.elements.values() if isinstance(el.rect, dict))
             else:return max(el.rect.bottom for el in self.elements if not isinstance(el.rect, dict))
+    def change_item(self,config:dict):
+        self.position = config.get("position", self.position)
 class ComboBox(TextButton):
     def __init__(self, config: dict):
         super().__init__(config)
@@ -257,7 +260,7 @@ class ComboBox(TextButton):
         pygame.draw.rect(self.screen, self.hover_dropdown, self.dropdown_rect)
         for i,button in enumerate(self.option_buttons):
             button.change_item({"position": (self.position[0], self.position[1] + self.font.get_height() + i * (self.font.get_height() + 5))})
-            button.rect.y =button.position[1]
+            # button.rect.y = button.position[1]
             button.draw()
     def charge_elements(self, options: list[str]):
         self.options = options
@@ -270,17 +273,17 @@ class ComboBox(TextButton):
                 "position": (self.position[0], self.position[1] + self.font.get_height() + i * (self.font.get_height() + 5)),
                 "text": option,
                 "command1": lambda idx=i: self.select_option(idx) if self.replace_text else None})
-            # if y>self.dropdown[1]:
-            #     self.scroll = ScrollBar({
-            #         "screen": self.screen,
-            #         "position": (self.dropdown[0]+20, self.position[1] + self.font.get_height(), 20, self.dropdown[1]),
-            #         "thumb_height": 20,
-            #         "color": (200, 200, 200),
-            #         "color_bar": (135, 206, 235),
-            #         "hover_color": (255, 199, 51),
-            #         "command1": lambda proportion: self.scroll_elements(proportion)})
             self.option_buttons.append(button)
-            self.option_buttons.append(self.scroll) if hasattr(self, 'scroll') else None
+        if self.option_buttons[-1].rect[1]>self.dropdown[1]:
+            self.scroll = ScrollBar({
+                "screen": self.screen,
+                "position": (self.position[0] + self.font.size(self.text)[0]+self.font.size(self.type_dropdown)[0], self.position[1] + self.font.get_height(), 20, self.dropdown[1]),
+                "thumb_height": 20,
+                "color": (200, 200, 200),
+                "color_bar": (135, 206, 235),
+                "hover_color": (255, 199, 51),
+                "command1": lambda proportion: self.scroll_elements(proportion)})
+        self.option_buttons.append(self.scroll) if hasattr(self, 'scroll') else None
         if (options and not self.text) and self.replace_text:
             self.text = options[0]
             self.selected_index = 0
