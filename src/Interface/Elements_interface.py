@@ -176,14 +176,16 @@ class ScrollBar(ElementBehavior):
         for el, (x0, y0) in zip(self.elements, self.initial_positions):
             new_y = y0 - offset
             el.position = (x0, new_y)
+            def update_rect_y(item, new_y):
+                if isinstance(item, pygame.Rect):item.y = new_y
+                elif isinstance(item, dict):
+                    for v in item.values():update_rect_y(v, new_y)
+                elif hasattr(item, 'rect') and hasattr(item, 'position'):
+                    update_rect_y(item.rect, new_y)
+                    item.position = (item.position[0], new_y)
             if isinstance(el.rect, dict):
-                for key in el.rect:
-                    item = el.rect[key]
-                    if hasattr(item, 'y'):item.y = new_y
-                    elif hasattr(item, 'rect') and hasattr(item, 'position'):
-                        item.rect.y = new_y
-                        item.position = (item.position[0], new_y)
-            else:el.rect.y = new_y
+                for key in el.rect:update_rect_y(el.rect[key], new_y)
+            else:update_rect_y(el.rect, new_y)
         if callable(self.commands):self.commands(proportion)
     def draw(self):
         pygame.draw.rect(self.screen, self.color, self.rect["rect"])
@@ -201,11 +203,19 @@ class ScrollBar(ElementBehavior):
                 self.content_height = bottom - top
             else:self.content_height = self.rect.height
     def return_rect(self):
-        for el in self.elements:
-            if isinstance(el.rect, dict):return max(el.rect.bottom for el in self.elements.values() if isinstance(el.rect, dict))
-            else:return max(el.rect.bottom for el in self.elements if not isinstance(el.rect, dict))
-    def change_item(self,config:dict):
-        self.position = config.get("position", self.position)
+        def get_bottom(val):
+            if isinstance(val, pygame.Rect):return val.bottom
+            elif isinstance(val, dict):return max(get_bottom(v) for v in val.values() if isinstance(v, (pygame.Rect, dict)))
+            elif hasattr(val, 'rect'):return get_bottom(val.rect)
+            return 0
+        max_bottom = 0
+        if self.elements:
+            for el in self.elements:
+                rect = getattr(el, 'rect', None)
+                if isinstance(rect, dict):
+                    for v in rect.values():max_bottom = max(max_bottom, get_bottom(v))
+                else:max_bottom = max(max_bottom, get_bottom(rect))
+        return max_bottom
 class ComboBox(TextButton):
     def __init__(self, config: dict):
         super().__init__(config)
@@ -260,8 +270,9 @@ class ComboBox(TextButton):
         pygame.draw.rect(self.screen, self.hover_dropdown, self.dropdown_rect)
         for i,button in enumerate(self.option_buttons):
             button.change_item({"position": (self.position[0], self.position[1] + self.font.get_height() + i * (self.font.get_height() + 5))})
-            # button.rect.y = button.position[1]
+            button.rect.y = button.position[1]
             button.draw()
+        if hasattr(self, 'scroll'):self.scroll.draw()
     def charge_elements(self, options: list[str]):
         self.options = options
         for i, option in enumerate(options):
@@ -283,7 +294,7 @@ class ComboBox(TextButton):
                 "color_bar": (135, 206, 235),
                 "hover_color": (255, 199, 51),
                 "command1": lambda proportion: self.scroll_elements(proportion)})
-        self.option_buttons.append(self.scroll) if hasattr(self, 'scroll') else None
+            self.rect["rect"] = self.scroll.rect
         if (options and not self.text) and self.replace_text:
             self.text = options[0]
             self.selected_index = 0
