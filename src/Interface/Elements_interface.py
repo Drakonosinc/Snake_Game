@@ -222,7 +222,7 @@ class ComboBox(TextButton):
     def __init__(self, config: dict):
         super().__init__(config)
         self.type_dropdown = self.icon_dropdown(config.get("type_dropdown", "down"))
-        self.dropdown = config.get("size", (self.font.size(self.text)[0]+self.font.size(self.type_dropdown)[0], 200))
+        self.dropdown = config.get("size", [self.font.size(self.text)[0]+self.font.size(self.type_dropdown)[0], 200])
         self.hover_dropdown=config.get("hover_dropdown",(135,206,235))
         self.replace_text = config.get("replace_text", False)
         self.anim_height_dropdown = 0
@@ -275,26 +275,31 @@ class ComboBox(TextButton):
         for button in self.option_buttons:
             if button.rect.bottom<=self.dropdown_rect.bottom and button.rect.top>=self.dropdown_rect.top:button.draw()
         if hasattr(self, 'scroll'):self.scroll.draw()
-    def charge_elements(self, options: list[str]):
-        self.options = options
-        for i, option in enumerate(options):
+    def charge_elements(self, options: dict, adapt_dropdown: bool = True, scroll: bool = True):
+        self.options = options.keys()
+        for i, (option,action) in enumerate(options.items()):
             button = TextButton({
                 "screen": self.screen,
+                "sound_hover": self.sound_hover,
+                "sound_touch": self.sound_touch,
                 "font": self.font,
                 "color": self.color,
                 "hover_color": self.hover_color,
                 "position": (self.position[0], self.position[1] + self.font.get_height() + i * (self.font.get_height() + 5)),
                 "text": option,
-                "command1": lambda idx=i: self.select_option(idx) if self.replace_text else None})
+                "command1": lambda idx=i: self.select_option(idx) if self.replace_text else None,
+                "command2": action if callable(action) else None})
             self.option_buttons.append(button)
             self.rect[f"option_{i}"] = button
-        if self.option_buttons[-1].rect[1]>self.dropdown[1]:self._create_scroll()
+        if adapt_dropdown:self.dropdown[1] = len(self.option_buttons) * (self.font.get_height() + 5)
+        if scroll:self._create_scroll()
         if (options and not self.text) and self.replace_text:
             self.text = options[0]
             self.selected_index = 0
     def _create_scroll(self):
         self.scroll = ScrollBar({
             "screen": self.screen,
+            "sound_hover": self.sound_hover,
             "position": (self.position[0] + self.font.size(self.text)[0]+self.font.size(self.type_dropdown)[0], self.position[1] + self.font.get_height(), 20, self.dropdown[1]),
             "thumb_height": 20,
             "color": (200, 200, 200),
