@@ -230,15 +230,16 @@ class ComboBox(TextButton):
         self.selected_index = None
         self.options = []
         self.option_buttons = []
-        self.button_dropdown = TextButton({
+        self.factory = ElementsFactory({
             "screen": self.screen,
             "font": self.font,
             "color": self.color,
-            "hover_color": self.hover_dropdown,
+            "hover_color": self.hover_color,
+            "sound_hover": self.sound_hover,
+            "sound_touch": self.sound_touch})
+        self.button_dropdown = self.factory.create_TextButton({
             "position": (self.position[0]+self.font.size(self.text)[0], int(self.position[1])),
             "text": self.type_dropdown,
-            "sound_hover": self.sound_hover,
-            "sound_touch": self.sound_touch,
             "command1": lambda: setattr(self, 'is_dropdown_open', not self.is_dropdown_open)})
         self.rect = {"button": pygame.Rect(*self.position, *self.font.size(self.text)),
                     "dropdown": self.button_dropdown}
@@ -278,15 +279,9 @@ class ComboBox(TextButton):
     def charge_elements(self, options: dict, adapt_dropdown: bool = True, scroll: bool = True):
         self.options = options.keys()
         for i, (option,action) in enumerate(options.items()):
-            button = TextButton({
-                "screen": self.screen,
-                "sound_hover": self.sound_hover,
-                "sound_touch": self.sound_touch,
-                "font": self.font,
-                "color": self.color,
-                "hover_color": self.hover_color,
-                "position": (self.position[0], self.position[1] + self.font.get_height() + i * (self.font.get_height() + 5)),
+            button = self.factory.create_TextButton({
                 "text": option,
+                "position": (self.position[0], self.position[1] + self.font.get_height() + i * (self.font.get_height() + 5)),
                 "command1": lambda idx=i: self.select_option(idx) if self.replace_text else None,
                 "command2": action if callable(action) else None})
             self.option_buttons.append(button)
@@ -297,14 +292,10 @@ class ComboBox(TextButton):
             self.text = options[0]
             self.selected_index = 0
     def _create_scroll(self):
-        self.scroll = ScrollBar({
-            "screen": self.screen,
-            "sound_hover": self.sound_hover,
+        self.scroll = self.factory.create_ScrollBar({
             "position": (self.position[0] + self.font.size(self.text)[0]+self.font.size(self.type_dropdown)[0], self.position[1] + self.font.get_height(), 20, self.dropdown[1]),
             "thumb_height": 20,
-            "color": (200, 200, 200),
-            "color_bar": (135, 206, 235),
-            "hover_color": (255, 199, 51)})
+            "color_bar": (135, 206, 235)})
         self.rect["rect"] = self.scroll.rect
         self.scroll.update_elements(self.option_buttons)
     def select_option(self, index):
