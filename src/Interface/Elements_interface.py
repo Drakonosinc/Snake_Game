@@ -229,7 +229,7 @@ class ComboBox(TextButton):
         self.is_dropdown_open = False
         self.selected_index = None
         self.options = []
-        self.option_buttons = []
+        self.option_buttons = {}
         self.factory = ElementsFactory({
             "screen": self.screen,
             "font": self.font,
@@ -273,31 +273,32 @@ class ComboBox(TextButton):
         self.dropdown_rect = self.get_rect_dropdown()
         pygame.draw.rect(self.screen, self.hover_dropdown, self.dropdown_rect)
         pygame.draw.rect(self.screen, self.color, self.dropdown_rect, 2)
-        for button in self.option_buttons:
+        for button in self.option_buttons.values():
             if button.rect.bottom<=self.dropdown_rect.bottom and button.rect.top>=self.dropdown_rect.top:button.draw()
         if hasattr(self, 'scroll'):self.scroll.draw()
     def charge_elements(self, options: dict, adapt_dropdown: bool = True, scroll: bool = True):
-        self.options = options.keys()
         for i, (option,action) in enumerate(options.items()):
             button = self.factory.create_TextButton({
                 "text": option,
                 "position": (self.position[0], self.position[1] + self.font.get_height() + i * (self.font.get_height() + 5)),
                 "command1": lambda idx=i: self.select_option(idx) if self.replace_text else None,
                 "command2": action if callable(action) else None})
-            self.option_buttons.append(button)
+            self.option_buttons[option] = button
             self.rect[f"option_{i}"] = button
+            self.options.append(option)
+            if len(self.options[i]) >= len(option):self.dropdown[0] = self.font.size(option)[0] + 5
         if adapt_dropdown:self.dropdown[1] = len(self.option_buttons) * (self.font.get_height() + 5)
         if scroll:self._create_scroll()
         if (options and not self.text) and self.replace_text:
-            self.text = options[0]
+            self.text = self.options[0]
             self.selected_index = 0
     def _create_scroll(self):
         self.scroll = self.factory.create_ScrollBar({
-            "position": (self.position[0] + self.font.size(self.text)[0]+self.font.size(self.type_dropdown)[0], self.position[1] + self.font.get_height(), 20, self.dropdown[1]),
+            "position": (self.position[0] + self.dropdown[0], self.position[1] + self.font.get_height(), 20, self.dropdown[1]),
             "thumb_height": 20,
             "color_bar": (135, 206, 235)})
         self.rect["rect"] = self.scroll.rect
-        self.scroll.update_elements(self.option_buttons)
+        self.scroll.update_elements([*self.option_buttons.values()])
     def select_option(self, index):
         if 0 <= index < len(self.options):
             self.text = self.options[index]
@@ -305,3 +306,4 @@ class ComboBox(TextButton):
             self.is_dropdown_open = False
     def events(self, event):
         if hasattr(self, 'scroll'):self.scroll.events(event)
+    def return_buttons(self, button:str):return self.option_buttons[button]
