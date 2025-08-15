@@ -27,10 +27,10 @@ class ElementBehavior:
         self.position = config["position"]
         self.sound_hover = config.get("sound_hover")
         self.sound_touch = config.get("sound_touch")
-        self.detect_mouse=config.get("detect_mouse",True)
+        self.detect_mouse = config.get("detect_mouse",True)
         self.pressed = config.get("pressed",True)
         self.states=config.get("states",{"detect_hover":True,"presses_touch":True,"click_time": None,"active":False})
-        self.commands = [config.get(f"command{i}") for i in range(1,4)]
+        self.commands = [config.get(f"command{i}") for i in range(1,config.get("number_commands", 4))]
         self.new_events(time=config.get("time",500))
     def events(self, event):pass
     def new_events(self,time):
@@ -292,12 +292,21 @@ class ComboBox(TextButton):
         if (options and not self.text) and self.replace_text:
             self.text = self.options[0]
             self.selected_index = 0
+    def charge_buttons(self,buttons: list, scroll: bool = True):
+        for i, button in enumerate(buttons):
+            if not self.option_buttons:button.position = (self.position[0], self.position[1] + self.font.get_height() + i * (self.font.get_height() + 5))
+            else:button.position = (self.position[0], self.option_buttons[list(self.option_buttons.keys())[-1]].rect.bottom + 5)
+            self.option_buttons[button.text] = button
+            self.rect[f"option_{i}"] = button
+            if len(self.options[i]) >= len(button.text):self.dropdown[0] = self.font.size(button.text)[0] + 5
+        self.dropdown[1] = len(self.option_buttons) * (self.font.get_height() + 5)
+        if scroll:self._create_scroll()
     def _create_scroll(self):
         self.scroll = self.factory.create_ScrollBar({
             "position": (self.position[0] + self.dropdown[0], self.position[1] + self.font.get_height(), 20, self.dropdown[1]),
             "thumb_height": 20,
             "color_bar": (135, 206, 235)})
-        self.rect["rect"] = self.scroll.rect
+        self.rect["scroll"] = self.scroll.rect
         self.scroll.update_elements([*self.option_buttons.values()])
     def select_option(self, index):
         if 0 <= index < len(self.options):
