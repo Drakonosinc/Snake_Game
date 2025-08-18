@@ -226,6 +226,7 @@ class ComboBox(TextButton):
         self.hover_dropdown=config.get("hover_dropdown",(135,206,235))
         self.replace_text = config.get("replace_text", False)
         self.adapt_dropdown = config.get("adapt_dropdown", True)
+        self.draw_scroll = config.get("draw_scroll", True)
         self.anim_height_dropdown = 0
         self.is_dropdown_open = False
         self.selected_index = None
@@ -279,7 +280,7 @@ class ComboBox(TextButton):
         if hasattr(self, 'scroll'):
             self.scroll.rect["rect"].height = self.dropdown_rect.height
             self.scroll.draw()
-    def charge_elements(self, options: dict, scroll: bool = True):
+    def charge_elements(self, options: dict):
         for i, (option,action) in enumerate(options.items()):
             button = self.factory.create_TextButton({
                 "text": option,
@@ -290,18 +291,18 @@ class ComboBox(TextButton):
             self.options.append(option)
             if len(self.options[i]) >= len(option):self.dropdown[0] = self.font.size(option)[0] + 5
         if self.adapt_dropdown:self.dropdown[1] = len(self.option_buttons) * (self.font.get_height() + 5)
-        if scroll:self._create_scroll()
+        if self.draw_scroll:self._create_scroll()
         if (options and not self.text) and self.replace_text:
             self.text = self.options[0]
             self.selected_index = 0
-    def charge_buttons(self,buttons: list, scroll: bool = True):
+    def charge_buttons(self,buttons: list):
         for i, button in enumerate(buttons):
             if not self.option_buttons:button.position = (self.position[0], self.position[1] + self.font.get_height() + i * (self.font.get_height() + 5))
             else:button.position = (self.position[0], self.option_buttons[list(self.option_buttons.keys())[-1]].rect.bottom + 5)
             self._repeat_charge(f"buttons_{i}",button.text,button)
             if len(buttons[i].text) >= len(button.text):self.dropdown[0] = self.font.size(button.text)[0] + 5
-        self.dropdown[1] = len(self.option_buttons) * (self.font.get_height() + 5)
-        if scroll:self._create_scroll()
+        if self.adapt_dropdown:self.dropdown[1] = len(self.option_buttons) * (self.font.get_height() + 5)
+        if self.draw_scroll:self._create_scroll()
     def _repeat_charge(self,i,option,button):
         self.option_buttons[option] = button
         self.rect[i] = button
