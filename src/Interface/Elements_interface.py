@@ -221,7 +221,7 @@ class ScrollBar(ElementBehavior):
 class ComboBox(TextButton):
     def __init__(self, config: dict):
         super().__init__(config)
-        self.type_dropdown = self.icon_dropdown(config.get("type_dropdown", "down"))
+        self.type_dropdown = self.icon_dropdown((config.get("type_dropdown", "down")).lower())
         self.dropdown = config.get("size", [self.font.size(self.text)[0]+self.font.size(self.type_dropdown)[0], 200])
         self.hover_dropdown=config.get("hover_dropdown",(135,206,235))
         self.replace_text = config.get("replace_text", False)
@@ -278,8 +278,7 @@ class ComboBox(TextButton):
         if self.adapt_dropdown:self.dropdown[1], self.adapt_dropdown = (len(self.option_buttons) * (self.font.get_height() + 5)), False
         if self.draw_scroll:self._create_scroll()
         for button in self.option_buttons.values():
-            button.draw()
-            # if button.rect.bottom<=self.dropdown_rect.bottom and button.rect.top>=self.dropdown_rect.top:button.draw()
+            if button.rect.bottom<=self.dropdown_rect.bottom and button.rect.top>=self.dropdown_rect.top:button.draw()
         if hasattr(self, 'scroll'):
             self.scroll.rect["rect"].height = self.dropdown_rect.height
             self.scroll.draw()
@@ -287,18 +286,23 @@ class ComboBox(TextButton):
         for i, (option,action) in enumerate(options.items()):
             button = self.factory.create_TextButton({
                 "text": option,
-                "position": (self.position[0], self.position[1] + self.font.get_height() + i * (self.font.get_height() + 5)),
+                "position": self._check_buttons_position(i),
                 "command1": lambda idx=i: self.select_option(idx) if self.replace_text else None,
                 "command2": action if callable(action) else None})
             self._repeat_charge(f"elements_{i}", option, button, i)
         if (options and not self.text) and self.replace_text:
             self.text = self.options[0]
             self.selected_index = 0
-    def charge_buttons(self,buttons: list):
+    def charge_buttons(self, buttons: list):
         for i, button in enumerate(buttons):
-            if not self.option_buttons:button.position = (self.position[0], self.position[1] + self.font.get_height() + i * (self.font.get_height() + 5))
-            else:button.position = (self.position[0], self.option_buttons[list(self.option_buttons.keys())[-1]].rect.bottom + 5)
+            button.position = self._check_buttons_position(i)
+            if hasattr(button, 'rect'):
+                if isinstance(button.rect, pygame.Rect):button.rect.topleft = button.position
+                elif isinstance(button.rect, dict) and "button" in button.rect:button.rect["button"].topleft = button.position
             self._repeat_charge(f"buttons_{i}",button.text,button,i)
+    def _check_buttons_position(self,i):
+        if not self.option_buttons:return (self.position[0], self.position[1] + self.font.get_height() + i * (self.font.get_height() + 5))
+        else:return (self.position[0], self.option_buttons[list(self.option_buttons.keys())[-1]].rect.bottom + 5)
     def _repeat_charge(self,rect,option,button,i):
         self.option_buttons[option] = button
         self.rect[rect] = button
