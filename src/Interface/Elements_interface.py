@@ -229,7 +229,6 @@ class ComboBox(TextButton):
         self.draw_scroll = config.get("draw_scroll", True)
         self.anim_height_dropdown = 0
         self.is_dropdown_open = False
-        self.selected_index = None
         self.options = []
         self.option_buttons = {}
         self.factory = ElementsFactory({
@@ -290,9 +289,6 @@ class ComboBox(TextButton):
                 "command1": lambda idx=i: self.select_option(idx) if self.replace_text else None,
                 "command2": action if callable(action) else None})
             self._repeat_charge(f"elements_{i}", option, button, i)
-        if (options and not self.text) and self.replace_text:
-            self.text = self.options[0]
-            self.selected_index = 0
     def charge_buttons(self, buttons: list):
         for i, button in enumerate(buttons):
             button.position = self._check_buttons_position(i)
@@ -319,7 +315,6 @@ class ComboBox(TextButton):
     def select_option(self, index):
         if 0 <= index < len(self.options):
             self.text = self.options[index]
-            self.selected_index = index
             self.is_dropdown_open = False
     def events(self, event):
         if hasattr(self, 'scroll'):self.scroll.events(event)
