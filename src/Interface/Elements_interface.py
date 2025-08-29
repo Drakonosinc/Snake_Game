@@ -247,16 +247,18 @@ class ComboBox(TextButton):
     def icon_dropdown(self,type_dropdown):
         match type_dropdown:
             case "down":return " V"
-            case "up":return " Λ"
+            case "up":return " ^"
             case "right":return " >"
             case "left":return " <"
-    def get_rect_dropdown(self):
+    def _get_rect_dropdown(self):
         def anim_height():pass
         match self.type_dropdown:
             case " V":
                 self.anim_height_dropdown += 1 if self.anim_height_dropdown<self.dropdown[1] else 0
                 return pygame.Rect(self.position[0], self.position[1] + self.font.get_height(), self.dropdown[0], self.anim_height_dropdown)
-            case " Λ":return None
+            case " ^":
+                self.anim_height_dropdown += 1 if self.anim_height_dropdown<self.dropdown[1] else 0
+                return pygame.Rect(self.position[0], self.position[1] - self.anim_height_dropdown, self.dropdown[0], self.anim_height_dropdown)
             case " >":return None
             case " <":return None
     def draw(self):
@@ -271,16 +273,20 @@ class ComboBox(TextButton):
     def draw_hover_effect(self):return self.screen.blit(self.font.render(f"{self.text}{self.type_dropdown}", True,self.hover_color), (self.position))
     def draw_rect_dropdown(self):
         self.button_dropdown.change_item({"color": self.hover_dropdown})
-        self.dropdown_rect = self.get_rect_dropdown()
+        self.dropdown_rect = self._get_rect_dropdown()
         pygame.draw.rect(self.screen, self.hover_dropdown, self.dropdown_rect)
         pygame.draw.rect(self.screen, self.color, self.dropdown_rect, 2)
-        if self.adapt_dropdown:self.dropdown[1], self.adapt_dropdown = (len(self.option_buttons) * (self.font.get_height() + 5)), False
-        if self.draw_scroll:self._create_scroll()
+        if self.adapt_dropdown and self.option_buttons:self.dropdown[1], self.adapt_dropdown = (len(self.option_buttons) * (self.font.get_height() + 5)), False
+        if self.draw_scroll and self.option_buttons:self._create_scroll()
         for button in self.option_buttons.values():
             if button.rect.bottom<=self.dropdown_rect.bottom and button.rect.top>=self.dropdown_rect.top:button.draw()
-        if hasattr(self, 'scroll'):
+        if hasattr(self, 'scroll'):self._draw_scroll()
+    def _draw_scroll(self):
+        if self.type_dropdown == " V":self.scroll.rect["rect"].height = self.dropdown_rect.height
+        elif self.type_dropdown == " ^":
+            if self.dropdown_rect.height != self.dropdown[1]:self.scroll.rect["rect"].y = self.scroll.rect["thumb"].y = self.dropdown_rect.y
             self.scroll.rect["rect"].height = self.dropdown_rect.height
-            self.scroll.draw()
+        self.scroll.draw()
     def charge_elements(self, options: dict):
         for i, (option,action) in enumerate(options.items()):
             button = self.factory.create_TextButton({
@@ -297,8 +303,12 @@ class ComboBox(TextButton):
                 elif isinstance(button.rect, dict) and "button" in button.rect:button.rect["button"].topleft = button.position
             self._repeat_charge(f"buttons_{i}",button.text,button,i)
     def _check_buttons_position(self,i):
-        if not self.option_buttons:return (self.position[0], self.position[1] + self.font.get_height() + i * (self.font.get_height() + 5))
-        else:return (self.position[0], self.option_buttons[list(self.option_buttons.keys())[-1]].rect.bottom + 5)
+        if not self.option_buttons:
+            if self.type_dropdown == " V":return (self.position[0], self.position[1] + self.font.get_height() + i * (self.font.get_height() + 5))
+            elif self.type_dropdown == " ^":return (self.position[0], self.position[1] - self.font.get_height() + i * (self.font.get_height() + 5))
+        else:
+            if self.type_dropdown == " V":return (self.position[0], self.option_buttons[list(self.option_buttons.keys())[-1]].rect.bottom + 5)
+            elif self.type_dropdown == " ^":return (self.position[0], self.option_buttons[list(self.option_buttons.keys())[-1]].rect.top - self.font.get_height())
     def _repeat_charge(self,rect,option,button,i):
         self.option_buttons[option] = button
         self.rect[rect] = button
