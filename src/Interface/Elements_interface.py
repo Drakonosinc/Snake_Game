@@ -259,8 +259,12 @@ class ComboBox(TextButton):
             case " ^":
                 self.anim_height_dropdown += 1 if self.anim_height_dropdown<self.dropdown[1] else 0
                 return pygame.Rect(self.position[0], self.position[1] - self.anim_height_dropdown, self.dropdown[0], self.anim_height_dropdown)
-            case " >":return None
-            case " <":return None
+            case " >":
+                self.anim_height_dropdown += 1 if self.anim_height_dropdown<self.dropdown[0] else 0
+                return None
+            case " <":
+                self.anim_height_dropdown += 1 if self.anim_height_dropdown<self.dropdown[0] else 0
+                return None
     def draw(self):
         self.screen.blit(self.font.render(self.text, True,self.color),(self.position))
         self.button_dropdown.draw()
@@ -292,7 +296,7 @@ class ComboBox(TextButton):
             button = self.factory.create_TextButton({
                 "text": option,
                 "position": self._check_buttons_position(i),
-                "command1": lambda idx=i: self.select_option(idx) if self.replace_text else None,
+                "command1": lambda idx=i: self._select_option(idx) if self.replace_text else None,
                 "command2": action if callable(action) else None})
             self._repeat_charge(f"elements_{i}", option, button, i)
     def charge_buttons(self, buttons: list):
@@ -306,9 +310,13 @@ class ComboBox(TextButton):
         if not self.option_buttons:
             if self.type_dropdown == " V":return (self.position[0], self.position[1] + self.font.get_height() + i * (self.font.get_height() + 5))
             elif self.type_dropdown == " ^":return (self.position[0], self.position[1] - self.font.get_height() + i * (self.font.get_height() + 5))
+            elif self.type_dropdown == " >":return (0,0)
+            elif self.type_dropdown == " <":return (0,0)
         else:
             if self.type_dropdown == " V":return (self.position[0], self.option_buttons[list(self.option_buttons.keys())[-1]].rect.bottom + 5)
             elif self.type_dropdown == " ^":return (self.position[0], self.option_buttons[list(self.option_buttons.keys())[-1]].rect.top - self.font.get_height())
+            elif self.type_dropdown == " >":return (0,0)
+            elif self.type_dropdown == " <":return (0,0)
     def _repeat_charge(self,rect,option,button,i):
         self.option_buttons[option] = button
         self.rect[rect] = button
@@ -322,9 +330,11 @@ class ComboBox(TextButton):
         self.rect["scroll"] = self.scroll.rect
         self.scroll.update_elements([*self.option_buttons.values()])
         self.draw_scroll = False
-    def select_option(self, index):
+    def _select_option(self, index):
         if 0 <= index < len(self.options):
             self.text = self.options[index]
+            self.option_buttons[self.options[index]].position = self.position
+            self.option_buttons[self.options[index]].rect = pygame.Rect(*self.position, *self.font.size(self.text))
             self.is_dropdown_open = False
     def events(self, event):
         if hasattr(self, 'scroll'):self.scroll.events(event)
