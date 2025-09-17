@@ -30,6 +30,7 @@ class ElementBehavior:
         self.detect_mouse = config.get("detect_mouse",True)
         self.pressed = config.get("pressed",True)
         self.states=config.get("states",{"detect_hover":True,"presses_touch":True,"click_time": None,"active":False})
+        self.repeat = config.get("repeat_button",False)
         self.commands = [config.get(f"command{i}") for i in range(1,config.get("number_commands", 4))]
         self.new_events(time=config.get("time",500))
     def events(self, event):pass
@@ -47,19 +48,24 @@ class ElementBehavior:
                 if self.sound_hover:self.sound_hover.play(loops=0)
                 self.states["detect_hover"]=False
         else:self.states["detect_hover"]=True
-    def pressed_button(self,rect,pressed_mouse,mouse_pos,draw=None):
+    def pressed_button(self,rect,pressed_mouse,mouse_pos,draw=None,repeat:bool = None):
+        repeat = self.repeat if repeat is None else repeat
         current_time = pygame.time.get_ticks()
         if pressed_mouse[0] and rect.collidepoint(mouse_pos) and self.states["presses_touch"]:
             self.states["active"]=True
             self.states["presses_touch"]=False
             self.states["click_time"] = current_time
-        if self.states["click_time"] is not None:
-            if current_time - self.states["click_time"] >= 200:
-                if self.sound_touch:self.sound_touch.play(loops=0)
-                self.states["click_time"] = None
-                self.states["presses_touch"] = True
-                self.execute_commands()
-        if pressed_mouse[0] and not rect.collidepoint(mouse_pos):self.states["active"],self.states["presses_touch"]=False,True
+        def execute():
+            if self.sound_touch:self.sound_touch.play(loops=0)
+            self.states["active"] = False
+            self.states["click_time"] = None
+            self.states["presses_touch"] = True
+            self.execute_commands()
+        if not repeat and not pressed_mouse[0] and self.states["active"]:
+            if rect.collidepoint(mouse_pos):execute()
+        elif self.states["click_time"] is not None and repeat:
+            if current_time - self.states["click_time"] >= 200:execute()
+        if pressed_mouse[0] and not rect.collidepoint(mouse_pos) and self.states["active"]:self.states["active"],self.states["presses_touch"]=False,True
         if self.states["active"]:self.draw_pressed_effect() if draw is None else draw()
     def draw_pressed_effect(self):return NotImplementedError
     def filter_rects_collision(self,rects: dict, mouse_pos, draws: list, option: bool=False):
