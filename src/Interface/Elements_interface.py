@@ -49,22 +49,19 @@ class ElementBehavior:
                 self.states["detect_hover"]=False
         else:self.states["detect_hover"]=True
     def pressed_button(self,rect,pressed_mouse,mouse_pos,draw=None,repeat:bool = None):
+        def execute(sound = False, active = False, presses = True, time = None, command = True):
+            if sound and self.sound_touch:self.sound_touch.play(loops=0)
+            self.states["active"] = active
+            self.states["presses_touch"] = presses
+            self.states["click_time"] = None if time is None else time
+            if command:self.execute_commands()
         repeat = self.repeat if repeat is None else repeat
         current_time = pygame.time.get_ticks()
-        if pressed_mouse[0] and rect.collidepoint(mouse_pos) and self.states["presses_touch"]:
-            self.states["active"]=True
-            self.states["presses_touch"]=False
-            self.states["click_time"] = current_time
-        def execute():
-            if self.sound_touch:self.sound_touch.play(loops=0)
-            self.states["active"] = False
-            self.states["click_time"] = None
-            self.states["presses_touch"] = True
-            self.execute_commands()
+        if pressed_mouse[0] and rect.collidepoint(mouse_pos) and self.states["presses_touch"]:execute(False,True,False,current_time,False)
         if not repeat and not pressed_mouse[0] and self.states["active"]:
-            if rect.collidepoint(mouse_pos):execute()
+            if rect.collidepoint(mouse_pos):execute(True)
         elif self.states["click_time"] is not None and repeat:
-            if current_time - self.states["click_time"] >= 200:execute()
+            if current_time - self.states["click_time"] >= 200:execute(True)
         if pressed_mouse[0] and not rect.collidepoint(mouse_pos) and self.states["active"]:self.states["active"],self.states["presses_touch"]=False,True
         if self.states["active"]:self.draw_pressed_effect() if draw is None else draw()
     def draw_pressed_effect(self):return NotImplementedError
@@ -153,6 +150,7 @@ class ScrollBar(ElementBehavior):
     def __init__(self, config: dict):
         super().__init__(config)
         rect = pygame.Rect(*self.position)
+        self.type_of_orientation = config.get("type_of_orientation", "vertical").lower()
         self.hover_color=config.get("hover_color",(255, 199, 51))
         self.thumb_height = config.get("thumb_height", max(20, int(self.position[3] * config.get("thumb_ratio", 0.2))))
         self.thumb_rect = pygame.Rect(rect.x, rect.y, rect.width, self.thumb_height)
