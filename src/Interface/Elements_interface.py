@@ -407,5 +407,3 @@ class ComboBoxLeft(ComboBox):
             self.dropdown[1] = self.font.get_height() + 5
     def _should_draw_option_button(self, button: object) -> bool: return button.rect.right <= self.dropdown_rect.right and button.rect.left >= self.dropdown_rect.left
     def _update_scroll_position(self) -> None: pass
-    # nota agregar un menu para modificar las capas de los modelos de redes neuronales, para
-    # dar la posibilidad de modificar la cantidad de capas y neuronas por capa
