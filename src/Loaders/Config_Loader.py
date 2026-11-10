@@ -10,6 +10,11 @@ class Config():
             self.config_keys = config["config_keys"]
             self.config_sounds = config["config_sounds"]
             self.config_AI = config["config_AI"]
+            genetic_cfg = self.config_AI.get("genetic", {})
+            self.config_AI.setdefault("generation_value", genetic_cfg.get("generation_value", 100))
+            self.config_AI.setdefault("population_value", genetic_cfg.get("population_value", 20))
+            self.config_AI.setdefault("try_for_ai", genetic_cfg.get("try_for_ai", 3))
+            self.config_AI.setdefault("model_save", genetic_cfg.get("model_save", False))
             self.config_game = config["config_game"]
         except:self.config(alls=True),self.save_config()
     def config(self,visuals=False,keys=False,sounds=False,AI=False,game=False,alls=False):

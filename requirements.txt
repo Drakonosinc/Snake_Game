@@ -1,0 +1,5 @@
+pygame-ce>=2.5.0
+numpy>=1.24.0
+torch>=2.0.0
+pyforgeui>=1.0.0
+pyforgeai-engine>=1.0.0

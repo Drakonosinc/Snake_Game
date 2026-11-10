@@ -1,5 +1,5 @@
 from Loaders.Load_elements import *
-from .Elements_interface import *
+from pyforgeui import *
 from .Menus import *
 class interface(load_elements,BaseMenu):
     def __init__(self):

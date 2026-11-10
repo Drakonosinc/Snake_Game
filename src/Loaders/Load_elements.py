@@ -1,6 +1,6 @@
 import pygame,os
 from pygame.locals import *
-from AI.Genetic_Algorithm import *
+from pyforgeai import load_model, save_model
 from .Config_Loader import *
 class load_elements():
     def __init__(self):
