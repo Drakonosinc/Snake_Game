@@ -11,7 +11,7 @@ class VisualsMenu(BaseMenu):
         self.buttons['decrease_body_button'] = factory.create_TextButton({"font": self.interface.font3_5,"text": "<","position": (50,self.HEIGHT/2-50),"command1":lambda:self.change_items("value_snake_body","snake_body",-1)})
         self.buttons['increase_body_button'] = factory.create_TextButton({"font": self.interface.font3_5,"text": ">","position": (self.WIDTH/2-100,self.HEIGHT/2-50),"command1":lambda:self.change_items("value_snake_body","snake_body",1)})
         self.buttons['decrease_food_button'] = factory.create_TextButton({"font": self.interface.font3_5,"text": "<","position": (50,self.HEIGHT/2),"command1":lambda:self.change_items("value_foods","food",-1)})
-        self.buttons['decrease_food_button'] = factory.create_TextButton({"font": self.interface.font3_5,"text": ">","position": (self.WIDTH/2-100,self.HEIGHT/2),"command1":lambda:self.change_items("value_foods","food",1)})
+        self.buttons['increase_food_button'] = factory.create_TextButton({"font": self.interface.font3_5,"text": ">","position": (self.WIDTH/2-100,self.HEIGHT/2),"command1":lambda:self.change_items("value_foods","food",1)})
         self.buttons['save'] = factory.create_TextButton({"text": "Save config","position": (self.WIDTH/2,self.HEIGHT-85),"command1":self.config.save_config})
         self.buttons['default'] = factory.create_TextButton({"text": "Default config","position": (self.WIDTH/2-40,self.HEIGHT-50),"command1":lambda:self.config.config(visuals=True),"command2":self.interface.load_images})
     def render(self):
@@ -20,6 +20,10 @@ class VisualsMenu(BaseMenu):
         self.screen.blit(self.interface.font3.render("Visuals", True, "orange"),(int(self.WIDTH * (52 / 600)),int(self.HEIGHT * (20 / 400 ))))
         self.execute_buttons(*self.buttons.values())
     def _items_visuals(self):
-        self.screen.blit(self.interface.head_snake,(120,self.HEIGHT/2-100))
-        self.screen.blit(self.interface.body_snake,(120,self.HEIGHT/2-50))
-        self.screen.blit(self.interface.apple_img,(120,self.HEIGHT/2))
+        dt = getattr(self.interface, "time_delta", 1.0 / 60.0)
+        self.interface.head_animator.update(dt)
+        self.interface.body_animator.update(dt)
+        self.interface.apple_animator.update(dt)
+        self.screen.blit(self.interface.head_animator.get_frame() or self.interface.head_snake, (116, self.HEIGHT / 2 - 104))
+        self.screen.blit(self.interface.body_animator.get_frame() or self.interface.body_snake, (116, self.HEIGHT / 2 - 54))
+        self.screen.blit(self.interface.apple_animator.get_frame() or self.interface.apple_img, (116, self.HEIGHT / 2 - 4))

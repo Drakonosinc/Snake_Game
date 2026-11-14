@@ -1,5 +1,7 @@
+import importlib
 import sys
-from Game.Snake_Game import *
+import pygame
+from Game.Snake_Game import Snake_Game
 from pyforgeai import genetic_algorithm, save_model
 
 
@@ -12,26 +14,49 @@ def _evaluate_snake_model(game, model):
 
 
 if __name__ == "__main__":
-    while True:
-        (game := Snake_Game()).run()
-        game.game_over = False
-        match game.mode_game:
-            case {"Training AI": True}:
-                best_model = genetic_algorithm(
-                    target=lambda m: _evaluate_snake_model(game, m),
-                    input_size=len(game.ai_handler.get_state()),
-                    output_size=4,
-                    generations=game.config.config_AI["generation_value"],
-                    population_size=game.config.config_AI["population_value"],
-                    num_trials=game.config.config_AI["try_for_ai"],
-                    stop_fn=lambda: bool(getattr(game, "exit", False)),
-                    on_generation_fn=lambda g: setattr(game, "generation", g),
-                )
-                game.models = best_model
-                if game.config.config_AI["model_save"] and best_model is not None:
-                    save_model(game.models, torch.optim.Adam(game.models.parameters(), lr=0.001), game.model_path)
-            case {"Player": True} | {"AI": True}:
-                game.run_with_models()
+    game = Snake_Game()
+    while not game.exit:
+        game.run()
         if game.exit:
             break
-pygame.quit(), sys.exit()
+        game.game_over = False
+        use_tf = bool(game.config.config_AI.get("type_model", {}).get("Tensorflow", False))
+        framework = "tensorflow" if use_tf else "pytorch"
+        use_qlearning = bool(game.config.config_AI.get("type_training", {}).get("q-learning", False))
+
+        match game.mode_game:
+            case {"Training AI": True}:
+                if use_qlearning:
+                    ql_mod = importlib.import_module("AI.Q-learning")
+                    best_model = ql_mod.train_dqn(
+                        episodes=game.config.config_AI["generation_value"],
+                        game=game,
+                        framework=framework,
+                        render=True,
+                    )
+                else:
+                    best_model = genetic_algorithm(
+                        target=lambda m: _evaluate_snake_model(game, m),
+                        input_size=len(game.ai_handler.get_state()),
+                        output_size=4,
+                        generations=game.config.config_AI["generation_value"],
+                        population_size=game.config.config_AI["population_value"],
+                        num_trials=game.config.config_AI["try_for_ai"],
+                        framework=framework,
+                        stop_fn=lambda: bool(getattr(game, "exit", False)) or game.main == 0,
+                        on_generation_fn=lambda g: setattr(game, "generation", g),
+                    )
+                if best_model is not None:
+                    game.models = best_model
+                    if game.config.config_AI["model_save"]:
+                        game.load_AI()
+                        save_model(best_model, None, game.model_path)
+                        game.load_AI()
+                game.mode_game["Training AI"] = False
+                if not game.exit:
+                    game.main = 0
+            case {"Player": True} | {"AI": True}:
+                game.run_with_models()
+    pygame.quit()
+    sys.exit()
+

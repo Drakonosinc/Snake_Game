@@ -39,15 +39,19 @@ class BaseMenu:
     def change_mains(self,config):
         if fade_in:=config.get("fade_in",True):self.fade_transition(False,config.get("color",(0,0,0)),config.get("limit",255))
         if fade_out:=config.get("fade_out",False):self.fade_transition(True,config.get("color2",(0,0,0)),0)
-        self.interface.main=config.get("main",None)
+        target_main = config.get("main", None)
+        if target_main == 4 and self.interface.main in (0, 3):
+            self.interface.previous_menu = self.interface.main
+        self.interface.main = target_main
         if config.get("command",None):config["command"]()
         if config.get("run",False):setattr(self.interface,"running",False),setattr(self.interface, "game_over", True)
         if config.get("recursive",False):self.change_mains({"main":self.interface.main,"fade_in":fade_in,"fade_out":fade_out})
     def type_game(self,mode_one=False,mode_two=False,mode_three=False):
         self.interface.mode_game["Training AI"]=mode_one
         self.interface.mode_game["Player"]=mode_two
-        if self.interface.model_training!=None:self.interface.mode_game["AI"]=mode_three
-        else:self.interface.load_AI()
+        if mode_three:
+            self.interface.load_AI()
+        self.interface.mode_game["AI"] = bool(mode_three and self.interface.model_training is not None)
     def update_mode_buttons(self,buttons):
         mode_buttons = {"Training AI": buttons['training_ai'],"Player": buttons['player'],"AI": buttons['ai']}
         self.check_item(self.interface.mode_game,self.interface.SKYBLUE,self.interface.WHITE,"color",**mode_buttons)

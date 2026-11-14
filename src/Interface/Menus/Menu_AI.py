@@ -12,6 +12,21 @@ class AIMenu(BaseMenu):
         self.interface.scroll = self.buttons['scroll']
         self._setup_training_ai_buttons()
         self._setup_training_ai_texts()
+    def _toggle_training(self):
+        tt = self.config.config_AI["type_training"]
+        is_gen = bool(tt.get("genetic", True))
+        tt["genetic"] = not is_gen
+        tt["q-learning"] = is_gen
+        self.config.save_config()
+
+    def _toggle_model(self):
+        tm = self.config.config_AI["type_model"]
+        is_pt = bool(tm.get("Pytorch", True))
+        tm["Pytorch"] = not is_pt
+        tm["Tensorflow"] = is_pt
+        self.config.save_config()
+        self.interface.load_AI()
+
     def _setup_training_ai_buttons(self):
         factory = self.interface.button_factory_f2_5
         self.config_buttons['increase_generation'] = factory.create_TextButton({"font":self.interface.font3_5,"text": ">","position": (300,self.HEIGHT/2-95),"command1":lambda:self.increase_decrease_variable(self.config.config_AI,'generation_value'),"command2":self._update_training_ai_texts})
@@ -21,6 +36,8 @@ class AIMenu(BaseMenu):
         self.config_buttons['increase_try_for_ai'] = factory.create_TextButton({"font":self.interface.font3_5,"text": ">","position": (300,self.HEIGHT/2+55),"command1":lambda:self.increase_decrease_variable(self.config.config_AI,'try_for_ai'),"command2":self._update_training_ai_texts})
         self.config_buttons['decrease_try_for_ai'] = factory.create_TextButton({"font":self.interface.font3_5,"text": "<","position": (120,self.HEIGHT/2+55),"command1":lambda:self.increase_decrease_variable(self.config.config_AI,'try_for_ai',True,-1),"command2":self._update_training_ai_texts})
         self.config_buttons['save_model'] = factory.create_TextButton({"text": "OFF","color": self.interface.SKYBLUE,"position": (self.WIDTH/2+10,self.HEIGHT/2+100),"command1":lambda:self.on_off(self.config.config_AI,"model_save"),"command2":self.config.save_config})
+        self.config_buttons['toggle_training'] = factory.create_TextButton({"text": "Genetic","color": self.interface.SKYBLUE,"position": (self.WIDTH/2+10,self.HEIGHT/2+140),"command1":self._toggle_training})
+        self.config_buttons['toggle_model'] = factory.create_TextButton({"text": "PyTorch","color": self.interface.SKYBLUE,"position": (self.WIDTH/2+10,self.HEIGHT/2+180),"command1":self._toggle_model})
     def _setup_training_ai_texts(self):
         factory = self.interface.button_factory_f2_5
         self.config_buttons['text_C'] = factory.create_Text({"text":(f"Config Training AI"),"position":(int(self.WIDTH * (52 / 600)),int(self.HEIGHT * (20 / 400 ))),"detect_mouse":False})
@@ -28,6 +45,8 @@ class AIMenu(BaseMenu):
         self.config_buttons['text_P'] = factory.create_Text({"text":(f"Population Size\n{self.config.config_AI['population_value']:^36}"),"position":(50,self.HEIGHT/2-50),"detect_mouse":False})
         self.config_buttons['text_A'] = factory.create_Text({"text":(f"Attempts By AI\n{self.config.config_AI['try_for_ai']:^{39 if self.config.config_AI['try_for_ai']<10 else 36}}"),"position":(50,self.HEIGHT/2+25),"detect_mouse":False})
         self.config_buttons['text_S'] = factory.create_Text({"text":(f"Save model"),"position":(50,self.HEIGHT/2+100),"detect_mouse":False})
+        self.config_buttons['text_T'] = factory.create_Text({"text":(f"Training"),"position":(50,self.HEIGHT/2+140),"detect_mouse":False})
+        self.config_buttons['text_M'] = factory.create_Text({"text":(f"Framework"),"position":(50,self.HEIGHT/2+180),"detect_mouse":False})
     def _update_training_ai_texts(self):
         if 'text_G' in self.config_buttons:self.config_buttons['text_G'].change_item({"text": f"Generation Size\n{self.config.config_AI['generation_value']:^36}"})
         if 'text_P' in self.config_buttons:self.config_buttons['text_P'].change_item({"text": f"Population Size\n{self.config.config_AI['population_value']:^36}"})
@@ -35,5 +54,9 @@ class AIMenu(BaseMenu):
     def render(self):
         self.screen.fill(self.interface.BLACK)
         self.config_buttons['save_model'].change_item({"color":self.interface.SKYBLUE if self.config.config_AI["model_save"] else self.interface.RED,"text":"ON" if self.config.config_AI["model_save"] else "OFF"})
+        is_gen = bool(self.config.config_AI["type_training"].get("genetic", True))
+        self.config_buttons['toggle_training'].change_item({"text": "Genetic" if is_gen else "Q-Learning", "color": self.interface.SKYBLUE})
+        is_pt = bool(self.config.config_AI["type_model"].get("Pytorch", True))
+        self.config_buttons['toggle_model'].change_item({"text": "PyTorch" if is_pt else "TensorFlow", "color": self.interface.SKYBLUE})
         self.buttons['scroll'].update_elements([*self.config_buttons.values()])
         self.execute_buttons(*self.buttons.values(),*self.config_buttons.values())
