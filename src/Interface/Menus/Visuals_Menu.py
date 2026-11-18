@@ -15,10 +15,27 @@ class VisualsMenu(BaseMenu):
         self.buttons['save'] = factory.create_TextButton({"text": "Save config","position": (self.WIDTH/2,self.HEIGHT-85),"command1":self.config.save_config})
         self.buttons['default'] = factory.create_TextButton({"text": "Default config","position": (self.WIDTH/2-40,self.HEIGHT-50),"command1":lambda:self.config.config(visuals=True),"command2":self.interface.load_images})
     def render(self):
-        self.screen.fill(self.interface.BLACK)
+        self.draw_retro_backdrop(show_grid=True, show_particles=True)
+        self.draw_hud_frame(
+            (34, int(self.HEIGHT / 2 - 116), 215, 162),
+            accent_color=(34, 197, 94),
+            bg_alpha=150,
+            corner_size=12,
+        )
+        self.draw_hud_frame(
+            (int(self.WIDTH / 2 - 54), self.HEIGHT - 95, 305, 86),
+            accent_color=(56, 189, 248),
+            bg_alpha=150,
+            corner_size=10,
+        )
         self._items_visuals()
-        self.screen.blit(self.interface.font3.render("Visuals", True, "orange"),(int(self.WIDTH * (52 / 600)),int(self.HEIGHT * (20 / 400 ))))
+        self.draw_menu_title(
+            self.interface.font3,
+            "Visuals",
+            (int(self.WIDTH * (52 / 600)), int(self.HEIGHT * (20 / 400))),
+        )
         self.execute_buttons(*self.buttons.values())
+        self.draw_post_overlay()
     def _items_visuals(self):
         dt = getattr(self.interface, "time_delta", 1.0 / 60.0)
         self.interface.head_animator.update(dt)

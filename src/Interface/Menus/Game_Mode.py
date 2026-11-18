@@ -11,6 +11,18 @@ class GameMode(BaseMenu):
         self.buttons['player'] = factory.create_TextButton({"text": "Player","position": (50,self.HEIGHT/2-50),"command1":lambda:self.type_game(False,True),"command2":lambda:self.update_mode_buttons(self.buttons)})
         self.buttons['ai'] = factory.create_TextButton({"text": "AI","position": (50,self.HEIGHT/2),"command1":lambda:self.type_game(mode_three=True),"command2":lambda:self.update_mode_buttons(self.buttons)})
     def render(self):
-        self.screen.fill(self.interface.BLACK)
-        self.screen.blit(self.interface.font3.render("Mode Game", True, "orange"),(int(self.WIDTH * (52 / 600)),int(self.HEIGHT * (20 / 400 ))))
+        self.draw_retro_backdrop(show_grid=True, show_particles=True)
+        self.draw_hud_frame(
+            (34, int(self.HEIGHT / 2 - 114), 286, 158),
+            accent_color=(56, 189, 248),
+            bg_alpha=150,
+            corner_size=12,
+        )
+        self.draw_menu_title(
+            self.interface.font3,
+            "Mode Game",
+            (int(self.WIDTH * (52 / 600)), int(self.HEIGHT * (20 / 400))),
+        )
+        self.update_mode_buttons(self.buttons)
         self.execute_buttons(*self.buttons.values())
+        self.draw_post_overlay()

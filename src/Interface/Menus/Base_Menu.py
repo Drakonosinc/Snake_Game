@@ -1,4 +1,7 @@
 import pygame
+from pyforgeui import RetroBackdrop, RetroVisualFX
+
+
 class BaseMenu:
     def __init__(self, interface=None):
         self.interface = interface
@@ -7,6 +10,84 @@ class BaseMenu:
             self.WIDTH = interface.WIDTH
             self.HEIGHT = interface.HEIGHT
             self.config = interface.config
+            if not hasattr(interface, "_retro_backdrop"):
+                interface._retro_backdrop = RetroBackdrop(
+                    self.WIDTH,
+                    self.HEIGHT,
+                    accent_color=(56, 189, 248),
+                    secondary_color=(34, 197, 94),
+                )
+
+    def draw_retro_backdrop(self, show_grid: bool = True, show_particles: bool = True) -> None:
+        if self.interface and hasattr(self.interface, "_retro_backdrop"):
+            self.interface._retro_backdrop.draw_background(
+                self.screen,
+                show_grid=show_grid,
+                show_particles=show_particles,
+            )
+        else:
+            self.screen.fill((8, 12, 24))
+
+    def draw_post_overlay(self) -> None:
+        if self.interface and hasattr(self.interface, "_retro_backdrop"):
+            self.interface._retro_backdrop.draw_post_overlay(self.screen)
+
+    def draw_menu_title(
+        self,
+        font: pygame.font.Font,
+        text: str,
+        pos: tuple[int, int],
+        main_color=(255, 199, 51),
+        glow_color=(249, 115, 22),
+    ) -> pygame.Rect:
+        return RetroVisualFX.draw_neon_title(
+            self.screen,
+            font,
+            text,
+            pos,
+            color=main_color,
+            glow_color=glow_color,
+            underline=True,
+        )
+
+    def draw_styled_label(
+        self,
+        font: pygame.font.Font,
+        text: str,
+        pos: tuple[int, int],
+        color=(255, 255, 255),
+        glow_color=(56, 189, 248),
+        highlight_second_line: bool = False,
+    ) -> None:
+        surf, (px, py), _, _ = RetroVisualFX.render_text_styled(
+            font,
+            text,
+            color=color,
+            shadow=True,
+            glow=True,
+            glow_color=glow_color,
+            glow_radius=3,
+            highlight_second_line=highlight_second_line,
+            second_line_color=(56, 189, 248),
+        )
+        self.screen.blit(surf, (int(pos[0]) - px, int(pos[1]) - py))
+
+    def draw_hud_frame(
+        self,
+        rect: tuple[int, int, int, int] | pygame.Rect,
+        accent_color=(56, 189, 248),
+        bg_alpha: int = 155,
+        corner_size: int = 12,
+        header_line_y: int | None = None,
+    ) -> None:
+        RetroVisualFX.draw_hud_frame(
+            self.screen,
+            rect,
+            accent_color=accent_color,
+            bg_alpha=bg_alpha,
+            corner_size=corner_size,
+            header_line_y=header_line_y,
+        )
     def filt(self,WIDTH,HEIGHT,number,color=(0,0,0),position=(0,0)):
         background=pygame.Surface((WIDTH,HEIGHT),pygame.SRCALPHA)
         background.fill((*color, number))

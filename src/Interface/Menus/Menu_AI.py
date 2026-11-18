@@ -12,6 +12,7 @@ class AIMenu(BaseMenu):
         self.interface.scroll = self.buttons['scroll']
         self._setup_training_ai_buttons()
         self._setup_training_ai_texts()
+        self.buttons['scroll'].update_elements([*self.config_buttons.values()])
     def _toggle_training(self):
         tt = self.config.config_AI["type_training"]
         is_gen = bool(tt.get("genetic", True))
@@ -52,11 +53,17 @@ class AIMenu(BaseMenu):
         if 'text_P' in self.config_buttons:self.config_buttons['text_P'].change_item({"text": f"Population Size\n{self.config.config_AI['population_value']:^36}"})
         if 'text_A' in self.config_buttons:self.config_buttons['text_A'].change_item({"text": f"Attempts By AI\n{self.config.config_AI['try_for_ai']:^{39 if self.config.config_AI['try_for_ai']<10 else 36}}"})
     def render(self):
-        self.screen.fill(self.interface.BLACK)
+        self.draw_retro_backdrop(show_grid=True, show_particles=True)
+        self.draw_hud_frame(
+            (32, 16, self.WIDTH - 68, self.HEIGHT - 32),
+            accent_color=(56, 189, 248),
+            bg_alpha=150,
+            corner_size=12,
+        )
         self.config_buttons['save_model'].change_item({"color":self.interface.SKYBLUE if self.config.config_AI["model_save"] else self.interface.RED,"text":"ON" if self.config.config_AI["model_save"] else "OFF"})
         is_gen = bool(self.config.config_AI["type_training"].get("genetic", True))
         self.config_buttons['toggle_training'].change_item({"text": "Genetic" if is_gen else "Q-Learning", "color": self.interface.SKYBLUE})
         is_pt = bool(self.config.config_AI["type_model"].get("Pytorch", True))
         self.config_buttons['toggle_model'].change_item({"text": "PyTorch" if is_pt else "TensorFlow", "color": self.interface.SKYBLUE})
-        self.buttons['scroll'].update_elements([*self.config_buttons.values()])
         self.execute_buttons(*self.buttons.values(),*self.config_buttons.values())
+        self.draw_post_overlay()

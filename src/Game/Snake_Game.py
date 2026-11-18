@@ -134,9 +134,7 @@ class Snake_Game(interface):
 
         self.screen.blit(self.background_img, (ox, oy))
         self.starfield.update_and_draw(self.screen, dt, drift_x=-0.4, drift_y=0.2)
-
-        self.show_score()
-        self.draw_generation()
+        self.draw_live_network_background()
 
         apple_frame = self.apple_animator.get_frame() or self.apple_img
         ax = self.fruit.rect.centerx - apple_frame.get_width() // 2 + ox
@@ -161,6 +159,8 @@ class Snake_Game(interface):
 
         self.particles.draw(self.screen, offset=(ox, oy))
         self.shockwaves.draw(self.screen, offset=(ox, oy))
+        self.show_score()
+        self.draw_generation()
         self.draw_interfaces()
 
     def collision(self):

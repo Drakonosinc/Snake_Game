@@ -115,6 +115,21 @@ class TestSnakeGame(unittest.TestCase):
         cb()
         self.assertEqual(self.game.main, 3)
 
+        # Render all 9 retro-modern menus
+        for menu_id in range(9):
+            self.game.main = menu_id
+            self.game.draw_interfaces()
+
+    def test_live_neural_network_training_background(self):
+        self.game.mode_game = {"Training AI": True, "Player": False, "AI": False}
+        self.game.main = -1
+        model = build_model("Pytorch", 13, 4, hidden_sizes=[128, 64])
+        self.game.models = model
+        self.game.type_mode()
+        self.assertIsNotNone(model.layer_activations)
+        self.assertEqual([len(layer) for layer in model.layer_activations], [13, 128, 64, 4])
+        self.game.draw()
+
 
 if __name__ == "__main__":
     unittest.main(verbosity=2)

@@ -22,9 +22,32 @@ class KeysMenu(BaseMenu):
         self.buttons['default'] = factory.create_TextButton({"text": "Default config","position": (self.WIDTH/2-40,self.HEIGHT-50),"command1":lambda:(self.config.config(keys=True),self.change_mains({"main":6,"command":self.setup_buttons}))})
         self.keys_buttons={"key_up":self.buttons_keys["up1_button"],"key_up2":self.buttons_keys["up2_button"],"key_down":self.buttons_keys["down1_button"],"key_down2":self.buttons_keys["down2_button"],"key_left":self.buttons_keys["left1_button"],"key_left2":self.buttons_keys["left2_button"],"key_right":self.buttons_keys["right1_button"],"key_right2":self.buttons_keys["right2_button"]}
     def render(self):
-        self.screen.fill(self.interface.BLACK)
-        self.screen.blit(self.interface.font3.render("Keys", True, "orange"),(int(self.WIDTH * (52 / 600)),int(self.HEIGHT * (20 / 400 ))))
-        self.execute_buttons(*self.buttons.values(),*self.buttons_keys.values())
+        self.draw_retro_backdrop(show_grid=True, show_particles=True)
+        self.draw_hud_frame(
+            (14, int(self.HEIGHT / 2 - 114), 255, 160),
+            accent_color=(56, 189, 248),
+            bg_alpha=150,
+            corner_size=12,
+        )
+        self.draw_hud_frame(
+            (self.WIDTH - 208, int(self.HEIGHT / 2 - 114), 194, 160),
+            accent_color=(34, 197, 94),
+            bg_alpha=150,
+            corner_size=12,
+        )
+        self.draw_hud_frame(
+            (int(self.WIDTH / 2 - 54), self.HEIGHT - 95, 305, 86),
+            accent_color=(56, 189, 248),
+            bg_alpha=150,
+            corner_size=10,
+        )
+        self.draw_menu_title(
+            self.interface.font3,
+            "Keys",
+            (int(self.WIDTH * (52 / 600)), int(self.HEIGHT * (20 / 400))),
+        )
+        self.execute_buttons(*self.buttons.values(), *self.buttons_keys.values())
+        self.draw_post_overlay()
     def _change_keys(self,key,key_name,button=None):
         self.key=key
         self.key_name=key_name
